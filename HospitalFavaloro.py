@@ -7,7 +7,7 @@ def mostrarLista(medicos): #Muestra el diccionario de medicos
             print(med,datos)
         
             
-    return medicos
+    return 
 
 def agregarMedico(medico): #Agrega un medico al diccionario
     
@@ -19,7 +19,7 @@ def agregarMedico(medico): #Agrega un medico al diccionario
         band = True
         print()
         print("="*40)
-        dni = int(input("Ingresar numero de documento: "))
+        dni = int(input("Ingresar numero de documento: "))#Se busca si el medico existe a traves de su DNI a traves un True/False
         for diccionario in medico:
             for medicos,datos in diccionario.items():
                 if dni == datos["DNI"][0]:
@@ -27,7 +27,7 @@ def agregarMedico(medico): #Agrega un medico al diccionario
                     break
 
         
-        if band == True:
+        if band == True:# Se ingresa los datos del medico a agregar
             medico.append({"Medico_"+str(len(medico)+1):
             {"Nombre": input("ingresar el nombre: "),
             "Edad" : input("ingresar edad: "),
@@ -39,7 +39,7 @@ def agregarMedico(medico): #Agrega un medico al diccionario
             
             break
         
-        else:
+        else: 
             print("El medico ya existe")
             input("\n presione enter para continuar")
             os.system('cls')
@@ -55,32 +55,29 @@ def eliminarMedico(medico):#Elimina de la lista al medico
         band = True
         print()
         print("="*40)
-        dni = int(input("Ingresar numero de documento: "))
+        dni = int(input("Ingresar numero de documento: "))#Se busca si el medico existe a traves de su DNI a traves un True/False
         for diccionario in medico:
             for medicos,datos in diccionario.items():
                 if dni == datos["DNI"][0]:
                     band = False
                     break
-
-        if band == False:
+        
+        if band == False:#Iteramos para buscar el indice(posicion) del medico para poder eliminarlo de la lista y forzamos que el bucle rompa a traves de un return con el fin de no tener IndexError
+            print(band)
             for diccionario in range(len(medico)):
                 for medicos,datos in medico[diccionario].items():
                     if dni == datos["DNI"][0]:
+                        print(band)
                         del medico[diccionario]
                         print(f'El {medicos}, {datos["Nombre"]} se elimino correctamente de la lista')
                         input("\nPresione Enter para continuar...")
-                        break     
-                break
-            break
-            
-            
-        
-        
+                        return
+                    
         else:
             print("El medico no esta en la lista")
             input("\n presione enter para continuar")
             os.system('cls')
-    return
+    
 
 def modificarMedico(medico):#Modifica datos del medico
     while True:
@@ -92,7 +89,7 @@ def modificarMedico(medico):#Modifica datos del medico
         print("="*40)
         dni = int(input("Ingresar DNI del medico: "))
 
-        for diccionario in medico:
+        for diccionario in medico:#Verificamos que existe y una vez encontrado se modifican sus datos
             for medicos,datos in diccionario.items():
                 if dni == datos["DNI"][0]:
                     while True:
@@ -115,18 +112,17 @@ def modificarMedico(medico):#Modifica datos del medico
                         
 
 
-
-
-    return
-
-
-def menuMedicos(): # Menu Principal
+def menuMedicos(): # Menu de los medicos
     os.system('cls')
+    """
+    Menu en donde se puede eliminar,agregar o modificar la lista de los medicos, donde estos mismos estan en una matriz(lista) de diccionarios
+    """
     medicos = [
         {"Medico_1":{"Nombre":"Gonzalez Juan",
                      "Edad":"30",
                      "DNI":(48120054,),
-                     "Especialidad":"Traumatologo"}},
+                     "Especialidad":"Traumatologo",
+                     "Estado":"Disponible"}},
 
         {"Medico_2":{"Nombre":"Ortiz Mariana",
                      "Edad":"26",
@@ -141,7 +137,7 @@ def menuMedicos(): # Menu Principal
     
     while True:
         print("\n" + "="*40)
-        print("[0] , Salir del Programa") 
+        print("[0] , Volver al menu principal") 
         print("[1] , Mostrar lista de medicos ") 
         print("[2] , Agregar medico " )
         print("[3] , Eliminar medico de la lista ")
@@ -164,7 +160,7 @@ def menuMedicos(): # Menu Principal
        
 
 
-def menuHospital(): # Submenu de medicos
+def menuHospital(): # Menu principal
     os.system('cls')
     while True:
         print("\n" + "="*40)
@@ -179,14 +175,13 @@ def menuHospital(): # Submenu de medicos
             menuMedicos()
             os.system('cls')
         elif opcion == 2:
-            eliminarMedicos()
+            menuPacientes()
         elif opcion == 3:
             agendarTurno()
         elif opcion == 4:
             eliminarTurno()
         elif opcion == 0:
-            
-            return
+             return
 
     
 
