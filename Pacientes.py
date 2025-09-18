@@ -1,5 +1,5 @@
 import os
-from Diccionarios import pacientes
+from Datos import pacientes
 
 
 

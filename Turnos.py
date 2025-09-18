@@ -1,6 +1,6 @@
 import os
-from Diccionarios import medicos
-from Diccionarios import pacientes
+from Datos import medicos
+from Datos import pacientes
 
 
 
@@ -9,8 +9,8 @@ def agendarTurno():
     while True:
         bandera = True
         dniPaciente = int(input("Ingresar numero de documento del paciente: "))
-        for diccionario in pacientes:
-            for identificacion,dato in diccionario.items():
+        for diccionarios in pacientes:
+            for identificacion,dato in diccionarios.items():
                 if dniPaciente == identificacion:
                     aux = identificacion
                     lista.append(aux)
@@ -31,8 +31,8 @@ def agendarTurno():
                 dniMedico = int(input("Ingresar numero de documento del medico con el que queres agendar un turno: "))
                 for diccionario in medicos:
                     for medico,datos in diccionario.items():
-                        print(datos['DNI'][0])
-                        if dniMedico == datos["DNI"][0]:
+                        print(datos['DNI'])
+                        if dniMedico == datos["DNI"]:
                             band = True
                             aux = datos 
                             break
@@ -41,6 +41,8 @@ def agendarTurno():
                     if aux["Estado"] == 'Disponible':
                         aux['Estado'] = 'Ocupado'
                         aux['Paciente'] = lista
+                        print(lista)
+                        aux['Historial'].append(lista)
                         print("El turno se agendo correctamente")
                         input("\nPresione Enter para continuar...")
                         return 
@@ -77,7 +79,7 @@ def cancelarTurno():
                 dniMedico = int(input("Ingresar numero de documento del medico con el que queres cancelar el turno: "))
                 for diccionario in medicos:
                     for medico,datos in diccionario.items():
-                        if dniMedico == datos["DNI"][0] and aux == datos["Paciente"][0]:
+                        if dniMedico == datos["DNI"]and aux == datos["Paciente"][0]:
                             band = True
                             aux = datos
                 

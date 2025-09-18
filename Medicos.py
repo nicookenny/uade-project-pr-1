@@ -69,6 +69,7 @@ def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
     return medico
 
 def agregarMedico(): #Agrega un medico al diccionario
+    os.system('cls')
     while True:
         band = True
         print("="*40)
@@ -99,6 +100,7 @@ def agregarMedico(): #Agrega un medico al diccionario
     os.system('cls')
 
 def eliminarMedico():#Elimina de la lista al medico
+    os.system('cls')
     MostrartablaMedicos()
     while True:
         band = True
@@ -128,6 +130,7 @@ def eliminarMedico():#Elimina de la lista al medico
     
 
 def modificarMedico():#Modifica datos del medico
+    os.system('cls')
     while True:    
         encontrado = False
         MostrartablaMedicos()
@@ -145,8 +148,9 @@ def modificarMedico():#Modifica datos del medico
                     datos["Fecha de Nacimiento"] = FechaDeNacimiento
                     datos["Especialidad"] = especialidad
                     
-                    print("Se han modificado sus datos correctamente")
-                    input("\nPresione Enter para continuar")
+                    print("Se han modificado sus datos correctamente \n")
+                    MostrartablaMedicos()
+                    os.system('cls')
                     return
         
         if not encontrado:
@@ -154,6 +158,135 @@ def modificarMedico():#Modifica datos del medico
             input("\nPresione Enter para continuar")
             os.system('cls')
 
+"""
+Esta funcion se encarga de mostrar el historial de los pacientes que se atendieron con un medico, ademas de comparar entre dos medicos sus historiales
+"""
+
+def mostrarHistorialMedico():
+    os.system('cls')
+    while True:
+        print("\n" + "="*40)
+        print("[1] , Mostrar historial de un medico" )
+        print("[2] , Mostrar historial entre 2 Medicos " )
+        opcion = int(input("Ingresar una Opcion: "))#Podes elegir comparar historiales o ver uno solo
+        if opcion == 1:
+            while True:
+                MostrartablaMedicos()
+                dni = int(input("Ingresar numero de documento del Medico: "))#Verificamos que el medico existe
+                for diccionario in Datos.medicos:
+                    for medico,dato in diccionario.items():
+                        print(dato["DNI"])
+                        if dni == dato["DNI"]:
+                            while True:
+                                if len(dato["Historial"]) < 3 and len(dato["Historial"]) >= 1:#Si el historial es menor que 3 pacientes lo muestra en pantalla con un print
+                                    print(f'{dato["Historial"]}')
+                                    input("\nPresione Enter para continuar")
+                                    return
+                                elif dato["Historial"] == []:#Si el historial es una lista vacia que 3 quiere decir que el medico no atendio a ningun paciente
+                                    print("El medico no tiene historial clinico")
+                                    input("\nPresione Enter para continuar")
+                                    os.system('cls')
+                                    return
+                                else:
+                                    print("\n" + "="*40)
+                                    print("[1] , Mostrar los primeros 6 pacientes" )
+                                    print("[2] , Mostrar todo el historial Medico " )
+                                    opcio = int(input("Ingresar una Opcion: "))
+                                    if opcio == 1:
+                                        ultimosTres = dato['Historial'][:6] # a traves de la tecnica de rebanado mostramos hasta los primeros 6 pacientes 
+                                        print(f'{ultimosTres}')
+                                        input("\nPresione Enter para continuar")
+                                        os.system('cls')
+                                        return
+                                    elif opcio== 2:# Muestra el historial completo de los pacientes atendidos por el medico
+                                        print(f'{dato["Historial"]}')
+                                        input("\nPresione Enter para continuar")
+                                        os.system('cls')
+                                        return
+                                    else:
+                                        print("Opcion incorrecta")
+                                        input("\nPresione Enter para continuar")
+                                        os.system('cls')
+
+                print("El medico no esta en la lista")
+                input("\nPresione Enter para continuar")
+                os.system('cls')
+
+        if opcion == 2:#Compara entre dos medicos sus historiales
+            os.system('cls')
+            MostrartablaMedicos()
+            while True:
+                band = False
+                medico1 = int(input("Ingresar numero de documento del primer medico elegido: "))#Verificamos que exista el primer medico
+                for diccionario in Datos.medicos:
+                    for medico,datos in diccionario.items():
+                        if medico1 == datos['DNI'] and datos['Historial'] != []:
+                            auxMedico1 = datos
+                            id1 = medico
+                            band = True
+                if band == True:
+                    while True:
+                        band1 = False
+                        medico2 = int(input("Ingresar numero de documento del segundo medico elegido: "))#Verificamos que exista el segundo medico
+                        for diccionario in Datos.medicos:
+                            for medic,dato in diccionario.items():
+                                if medico2 == dato['DNI'] and dato['Historial'] != [] and dato['DNI']:
+                                    auxMedico2 = dato
+                                    id2 = medic
+                                    band1 = True
+                        
+                        if band1 == True:
+                            if auxMedico1 == auxMedico2: #Verificamos que no sea el mismo medico el que se compara
+                                print("Los medicos son los mismos, eliga otro por favor")
+                                input("\nPresione Enter para continuar")
+                            else:
+                                os.system('cls')
+                                historial1_dict = {}
+                                historial2_dict = {}
+                                for medico in Datos.medicos: #Iteramos por la clave del medico y su valor del historial para agregarlo a un diccionario
+                                    if id1 in medico:
+                                        for paciente in medico[id1]["Historial"]:
+                                            historial1_dict.update(paciente)
+                                    if id2 in medico:
+                                        for paciente in medico[id2]["Historial"]:
+                                            historial2_dict.update(paciente)
+                                print(historial1_dict)
+                                
+                                """
+                                Convertimos a cada diccionario en un conjunto para utilizar operaciones con el fin de comparar cada historial
+                                """
+                                historialMedico1 = set(historial1_dict.keys()) 
+                                historialMedico2 = set(historial2_dict.keys())
+
+                                comunes = historialMedico1 & historialMedico2
+                                exclusivosPrimero = historialMedico1 - historialMedico2
+                                exclusivosSegundo = historialMedico2 - historialMedico1
+
+                                print("\nPacientes en comun:")
+                                for pacientes in comunes:
+                                    print(historial1_dict[pacientes])
+
+                                print("\nPacientes exclusivos del primero:")
+                                for pacientes in exclusivosPrimero:
+                                    print(historial1_dict[pacientes])
+
+                                print("\nPacientes exclusivos del segundo:")
+                                for pacientes in exclusivosSegundo:
+                                    print(historial2_dict[pacientes])
+
+                                input("\nPresione Enter para continuar")
+                                os.system('cls')
+                                return
+                                
+                        else:            
+                            print("El medico no esta en la lista o el historial medico esta vacio")
+                            input("\nPresione Enter para continuar")
+                            os.system('cls')
+                else:
+
+                    print("El medico no esta en la lista o el historial medico esta vacio")
+                    input("\nPresione Enter para continuar")
+                os.system('cls')
 def main():
     ...
 main()
