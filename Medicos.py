@@ -19,13 +19,10 @@ def CalculoEdad(fecha):
 
 
 def buscar_medico_por_dni(dni):
-    resultado = [
-        (id_medico, datos)
-        for diccionario in Datos.medicos
-        for id_medico, datos in diccionario.items()
-        if datos["DNI"] == dni
-    ]
-    return resultado[0] if resultado else None
+    for i, medico in enumerate(Datos.medicos):
+        if medico["DNI"] == dni:
+            return (i, medico)
+    return None
 
 
 def medico_existe(dni):
@@ -42,11 +39,10 @@ def MostrartablaMedicos():
         f"{'ID':<3} {'Nombre':<20} {'Edad':<12} {'DNI':<10} {'Especialidad':<30} {'Estado':<12} {'Paciente'}"
     )
     print("-" * 102)
-    for medico in Datos.medicos:
-        for id_medico, datos in medico.items():
-            print(
-                f"{id_medico:<3} {datos['Nombre']:<20} {CalculoEdad(datos['Fecha de Nacimiento']):<12} {datos['DNI']:<10} {datos['Especialidad']:<30} {datos['Estado']:<12} {datos['Paciente']}"
-            )
+    for i, medico in enumerate(Datos.medicos, 1):
+        print(
+            f"{i:<3} {medico['Nombre']:<20} {CalculoEdad(medico['Fecha de Nacimiento']):<12} {medico['DNI']:<10} {medico['Especialidad']:<30} {medico['Estado']:<12} {medico['Paciente']}"
+        )
     pausar()
 
 
@@ -95,15 +91,13 @@ def CargarNombre():
 
 def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
     return {
-        len(Datos.medicos) + 1: {
-            "Nombre": nombre,
-            "Fecha de Nacimiento": FechaDeNacimiento,
-            "DNI": dni,
-            "Especialidad": Especialidad,
-            "Estado": "Disponible",
-            "Paciente": {},
-            "Historial": [],
-        }
+        "Nombre": nombre,
+        "Fecha de Nacimiento": FechaDeNacimiento,
+        "DNI": dni,
+        "Especialidad": Especialidad,
+        "Estado": "Disponible",
+        "Paciente": {},
+        "Historial": [],
     }
 
 
@@ -156,14 +150,12 @@ def eliminarMedico():
             limpiar_pantalla()
             continue
 
-        for i, diccionario in enumerate(Datos.medicos):
-            if id_medico in diccionario:
-                nombre_medico = datos["Nombre"]
-                del Datos.medicos[i][id_medico]
-                print(f"El medico {nombre_medico} se elimino correctamente de la lista")
-                pausar()
-                MostrartablaMedicos()
-                return
+        nombre_medico = datos["Nombre"]
+        del Datos.medicos[id_medico]
+        print(f"El medico {nombre_medico} se elimino correctamente de la lista")
+        pausar()
+        MostrartablaMedicos()
+        return
 
 
 def modificarMedico():
@@ -268,10 +260,9 @@ def mostrarHistorialMedico1():
 
 def obtener_historial_dict(id_medico):
     historial_dict = {}
-    for medico in Datos.medicos:
-        if id_medico in medico:
-            for paciente in medico[id_medico]["Historial"]:
-                historial_dict.update(paciente)
+    if 0 <= id_medico < len(Datos.medicos):
+        for paciente in Datos.medicos[id_medico]["Historial"]:
+            historial_dict.update(paciente)
     return historial_dict
 
 

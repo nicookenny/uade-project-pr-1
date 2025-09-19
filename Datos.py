@@ -1,189 +1,173 @@
 medicos = [
     {
-        1: {
-            "Nombre": "Gonzalez Juan",
-            "Fecha de Nacimiento": (1995, 6, 19),
-            "DNI": 48120054,
-            "Especialidad": "Ortopedia y Traumatología",
-            "Estado": "Disponible",
-            "Paciente": {},
-            "Historial": [
-                {
-                    47130033: {
-                        "Nombre": "Lucas Kataoka",
-                        "Fecha de Nacimiento": (1998, 5, 23),
-                        "Obra Social": "Osde",
-                    }
-                },
-                {
-                    46120054: {
-                        "Nombre": "Matias Gonzalez",
-                        "Fecha de Nacimiento": (1998, 10, 21),
-                        "Obra Social": "Ioma",
-                    }
-                },
-                {
-                    48220011: {
-                        "Nombre": "Sofia Ramirez",
-                        "Fecha de Nacimiento": (1994, 9, 21),
-                        "Obra Social": "Galeno",
-                    }
-                },
-                {
-                    49340022: {
-                        "Nombre": "Martin Perez",
-                        "Fecha de Nacimiento": (2000, 10, 9),
-                        "Obra Social": "Ioma",
-                    }
-                },
-                {
-                    50450033: {
-                        "Nombre": "Valentina Lopez",
-                        "Fecha de Nacimiento": (1990, 1, 7),
-                        "Obra Social": "Osde",
-                    }
-                },
-                {
-                    51560044: {
-                        "Nombre": "Juan Torres",
-                        "Fecha de Nacimiento": (1998, 3, 11),
-                        "Obra Social": "Swiss Medical",
-                    }
-                },
-            ],
-        }
+        "Nombre": "Gonzalez Juan",
+        "Fecha de Nacimiento": (1995, 6, 19),
+        "DNI": 48120054,
+        "Especialidad": "Ortopedia y Traumatología",
+        "Estado": "Disponible",
+        "Paciente": {},
+        "Historial": [
+            {
+                47130033: {
+                    "Nombre": "Lucas Kataoka",
+                    "Fecha de Nacimiento": (1998, 5, 23),
+                    "Obra Social": "Osde",
+                }
+            },
+            {
+                46120054: {
+                    "Nombre": "Matias Gonzalez",
+                    "Fecha de Nacimiento": (1998, 10, 21),
+                    "Obra Social": "Ioma",
+                }
+            },
+            {
+                48220011: {
+                    "Nombre": "Sofia Ramirez",
+                    "Fecha de Nacimiento": (1994, 9, 21),
+                    "Obra Social": "Galeno",
+                }
+            },
+            {
+                49340022: {
+                    "Nombre": "Martin Perez",
+                    "Fecha de Nacimiento": (2000, 10, 9),
+                    "Obra Social": "Ioma",
+                }
+            },
+            {
+                50450033: {
+                    "Nombre": "Valentina Lopez",
+                    "Fecha de Nacimiento": (1990, 1, 7),
+                    "Obra Social": "Osde",
+                }
+            },
+            {
+                51560044: {
+                    "Nombre": "Juan Torres",
+                    "Fecha de Nacimiento": (1998, 3, 11),
+                    "Obra Social": "Swiss Medical",
+                }
+            },
+        ],
     },
     {
-        2: {
-            "Nombre": "Ortiz Mariana",
-            "Fecha de Nacimiento": (1999, 4, 23),
-            "DNI": 45063213,
-            "Especialidad": "Pediatra",
-            "Estado": "Disponible",
-            "Paciente": {},
-            "Historial": [
-                {
-                    51560044: {
-                        "Nombre": "Juan Torres",
-                        "Fecha de Nacimiento": (1998, 3, 11),
-                        "Obra Social": "Swiss Medical",
-                    }
-                },
-                {
-                    52670055: {
-                        "Nombre": "Camila Diaz",
-                        "Fecha de Nacimiento": (1992, 11, 21),
-                        "Obra Social": "Ioma",
-                    }
-                },
-                {
-                    53780066: {
-                        "Nombre": "Diego Fernandez",
-                        "Fecha de Nacimiento": (1995, 10, 30),
-                        "Obra Social": "Galeno",
-                    }
-                },
-                {
-                    54890077: {
-                        "Nombre": "Lucia Morales",
-                        "Fecha de Nacimiento": (1993, 2, 22),
-                        "Obra Social": "Osde",
-                    }
-                },
-                {
-                    55900188: {
-                        "Nombre": "Nicolas Suarez",
-                        "Fecha de Nacimiento": (1999, 4, 18),
-                        "Obra Social": "Ioma",
-                    }
-                },
-            ],
-        }
+        "Nombre": "Ortiz Mariana",
+        "Fecha de Nacimiento": (1999, 4, 23),
+        "DNI": 45063213,
+        "Especialidad": "Pediatra",
+        "Estado": "Disponible",
+        "Paciente": {},
+        "Historial": [
+            {
+                51560044: {
+                    "Nombre": "Juan Torres",
+                    "Fecha de Nacimiento": (1998, 3, 11),
+                    "Obra Social": "Swiss Medical",
+                }
+            },
+            {
+                52670055: {
+                    "Nombre": "Camila Diaz",
+                    "Fecha de Nacimiento": (1992, 11, 21),
+                    "Obra Social": "Ioma",
+                }
+            },
+            {
+                53780066: {
+                    "Nombre": "Diego Fernandez",
+                    "Fecha de Nacimiento": (1995, 10, 30),
+                    "Obra Social": "Galeno",
+                }
+            },
+            {
+                54890077: {
+                    "Nombre": "Lucia Morales",
+                    "Fecha de Nacimiento": (1993, 2, 22),
+                    "Obra Social": "Osde",
+                }
+            },
+            {
+                55900188: {
+                    "Nombre": "Nicolas Suarez",
+                    "Fecha de Nacimiento": (1999, 4, 18),
+                    "Obra Social": "Ioma",
+                }
+            },
+        ],
     },
     {
-        3: {
-            "Nombre": "Lopez Esteban",
-            "Fecha de Nacimiento": (1988, 5, 11),
-            "DNI": 43170055,
-            "Especialidad": "Oculista",
-            "Estado": "Disponible",
-            "Paciente": {},
-            "Historial": [],
-        }
+        "Nombre": "Lopez Esteban",
+        "Fecha de Nacimiento": (1988, 5, 11),
+        "DNI": 43170055,
+        "Especialidad": "Oculista",
+        "Estado": "Disponible",
+        "Paciente": {},
+        "Historial": [],
     },
 ]
 
 
 pacientes = [
     {
-        47130033: {
-            "Nombre": "Lucas Kataoka",
-            "Fecha de Nacimiento": (1998, 5, 23),
-            "Obra Social": "Osde",
-        }
+        "DNI": 47130033,
+        "Nombre": "Lucas Kataoka",
+        "Fecha de Nacimiento": (1998, 5, 23),
+        "Obra Social": "Osde",
     },
     {
-        46120054: {
-            "Nombre": "Matias Gonzalez",
-            "Fecha de Nacimiento": (1998, 10, 21),
-            "Obra Social": "Ioma",
-        }
+        "DNI": 46120054,
+        "Nombre": "Matias Gonzalez",
+        "Fecha de Nacimiento": (1998, 10, 21),
+        "Obra Social": "Ioma",
     },
     {
-        48220011: {
-            "Nombre": "Sofia Ramirez",
-            "Fecha de Nacimiento": (1994, 9, 21),
-            "Obra Social": "Galeno",
-        }
+        "DNI": 48220011,
+        "Nombre": "Sofia Ramirez",
+        "Fecha de Nacimiento": (1994, 9, 21),
+        "Obra Social": "Galeno",
     },
     {
-        49340022: {
-            "Nombre": "Martin Perez",
-            "Fecha de Nacimiento": (2000, 10, 9),
-            "Obra Social": "Ioma",
-        }
+        "DNI": 49340022,
+        "Nombre": "Martin Perez",
+        "Fecha de Nacimiento": (2000, 10, 9),
+        "Obra Social": "Ioma",
     },
     {
-        50450033: {
-            "Nombre": "Valentina Lopez",
-            "Fecha de Nacimiento": (1990, 1, 7),
-            "Obra Social": "Osde",
-        }
+        "DNI": 50450033,
+        "Nombre": "Valentina Lopez",
+        "Fecha de Nacimiento": (1990, 1, 7),
+        "Obra Social": "Osde",
     },
     {
-        51560044: {
-            "Nombre": "Juan Torres",
-            "Fecha de Nacimiento": (1998, 3, 11),
-            "Obra Social": "Swiss Medical",
-        }
+        "DNI": 51560044,
+        "Nombre": "Juan Torres",
+        "Fecha de Nacimiento": (1998, 3, 11),
+        "Obra Social": "Swiss Medical",
     },
     {
-        52670055: {
-            "Nombre": "Camila Diaz",
-            "Fecha de Nacimiento": (1992, 11, 21),
-            "Obra Social": "Ioma",
-        }
+        "DNI": 52670055,
+        "Nombre": "Camila Diaz",
+        "Fecha de Nacimiento": (1992, 11, 21),
+        "Obra Social": "Ioma",
     },
     {
-        53780066: {
-            "Nombre": "Diego Fernandez",
-            "Fecha de Nacimiento": (1995, 10, 30),
-            "Obra Social": "Galeno",
-        }
+        "DNI": 53780066,
+        "Nombre": "Diego Fernandez",
+        "Fecha de Nacimiento": (1995, 10, 30),
+        "Obra Social": "Galeno",
     },
     {
-        54890077: {
-            "Nombre": "Lucia Morales",
-            "Fecha de Nacimiento": (1993, 2, 22),
-            "Obra Social": "Osde",
-        }
+        "DNI": 54890077,
+        "Nombre": "Lucia Morales",
+        "Fecha de Nacimiento": (1993, 2, 22),
+        "Obra Social": "Osde",
     },
     {
-        55900188: {
-            "Nombre": "Nicolas Suarez",
-            "Fecha de Nacimiento": (1999, 4, 18),
-            "Obra Social": "Ioma",
-        }
+        "DNI": 55900188,
+        "Nombre": "Nicolas Suarez",
+        "Fecha de Nacimiento": (1999, 4, 18),
+        "Obra Social": "Ioma",
     },
 ]
 

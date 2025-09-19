@@ -22,28 +22,22 @@ def pausar():
 
 def buscar_paciente(dni_paciente):
     for paciente in Datos.pacientes:
-        for dni, datos in paciente.items():
-            if dni == dni_paciente:
-                return paciente
+        if paciente["DNI"] == dni_paciente:
+            return paciente
     return None
 
 
 def buscar_medico_por_dni(dni_medico):
     for medico in Datos.medicos:
-        for nombre, datos in medico.items():
-            if datos["DNI"] == dni_medico:
-                return datos
+        if medico["DNI"] == dni_medico:
+            return medico
     return None
 
 
 def paciente_tiene_turno(dni_paciente):
     for medico in Datos.medicos:
-        for _, datos in medico.items():
-            if datos["Paciente"]:
-                for paciente in datos["Paciente"]:
-                    for dni, info in paciente.items():
-                        if dni == dni_paciente:
-                            return True
+        if medico["Paciente"] and medico["Paciente"]["DNI"] == dni_paciente:
+            return True
     return False
 
 
@@ -52,11 +46,7 @@ def buscar_turno_paciente_con_medico(dni_paciente, dni_medico):
     if not medico_data:
         return False
 
-    for paciente in medico_data["Paciente"]:
-        for dni, info in paciente.items():
-            if dni == dni_paciente:
-                return True
-    return False
+    return medico_data["Paciente"] and medico_data["Paciente"]["DNI"] == dni_paciente
 
 
 def agendarTurno():
@@ -93,8 +83,16 @@ def agendarTurno():
 
             if medico_data["Estado"] == "Disponible":
                 medico_data["Estado"] = "Ocupado"
-                medico_data["Paciente"] = [paciente_data]
-                medico_data["Historial"].append(paciente_data)
+                medico_data["Paciente"] = paciente_data
+                medico_data["Historial"].append(
+                    {
+                        paciente_data["DNI"]: {
+                            "Nombre": paciente_data["Nombre"],
+                            "Fecha de Nacimiento": paciente_data["Fecha de Nacimiento"],
+                            "Obra Social": paciente_data["Obra Social"],
+                        }
+                    }
+                )
                 print("El turno se agendo correctamente")
                 pausar()
                 Medicos.MostrartablaMedicos()

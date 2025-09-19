@@ -4,14 +4,22 @@ from datetime import date
 
 
 def limpiar_pantalla():
-    os.system("cls" if os.name == "nt" else "clear")
+    os.system(
+        "cls" if os.name == "nt" else "clear"
+    )  # cls es solo para windows, clear es para linux y mac
 
 
 def pausar():
+    """
+    Pausa la ejecución del programa y espera a que el usuario presione Enter para continuar.
+    """
     input("\nPresione Enter para continuar...")
 
 
 def CalculoEdad(fecha):
+    """
+    Calcula la edad de una persona a partir de su fecha de nacimiento.
+    """
     hoy = date.today()
     año, mes, dia = fecha
     edad = hoy.year - año - ((hoy.month, hoy.day) < (mes, dia))
@@ -19,13 +27,10 @@ def CalculoEdad(fecha):
 
 
 def buscar_paciente(dni):
-    resultado = [
-        (paciente, datos)
-        for paciente in Datos.pacientes
-        for id_paciente, datos in paciente.items()
-        if id_paciente == dni
-    ]
-    return resultado[0] if resultado else None
+    for i, paciente in enumerate(Datos.pacientes):
+        if paciente["DNI"] == dni:
+            return (i, paciente)
+    return None
 
 
 def paciente_existe(dni):
@@ -49,6 +54,10 @@ def CargarNombre():
 
 
 def CargarObraSocial():
+    """
+    Carga la obra social de un paciente.
+    """
+
     print("=" * 40)
     for obras in Datos.obras_y_prepagas_arg:
         print(obras)
@@ -87,13 +96,12 @@ def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
 
 def mostrarLista():
     limpiar_pantalla()
-    print(f"{'ID':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
+    print(f"{'DNI':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
     print("-" * 102)
     for paciente in Datos.pacientes:
-        for id_paciente, datos in paciente.items():
-            print(
-                f"{id_paciente:<8} {datos['Nombre']:<20} {CalculoEdad(datos['Fecha de Nacimiento']):<12} {datos['Obra Social']}"
-            )
+        print(
+            f"{paciente['DNI']:<8} {paciente['Nombre']:<20} {CalculoEdad(paciente['Fecha de Nacimiento']):<12} {paciente['Obra Social']}"
+        )
     pausar()
 
 
@@ -135,17 +143,15 @@ def eliminarPaciente():
             limpiar_pantalla()
             continue
 
-        paciente_dict, datos = paciente_info
+        idx, datos = paciente_info
         nombre = datos["Nombre"]
 
-        for i, p in enumerate(Datos.pacientes):
-            if p == paciente_dict:
-                del Datos.pacientes[i]
-                print(f"El paciente {nombre} se elimino correctamente de la lista")
-                pausar()
-                mostrarLista()
-                limpiar_pantalla()
-                return
+        del Datos.pacientes[idx]
+        print(f"El paciente {nombre} se elimino correctamente de la lista")
+        pausar()
+        mostrarLista()
+        limpiar_pantalla()
+        return
 
 
 def modificarPaciente():
