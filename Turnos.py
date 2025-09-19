@@ -12,161 +12,145 @@ def CargarDNI():
     return int(dni)
 
 
+def limpiar_pantalla():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
+def pausar():
+    input("\nPresione Enter para continuar...")
+
+
+def buscar_paciente(dni_paciente):
+    for paciente in Datos.pacientes:
+        for dni, datos in paciente.items():
+            if dni == dni_paciente:
+                return paciente
+    return None
+
+
+def buscar_medico_por_dni(dni_medico):
+    for medico in Datos.medicos:
+        for nombre, datos in medico.items():
+            if datos["DNI"] == dni_medico:
+                return datos
+    return None
+
+
+def paciente_tiene_turno(dni_paciente):
+    for medico in Datos.medicos:
+        for _, datos in medico.items():
+            if datos["Paciente"]:
+                for paciente in datos["Paciente"]:
+                    for dni, info in paciente.items():
+                        if dni == dni_paciente:
+                            return True
+    return False
+
+
+def buscar_turno_paciente_con_medico(dni_paciente, dni_medico):
+    medico_data = buscar_medico_por_dni(dni_medico)
+    if not medico_data:
+        return False
+
+    for paciente in medico_data["Paciente"]:
+        for dni, info in paciente.items():
+            if dni == dni_paciente:
+                return True
+    return False
+
+
 def agendarTurno():
-    lista = []
-    diccionarioss = {}
     while True:
         Pacientes.mostrarLista()
-        bandera = True
-        dniPaciente = CargarDNI()
-        for diccionarios in Datos.pacientes:
-            for identificacion, dato in diccionarios.items():
-                if dniPaciente == identificacion:
-                    aux = identificacion
-                    lista.append(diccionarios)
-                    diccionarioss.update(diccionarios)
-                    bandera = False
+        dni_paciente = CargarDNI()
+        paciente_data = buscar_paciente(dni_paciente)
 
-        if bandera == False:
-            for diccionari in Datos.medicos:
-                for medico, datos in diccionari.items():
-                    for paciente in datos["Paciente"]:
-                        for dni, dato in paciente.items():
-                            if datos["Paciente"] != {} and dni == dniPaciente:
-                                print(
-                                    "El paciente ya tiene un turno agendado con otro médico."
-                                )
-                                input("\nPresione Enter para continuar...")
-                                return
-            while True:
-                Medicos.MostrartablaMedicos()
-                band = False
-                dniMedico = int(
-                    input(
-                        "Ingresar numero de documento del medico con el que queres agendar un turno: "
-                    )
+        if not paciente_data:
+            print("El paciente no existe en la lista")
+            pausar()
+            limpiar_pantalla()
+            continue
+
+        if paciente_tiene_turno(dni_paciente):
+            print("El paciente ya tiene un turno agendado con otro médico.")
+            pausar()
+            return
+
+        while True:
+            Medicos.MostrartablaMedicos()
+            dni_medico = int(
+                input(
+                    "Ingresar numero de documento del medico con el que queres agendar un turno: "
                 )
-                for diccionario in Datos.medicos:
-                    for medico, datos in diccionario.items():
-                        if dniMedico == datos["DNI"]:
-                            band = True
-                            aux = datos
-                            aux2 = diccionarios
-                            break
+            )
+            medico_data = buscar_medico_por_dni(dni_medico)
 
-                if band == True:
-                    if aux["Estado"] == "Disponible":
-                        aux["Estado"] = "Ocupado"
-                        aux["Paciente"] = lista
-                        aux["Historial"].append(diccionarioss)
-                        print("El turno se agendo correctamente")
-                        input("\nPresione Enter para continuar...")
-                        Medicos.MostrartablaMedicos()
-                        return
-                    else:
-                        print("El medico esta ocupado")
-                        input("\nPresione Enter para continuar...")
-                        os.system("clear")
-                else:
-                    print("El medico no esta en la lista")
-                    input("\nPresione Enter para continuar...")
-                    os.system("clear")
+            if not medico_data:
+                print("El medico no esta en la lista")
+                pausar()
+                limpiar_pantalla()
+                continue
 
-        print("El paciente no existe en la lista")
-        input("\nPresione Enter para continuar...")
-        os.system("cls")
+            if medico_data["Estado"] == "Disponible":
+                medico_data["Estado"] = "Ocupado"
+                medico_data["Paciente"] = [paciente_data]
+                medico_data["Historial"].append(paciente_data)
+                print("El turno se agendo correctamente")
+                pausar()
+                Medicos.MostrartablaMedicos()
+                return
+            else:
+                print("El medico esta ocupado")
+                pausar()
+                limpiar_pantalla()
 
 
 def cancelarTurno():
     while True:
         Pacientes.mostrarLista()
-        bandera = True
-        dniPaciente = CargarDNI()
-        for diccionario in Datos.pacientes:
-            for identificacion, dato in diccionario.items():
-                if dniPaciente == identificacion:
-                    aux = identificacion
-                    bandera = False
+        dni_paciente = CargarDNI()
+        paciente_data = buscar_paciente(dni_paciente)
 
-        if bandera == False:
-            while True:
-                bandera2 = False
-                for diccionario in Datos.medicos:
-                    for medico, datos in diccionario.items():
-                        for paciente in datos["Paciente"]:
-                            for dni, dato in paciente.items():
-                                if dniPaciente == dni:
-                                    bandera2 = True
+        if not paciente_data:
+            print("El paciente no existe en la lista")
+            pausar()
+            limpiar_pantalla()
+            continue
 
-                if bandera2 == True:
-                    break
-                else:
-                    print(
-                        "El paciente no agendo nunca un turno, ingrese nuevamente los datos"
-                    )
-                    input("\nPresione Enter para continuar...")
-                    while True:
-                        os.system("clear")
-                        Pacientes.mostrarLista()
-                        bandera = True
-                        dniPaciente = CargarDNI()
-                        for diccionario in Datos.pacientes:
-                            for identificacion, dato in diccionario.items():
-                                if dniPaciente == identificacion:
-                                    aux = identificacion
-                                    bandera = False
+        if not paciente_tiene_turno(dni_paciente):
+            print("El paciente no agendo nunca un turno")
+            pausar()
+            limpiar_pantalla()
+            continue
 
-                        if bandera == False:
-                            break
-                        else:
-                            print("El paciente no existe en la lista")
-                            input("\nPresione Enter para continuar...")
+        while True:
+            Medicos.MostrartablaMedicos()
+            dni_medico = CargarDNI()
+            medico_data = buscar_medico_por_dni(dni_medico)
 
-        if bandera == False:
-            while True:
+            if not medico_data:
+                print("El medico no esta en la lista")
+                pausar()
+                limpiar_pantalla()
+                continue
+
+            if medico_data["Estado"] == "Disponible":
+                print("ERROR, el medico esta disponible")
+                pausar()
+                limpiar_pantalla()
+                continue
+
+            if buscar_turno_paciente_con_medico(dni_paciente, dni_medico):
+                medico_data["Estado"] = "Disponible"
+                medico_data["Paciente"] = {}
+                print("El turno se cancelo correctamente")
+                pausar()
                 Medicos.MostrartablaMedicos()
-                band = False
-                dniMedico = CargarDNI()
-                for diccionario in Datos.medicos:
-                    for medico, datos in diccionario.items():
-                        for paciente in datos["Paciente"]:
-                            for dni, dato in paciente.items():
-                                if dniMedico == datos["DNI"]:
-                                    band = True
-                                    aux2 = datos
-                                    aux3 = dni
-
-                if band == True:
-                    if aux2["Estado"] == "Disponible":
-                        band = False
-                        print("ERROR, el medico esta disponible")
-                        input("\nPresione Enter para continuar...")
-                        os.system("clear")
-                    else:
-                        print(aux3)
-                        input("\nPresione Enter para continuar...")
-                        if dniPaciente == aux3:
-                            aux2["Estado"] = "Disponible"
-                            aux2["Paciente"] = {}
-                            print("El turno se cancelo correctamente")
-                            input("\nPresione Enter para continuar...")
-                            Medicos.MostrartablaMedicos()
-                            return
-                        else:
-                            print(aux2["Paciente"])
-                            print(
-                                "El medico esta agendado con otro paciente, ingrese nuevamente todos los datos"
-                            )
-                            input("\nPresione Enter para continuar...")
-                            return
-                else:
-                    print("El medico no esta en la lista")
-                    input("\nPresione Enter para continuar...")
-                    os.system("clear")
-
-        print("El paciente no existe en la lista")
-        input("\nPresione Enter para continuar...")
-        os.system("clear")
+                return
+            else:
+                print("El medico esta agendado con otro paciente")
+                pausar()
+                return
 
 
 def main():

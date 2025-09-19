@@ -1,7 +1,5 @@
 import os
 
-# from datetime import date
-# from Datos import medicos
 import Medicos
 import Datos
 
