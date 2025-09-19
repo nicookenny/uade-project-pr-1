@@ -1,23 +1,27 @@
+import Medicos
+import Pacientes
+import Turnos
+
 doctors_menu = {
     "0": {
         "text": "Salir del programa",
-        "action": lambda: exit(),
+        "action": Medicos.MostrartablaMedicos,
     },
     "1": {
-        "text": "Mostrar Menu de Medico",
-        "action": None,
+        "text": "Ver medicos",
+        "action": Medicos.MostrartablaMedicos,
     },
     "2": {
-        "text": "Mostrar Menu de Paciente",
-        "action": None,
+        "text": "Agregar medico",
+        "action": Medicos.agregarMedico,
     },
     "3": {
-        "text": "Agendar Turno",
-        "action": None,
+        "text": "Eliminar medico",
+        "action": Medicos.eliminarMedico,
     },
     "4": {
-        "text": "Cancelar Turno",
-        "action": None,
+        "text": "Modificar medico",
+        "action": Medicos.modificarMedico,
     },
 }
 
@@ -27,35 +31,41 @@ patients_menu = {
         "action": lambda: exit(),
     },
     "1": {
-        "text": "Mostrar Menu de Paciente",
-        "action": None,
+        "text": "Ver pacientes",
+        "action": Pacientes.mostrarLista,
     },
     "2": {
         "text": "Agregar Paciente",
-        "action": None,
+        "action": Pacientes.agregarPaciente,
     },
     "3": {
         "text": "Eliminar Paciente",
-        "action": None,
+        "action": Pacientes.eliminarPaciente,
+    },
+    "4": {
+        "text": "Modificar Paciente",
+        "action": Pacientes.modificarPaciente,
     },
 }
 
-main_menu = {
+
+turns_menu = {
     "0": {
-        "text": "Salir del programa",
-        "action": lambda: exit(),
+        "text": "Volver al menu principal",
+        "action": None,
     },
     "1": {
-        "text": "Mostrar Menu de Medico",
-        "action": None,
-    },
-    "2": "Mostrar Menu de Paciente",
-    "3": {
         "text": "Agendar Turno",
-        "action": None,
+        "action": Turnos.agendarTurno,
     },
-    "4": {
+    "2": {
         "text": "Cancelar Turno",
-        "action": None,
+        "action": Turnos.cancelarTurno,
     },
 }
+
+
+def showMenu(menu, title):
+    print(title)
+    for key, value in menu.items():
+        print(f"[{key}] {value['text']}")

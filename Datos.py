@@ -1,0 +1,213 @@
+medicos = [
+    {
+        1: {
+            "Nombre": "Gonzalez Juan",
+            "Fecha de Nacimiento": (1995, 6, 19),
+            "DNI": 48120054,
+            "Especialidad": "Ortopedia y Traumatología",
+            "Estado": "Disponible",
+            "Paciente": "Ninguno",
+            "Historial": [
+                {
+                    47130033: {
+                        "Nombre": "Lucas Kataoka",
+                        "Edad": 19,
+                        "Obra Social": "Osde",
+                    }
+                },
+                {
+                    46120054: {
+                        "Nombre": "Matias Gonzalez",
+                        "Edad": 24,
+                        "Obra Social": "Ioma",
+                    }
+                },
+                {
+                    48220011: {
+                        "Nombre": "Sofia Ramirez",
+                        "Edad": 30,
+                        "Obra Social": "Galeno",
+                    }
+                },
+                {
+                    49340022: {
+                        "Nombre": "Martin Perez",
+                        "Edad": 27,
+                        "Obra Social": "Ioma",
+                    }
+                },
+                {
+                    50450033: {
+                        "Nombre": "Valentina Lopez",
+                        "Edad": 22,
+                        "Obra Social": "Osde",
+                    }
+                },
+                {
+                    51560044: {
+                        "Nombre": "Juan Torres",
+                        "Edad": 35,
+                        "Obra Social": "Swiss Medical",
+                    }
+                },
+            ],
+        }
+    },
+    {
+        2: {
+            "Nombre": "Ortiz Mariana",
+            "Fecha de Nacimiento": (1999, 4, 23),
+            "DNI": 45063213,
+            "Especialidad": "Pediatra",
+            "Estado": "Disponible",
+            "Paciente": "Ninguno",
+            "Historial": [
+                {
+                    51560044: {
+                        "Nombre": "Juan Torres",
+                        "Edad": 35,
+                        "Obra Social": "Swiss Medical",
+                    }
+                },
+                {
+                    52670055: {
+                        "Nombre": "Camila Diaz",
+                        "Edad": 28,
+                        "Obra Social": "Ioma",
+                    }
+                },
+                {
+                    53780066: {
+                        "Nombre": "Diego Fernandez",
+                        "Edad": 40,
+                        "Obra Social": "Galeno",
+                    }
+                },
+                {
+                    54890077: {
+                        "Nombre": "Lucia Morales",
+                        "Edad": 26,
+                        "Obra Social": "Osde",
+                    }
+                },
+                {
+                    55900188: {
+                        "Nombre": "Nicolas Suarez",
+                        "Edad": 31,
+                        "Obra Social": "Ioma",
+                    }
+                },
+            ],
+        }
+    },
+    {
+        3: {
+            "Nombre": "Lopez Esteban",
+            "Fecha de Nacimiento": (1988, 5, 11),
+            "DNI": 43170055,
+            "Especialidad": "Oculista",
+            "Estado": "Disponible",
+            "Paciente": "Ninguno",
+            "Historial": [],
+        }
+    },
+]
+
+
+pacientes = [
+    {47130033: {"Nombre": "Lucas Kataoka", "Edad": 19, "Obra Social": "Osde"}},
+    {46120054: {"Nombre": "Matias Gonzalez", "Edad": 24, "Obra Social": "Ioma"}},
+    {48220011: {"Nombre": "Sofia Ramirez", "Edad": 30, "Obra Social": "Galeno"}},
+    {49340022: {"Nombre": "Martin Perez", "Edad": 27, "Obra Social": "Ioma"}},
+    {50450033: {"Nombre": "Valentina Lopez", "Edad": 22, "Obra Social": "Osde"}},
+    {51560044: {"Nombre": "Juan Torres", "Edad": 35, "Obra Social": "Swiss Medical"}},
+    {52670055: {"Nombre": "Camila Diaz", "Edad": 28, "Obra Social": "Ioma"}},
+    {53780066: {"Nombre": "Diego Fernandez", "Edad": 40, "Obra Social": "Galeno"}},
+    {54890077: {"Nombre": "Lucia Morales", "Edad": 26, "Obra Social": "Osde"}},
+    {55900188: {"Nombre": "Nicolas Suarez", "Edad": 31, "Obra Social": "Ioma"}},
+]
+
+especialidades_medicas = (
+    "Alergología",
+    "Anestesiología",
+    "Cardiología",
+    "Cirugía General",
+    "Cirugía Cardiovascular",
+    "Cirugía Plástica y Reconstructiva",
+    "Cirugía Pediátrica",
+    "Cirugía Torácica",
+    "Cirugía Vascular",
+    "Dermatología",
+    "Endocrinología",
+    "Gastroenterología",
+    "Geriatría",
+    "Ginecología y Obstetricia",
+    "Hematología",
+    "Hepatología",
+    "Infectología",
+    "Medicina de Emergencias",
+    "Medicina del Deporte",
+    "Medicina Familiar y Comunitaria",
+    "Medicina Física y Rehabilitación",
+    "Medicina Intensiva",
+    "Medicina Interna",
+    "Medicina Legal y Forense",
+    "Nefrología",
+    "Neumología",
+    "Neurología",
+    "Neurocirugía",
+    "Nutriología Clínica",
+    "Oftalmología",
+    "Oncología Médica",
+    "Oncología Radioterápica",
+    "Ortopedia y Traumatología",
+    "Otorrinolaringología",
+    "Pediatría",
+    "Psiquiatría",
+    "Radiología",
+    "Reumatología",
+    "Toxicología",
+    "Urología",
+)
+
+obras_y_prepagas_arg = (
+    "PAMI",
+    "APM / OSAPM",
+    "Activa Salud",
+    "Andar",
+    "APRES Salud",
+    "APSOT / FFST",
+    "ASMEPRIV",
+    "Assistravel",
+    "Avalian",
+    "Banco Provincia (BCO. PCIA.)",
+    "Bristol / Santa Cecilia",
+    "C.A.S.A",
+    "CEMIC",
+    "CIMA",
+    "Cobermed",
+    "Cobertec / OS Mosaistas",
+    "Colegio de Escribanos Plan Especial (OSSEG)",
+    "COMEI",
+    "Corporación Asistencial",
+    "DASMI - Universidad de Luján",
+    "Dom Centro de Reumatología",
+    "Emergencias",
+    "Empleados de Farmacia",
+    "OSDE",
+    "Swiss Medical",
+    "Medicus",
+    "Omint",
+    "Galeno",
+    "Medifé",
+    "Sancor Salud",
+    "Prevención Salud",
+    "Premedic",
+    "Salud y Bienestar",
+    "Obras Sociales Unión Personal (UP)",
+    "OSVARA",
+    "OSIPE",
+    "Obra Social del Personal de Edificios de Renta y Horizontal",
+    "Obra Social de Petroleros Privados",
+    "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)",
+)
