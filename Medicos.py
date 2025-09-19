@@ -19,11 +19,13 @@ def CalculoEdad(fecha):
 
 
 def buscar_medico_por_dni(dni):
-    for diccionario in Datos.medicos:
-        for id_medico, datos in diccionario.items():
-            if datos["DNI"] == dni:
-                return (id_medico, datos)
-    return None
+    resultado = [
+        (id_medico, datos)
+        for diccionario in Datos.medicos
+        for id_medico, datos in diccionario.items()
+        if datos["DNI"] == dni
+    ]
+    return resultado[0] if resultado else None
 
 
 def medico_existe(dni):

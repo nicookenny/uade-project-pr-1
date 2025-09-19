@@ -19,11 +19,13 @@ def CalculoEdad(fecha):
 
 
 def buscar_paciente(dni):
-    for paciente in Datos.pacientes:
-        for id_paciente, datos in paciente.items():
-            if id_paciente == dni:
-                return (paciente, datos)
-    return None
+    resultado = [
+        (paciente, datos)
+        for paciente in Datos.pacientes
+        for id_paciente, datos in paciente.items()
+        if id_paciente == dni
+    ]
+    return resultado[0] if resultado else None
 
 
 def paciente_existe(dni):
@@ -134,7 +136,7 @@ def eliminarPaciente():
             continue
 
         paciente_dict, datos = paciente_info
-        nombre = datos['Nombre']
+        nombre = datos["Nombre"]
 
         for i, p in enumerate(Datos.pacientes):
             if p == paciente_dict:
