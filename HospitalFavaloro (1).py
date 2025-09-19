@@ -1,4 +1,6 @@
 import os
+import sys
+import time
 import Medicos
 import Pacientes
 import Turnos
@@ -27,6 +29,7 @@ def menuMedicos(): # Menu de los medicos
             Medicos.agregarMedico()
         elif opcion == 3:
             Medicos.eliminarMedico()
+            os.system('cls')
         elif opcion == 4:
             Medicos.modificarMedico()
         elif opcion == 5:
@@ -38,9 +41,12 @@ def menuMedicos(): # Menu de los medicos
             print("Opcion Invalida, Ingrese nuevamente los datos:")
             input("\nPresione Enter para continuar...")
 
-def menuPacientes():
-    os.system('cls')
 
+def menuPacientes(): #Menu de los pacientes
+    os.system('cls')
+    """
+    Menu en donde se puede eliminar,agregar o modificar la lista de los pacientes, donde estos mismos estan en una matriz(lista) de diccionarios
+    """
     while True:
         print("\n" + "="*40)
         print("[0] , Volver al menu principal") 
@@ -52,6 +58,7 @@ def menuPacientes():
         opcion = int(input("Ingresar una Opcion: "))
         if opcion == 1:
             Pacientes.mostrarLista()
+            os.system('cls')
         elif opcion == 2:
             Pacientes.agregarPaciente()
         elif opcion == 3:
@@ -65,9 +72,11 @@ def menuPacientes():
             print("Opcion Invalida, Ingrese nuevamente los datos:")
             input("\nPresione Enter para continuar...")
 
-def menuTurnos():
+def menuTurnos():# Menu Turnos
     os.system('cls')
-
+    """
+    El paciente puede agendar o cancelar un turno de la lista de medicos
+    """
     while True:
         print("\n" + "="*40)
         print("[0] , Volver al menu principal " )
@@ -77,8 +86,10 @@ def menuTurnos():
         opcion = int(input("Ingresar una Opcion: "))
         if opcion == 1:
             Turnos.agendarTurno()
+            os.system('cls')
         elif opcion == 2:
             Turnos.cancelarTurno()
+            os.system('cls')
         elif opcion == 0:
             os.system('cls')
             return
@@ -108,4 +119,6 @@ def main():
     menuHospital()
     os.system('cls')
     print("Saliendo del programa...")
+    time.sleep(2)
+    sys.exit()
 main()
