@@ -23,6 +23,10 @@ doctors_menu = {
         "text": "Modificar medico",
         "action": Medicos.modificarMedico,
     },
+    "5": {
+        "text": "Mostrar historial de un medico",
+        "action": Medicos.mostrarHistorialMedico,
+    },
 }
 
 patients_menu = {
