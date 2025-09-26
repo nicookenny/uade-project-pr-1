@@ -1,6 +1,7 @@
 import os
 import Datos
 from datetime import date
+from functools import reduce
 
 
 def limpiar_pantalla():
@@ -19,14 +20,19 @@ def CalculoEdad(fecha):
 
 
 def buscar_medico_por_dni(dni):
-    for i, medico in enumerate(Datos.medicos):
-        if medico["DNI"] == dni:
-            return (i, medico)
+    existentes = [medico["DNI"] for medico in Datos.medicos]
+
+    if dni in existentes:
+        medico = reduce(lambda x, y: y if y["DNI"] == dni else x, Datos.medicos, None)
+        return medico
     return None
 
 
 def medico_existe(dni):
-    return buscar_medico_por_dni(dni) is not None
+    existentes = [medico["DNI"] for medico in Datos.medicos]
+    if dni in existentes:
+        return True
+    return False
 
 
 def medico_disponible(datos_medico):
@@ -108,9 +114,11 @@ def agregarMedico():
         MostrartablaMedicos()
         dni = CargarDNI()
 
-        medico_info = buscar_medico_por_dni(dni)
-        if medico_info:
-            print(f"El médico {medico_info[1]['Nombre']} ya existe")
+        existe = medico_existe(dni)
+
+        if existe:
+            medicoExistente = buscar_medico_por_dni(dni)
+            print(f"El médico {medicoExistente['Nombre']} ya existe")
             pausar()
             limpiar_pantalla()
         else:
@@ -136,22 +144,23 @@ def eliminarMedico():
         print("=" * 40)
         dni = CargarDNI()
 
-        medico_info = buscar_medico_por_dni(dni)
-        if not medico_info:
+        existe = medico_existe(dni)
+        if not existe:
             print("El medico no esta en la lista")
             pausar()
             limpiar_pantalla()
             continue
 
-        id_medico, datos = medico_info
-        if not medico_disponible(datos):
+        medicoExistente = buscar_medico_por_dni(dni)
+        if not medico_disponible(medicoExistente):
             print("El medico tiene informacion importante y no puede ser eliminado")
             pausar()
             limpiar_pantalla()
             continue
 
-        nombre_medico = datos["Nombre"]
-        del Datos.medicos[id_medico]
+        nombre_medico = medicoExistente["Nombre"]
+        index = Datos.medicos.index(medicoExistente)
+        del Datos.medicos[index]
         print(f"El medico {nombre_medico} se elimino correctamente de la lista")
         pausar()
         MostrartablaMedicos()
@@ -164,15 +173,15 @@ def modificarMedico():
         MostrartablaMedicos()
         dni = CargarDNI()
 
-        medico_info = buscar_medico_por_dni(dni)
-        if not medico_info:
+        existe = medico_existe(dni)
+        if not existe:
             print("El medico no está en la lista")
             pausar()
             limpiar_pantalla()
             continue
 
-        id_medico, datos = medico_info
-        if not medico_disponible(datos):
+        medicoExistente = buscar_medico_por_dni(dni)
+        if not medico_disponible(medicoExistente):
             print("El medico tiene información importante y no puede ser modificado")
             pausar()
             limpiar_pantalla()
@@ -182,9 +191,9 @@ def modificarMedico():
         nombre = CargarNombre()
         especialidad = CargaEspecialidad()
 
-        datos["Nombre"] = nombre
-        datos["Fecha de Nacimiento"] = FechaDeNacimiento
-        datos["Especialidad"] = especialidad
+        medicoExistente["Nombre"] = nombre
+        medicoExistente["Fecha de Nacimiento"] = FechaDeNacimiento
+        medicoExistente["Especialidad"] = especialidad
 
         print("Se han modificado sus datos correctamente\n")
         MostrartablaMedicos()
@@ -246,15 +255,15 @@ def mostrarHistorialMedico1():
         MostrartablaMedicos()
         dni = int(input("Ingresar numero de documento del Medico: "))
 
-        medico_info = buscar_medico_por_dni(dni)
-        if not medico_info:
+        existe = medico_existe(dni)
+        if not existe:
             print("El medico no esta en la lista")
             pausar()
             limpiar_pantalla()
             continue
 
-        _, datos = medico_info
-        if mostrar_opciones_historial(datos["Historial"]):
+        medicoExistente = buscar_medico_por_dni(dni)
+        if mostrar_opciones_historial(medicoExistente["Historial"]):
             return
 
 
@@ -271,9 +280,9 @@ def mostrarHistorialMedico2():
     MostrartablaMedicos()
 
     medico1_dni = int(input("Ingresar numero de documento del primer medico elegido: "))
-    medico1_info = buscar_medico_por_dni(medico1_dni)
 
-    if not medico1_info or not medico1_info[1]["Historial"]:
+    medico1Existe = medico_existe(medico1_dni)
+    if not medico1Existe:
         print("El primer medico no esta en la lista o su historial esta vacio")
         pausar()
         limpiar_pantalla()
@@ -282,9 +291,10 @@ def mostrarHistorialMedico2():
     medico2_dni = int(
         input("Ingresar numero de documento del segundo medico elegido: ")
     )
-    medico2_info = buscar_medico_por_dni(medico2_dni)
 
-    if not medico2_info or not medico2_info[1]["Historial"]:
+    medico2Existe = medico_existe(medico2_dni)
+
+    if not medico2Existe:
         print("El segundo medico no esta en la lista o su historial esta vacio")
         pausar()
         limpiar_pantalla()
@@ -296,8 +306,8 @@ def mostrarHistorialMedico2():
         return
 
     limpiar_pantalla()
-    historial1_dict = obtener_historial_dict(medico1_info[0])
-    historial2_dict = obtener_historial_dict(medico2_info[0])
+    historial1_dict = obtener_historial_dict(medico1_dni)
+    historial2_dict = obtener_historial_dict(medico2_dni)
 
     historialMedico1 = set(historial1_dict.keys())
     historialMedico2 = set(historial2_dict.keys())

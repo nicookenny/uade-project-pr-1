@@ -10,6 +10,11 @@ def menuMedicos():  # Menu de los medicos
     while True:
         showMenu(doctors_menu, title="Menu de Medicos")
         opcion = input("Ingresar una Opcion: ")
+
+        if opcion == "0":
+            menuHospital()
+            return
+
         if opcion in doctors_menu:
             doctors_menu[opcion]["action"]()
         else:
@@ -23,6 +28,10 @@ def menuPacientes():
     while True:
         showMenu(patients_menu, title="Menu de Pacientes")
         opcion = input("Ingresar una Opcion: ")
+        if opcion == "0":
+            menuHospital()
+            return
+
         if opcion in patients_menu:
             patients_menu[opcion]["action"]()
         else:
@@ -36,6 +45,11 @@ def menuTurnos():
     while True:
         showMenu(turns_menu, title="Menu de Turnos")
         opcion = input("Ingresar una Opcion: ")
+
+        if opcion == "0":
+            menuHospital()
+            return
+
         if opcion in turns_menu:
             turns_menu[opcion]["action"]()
         else:

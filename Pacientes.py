@@ -86,11 +86,10 @@ def CargarFechaDeNacimiento():
 
 def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
     return {
-        dni: {
-            "Nombre": nombre,
-            "Fecha de Nacimiento": FechaDeNacimiento,
-            "Obra Social": ObraSocial,
-        }
+        "DNI": dni,
+        "Nombre": nombre,
+        "Fecha de Nacimiento": FechaDeNacimiento,
+        "Obra Social": ObraSocial,
     }
 
 
@@ -98,9 +97,9 @@ def mostrarLista():
     limpiar_pantalla()
     print(f"{'DNI':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
     print("-" * 102)
-    for paciente in Datos.pacientes:
+    for pacienteWithKey in Datos.pacientes:
         print(
-            f"{paciente['DNI']:<8} {paciente['Nombre']:<20} {CalculoEdad(paciente['Fecha de Nacimiento']):<12} {paciente['Obra Social']}"
+            f"{pacienteWithKey['DNI']:<8} {pacienteWithKey['Nombre']:<20} {CalculoEdad(pacienteWithKey['Fecha de Nacimiento']):<12} {pacienteWithKey['Obra Social']}"
         )
     pausar()
 

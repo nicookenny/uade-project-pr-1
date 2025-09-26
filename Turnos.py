@@ -113,13 +113,13 @@ def cancelarTurno():
             print("El paciente no existe en la lista")
             pausar()
             limpiar_pantalla()
-            continue
+            return
 
         if not paciente_tiene_turno(dni_paciente):
             print("El paciente no agendo nunca un turno")
             pausar()
             limpiar_pantalla()
-            continue
+            return
 
         while True:
             Medicos.MostrartablaMedicos()
@@ -130,13 +130,13 @@ def cancelarTurno():
                 print("El medico no esta en la lista")
                 pausar()
                 limpiar_pantalla()
-                continue
+                return
 
             if medico_data["Estado"] == "Disponible":
                 print("ERROR, el medico esta disponible")
                 pausar()
                 limpiar_pantalla()
-                continue
+                return
 
             if buscar_turno_paciente_con_medico(dni_paciente, dni_medico):
                 medico_data["Estado"] = "Disponible"

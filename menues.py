@@ -4,7 +4,7 @@ import Turnos
 
 doctors_menu = {
     "0": {
-        "text": "Salir del programa",
+        "text": "Volver atras",
         "action": Medicos.MostrartablaMedicos,
     },
     "1": {
