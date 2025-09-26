@@ -3,6 +3,15 @@ import Datos
 from datetime import date
 from functools import reduce
 
+def mostrar_historial(historial):
+    for paciente in historial:
+        for dni, datos in paciente.items():
+            print(f"DNI: {dni}")
+            print(f"  Nombre: {datos['Nombre']}")
+            print(f"  Fecha de Nacimiento: {datos['Fecha de Nacimiento'][2]:02d}/{datos['Fecha de Nacimiento'][1]:02d}/{datos['Fecha de Nacimiento'][0]}")
+            print(f"  Obra Social: {datos['Obra Social']}")
+            print("-" * 30)
+
 
 def limpiar_pantalla():
     os.system("cls" if os.name == "nt" else "clear")
@@ -239,9 +248,9 @@ def mostrar_opciones_historial(historial):
     opcion = int(input("Ingresar una Opcion: "))
 
     if opcion == 1:
-        print(f"{historial[:6]}")
+        mostrar_historial(historial[:6])
     elif opcion == 2:
-        print(f"{historial}")
+        mostrar_historial(historial)
     else:
         print("Opcion incorrecta")
 
