@@ -1,30 +1,5 @@
-import os
 import Datos
-from datetime import date
-
-
-def limpiar_pantalla():
-    os.system(
-        "cls" if os.name == "nt" else "clear"
-    )  # cls es solo para windows, clear es para linux y mac
-
-
-def pausar():
-    """
-    Pausa la ejecución del programa y espera a que el usuario presione Enter para continuar.
-    """
-    input("\nPresione Enter para continuar...")
-
-
-def CalculoEdad(fecha):
-    """
-    Calcula la edad de una persona a partir de su fecha de nacimiento.
-    """
-    hoy = date.today()
-    año, mes, dia = fecha
-    edad = hoy.year - año - ((hoy.month, hoy.day) < (mes, dia))
-    return edad
-
+import FuncionesGenerales
 
 def buscar_paciente(dni):
     for i, paciente in enumerate(Datos.pacientes):
@@ -32,32 +7,11 @@ def buscar_paciente(dni):
             return (i, paciente)
     return None
 
-
 def paciente_existe(dni):
     return buscar_paciente(dni) is not None
 
-
-def CargarDNI():
-    dni = input("Ingresar número de documento: ")
-    while not dni.isdigit() or len(dni) != 8:
-        print("DNI inválido")
-        dni = input("Ingresar otro número de documento: ")
-    return int(dni)
-
-
-def CargarNombre():
-    nombre = input("Ingresar el nombre: ")
-    while nombre == "" or nombre.isnumeric():
-        print("Nombre no válido")
-        nombre = input("Ingrese otro nombre: ")
-    return nombre
-
-
 def CargarObraSocial():
-    """
-    Carga la obra social de un paciente.
-    """
-
+    #Carga la obra social de un paciente.
     print("=" * 40)
     for obras in Datos.obras_y_prepagas_arg:
         print(obras)
@@ -68,22 +22,6 @@ def CargarObraSocial():
         obrasocial = input("Intente nuevamente: ")
     return obrasocial
 
-
-def CargarFechaDeNacimiento():
-    carga = True
-    while carga:
-        dia = int(input("Ingrese su dia de nacimiento: "))
-        mes = int(input("Ingrese su mes de nacimiento: "))
-        año = int(input("Ingrese su año de nacimiento: "))
-        fecha = (año, mes, dia)
-        edad = CalculoEdad(fecha)
-        if edad > 0:
-            carga = False
-        else:
-            print("Fecha invalida")
-    return fecha
-
-
 def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
     return {
         "DNI": dni,
@@ -92,94 +30,123 @@ def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
         "Obra Social": ObraSocial,
     }
 
-
 def mostrarLista():
-    limpiar_pantalla()
+    FuncionesGenerales.limpiar_pantalla()
     print(f"{'DNI':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
     print("-" * 102)
     for pacienteWithKey in Datos.pacientes:
         print(
-            f"{pacienteWithKey['DNI']:<8} {pacienteWithKey['Nombre']:<20} {CalculoEdad(pacienteWithKey['Fecha de Nacimiento']):<12} {pacienteWithKey['Obra Social']}"
+            f"{pacienteWithKey['DNI']:<8} {pacienteWithKey['Nombre']:<20} {FuncionesGenerales.CalculoEdad(pacienteWithKey['Fecha de Nacimiento']):<12} {pacienteWithKey['Obra Social']}"
         )
-    pausar()
+    FuncionesGenerales.pausar()
 
+def visualizarDatos(lista,Encabezado):  
+    FuncionesGenerales.limpiar_pantalla()
+    print("=" * 40)
+    print(f"{Encabezado}")
+    print(f"Nombre completo: {lista['Nombre']}")
+    print(f"Fecha de Nacimiento: {lista['Fecha de Nacimiento'][2]}/{lista['Fecha de Nacimiento'][1]}/{lista['Fecha de Nacimiento'][0]}")
+    print(f"Edad:{FuncionesGenerales.CalculoEdad(lista['Fecha de Nacimiento'])} años")
+    print(f"DNI: {lista['DNI']}")
+    print(f"Obra social:{lista['Obra Social']}")
+    print("=" * 40)
 
 def agregarPaciente():
-    limpiar_pantalla()
+    FuncionesGenerales.limpiar_pantalla()
     while True:
         print("=" * 40)
         mostrarLista()
-        dni = CargarDNI()
-
+        dni = FuncionesGenerales.CargarDNI()
         paciente_info = buscar_paciente(dni)
         if paciente_info:
             print(f"El paciente {paciente_info[1]['Nombre']} ya existe")
-            pausar()
-            limpiar_pantalla()
+            FuncionesGenerales.pausar()
+            FuncionesGenerales.limpiar_pantalla()
         else:
-            nombre = CargarNombre()
-            FechaDeNacimiento = CargarFechaDeNacimiento()
+            nombre = FuncionesGenerales.CargarNombre()
+            FechaDeNacimiento = FuncionesGenerales.CargarFechaDeNacimiento()
             obrasocial = CargarObraSocial()
-            Datos.pacientes.append(
-                CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, obrasocial)
-            )
-            print("El paciente se agregó correctamente")
-            pausar()
+            newPaciente=CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, obrasocial)
+            visualizarDatos(newPaciente,Encabezado="Resumen de datos del nuevo paciente:")
+            confirmar = input("\n¿Desea confirmar el alta del paciente? (s/n): ").lower()
+            if confirmar != "s":
+                print("Alta cancelada por el usuario.")
+                FuncionesGenerales.pausar()
+                FuncionesGenerales.limpiar_pantalla()
+                return
+            
+            Datos.pacientes.append(newPaciente)
+            print(f"El paciente {nombre} se agregó correctamente")
+            FuncionesGenerales.pausar()
             break
     mostrarLista()
-    limpiar_pantalla()
+    FuncionesGenerales.limpiar_pantalla()
 
 
 def eliminarPaciente():
     while True:
         mostrarLista()
-        dni = CargarDNI()
+        dni = FuncionesGenerales.CargarDNI()
 
         paciente_info = buscar_paciente(dni)
         if not paciente_info:
             print("El paciente no existe en la lista")
-            pausar()
-            limpiar_pantalla()
+            FuncionesGenerales.pausar()
+            FuncionesGenerales.limpiar_pantalla()
             continue
 
         idx, datos = paciente_info
         nombre = datos["Nombre"]
-
+        visualizarDatos(datos,Encabezado="Datos del paciente a eliminar:")
+        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
+        if confirmar != "s":
+            print("Modificación cancelada por el usuario.")
+            FuncionesGenerales.pausar()
+            FuncionesGenerales.limpiar_pantalla()
+            return
+        
         del Datos.pacientes[idx]
         print(f"El paciente {nombre} se elimino correctamente de la lista")
-        pausar()
+        FuncionesGenerales.pausar()
         mostrarLista()
-        limpiar_pantalla()
+        FuncionesGenerales.limpiar_pantalla()
         return
 
 
 def modificarPaciente():
-    limpiar_pantalla()
+    FuncionesGenerales.limpiar_pantalla()
     while True:
         mostrarLista()
-        dni = CargarDNI()
+        dni = FuncionesGenerales.CargarDNI()
 
         paciente_info = buscar_paciente(dni)
         if not paciente_info:
             print("El paciente no esta en la lista")
-            pausar()
-            limpiar_pantalla()
+            FuncionesGenerales.pausar()
+            FuncionesGenerales.limpiar_pantalla()
             continue
 
         _, datos = paciente_info
 
-        FechaDeNacimiento = CargarFechaDeNacimiento()
-        nombre = CargarNombre()
+        FechaDeNacimiento = FuncionesGenerales.CargarFechaDeNacimiento()
+        nombre = FuncionesGenerales.CargarNombre()
         obrasocial = CargarObraSocial()
 
         datos["Nombre"] = nombre
         datos["Fecha de Nacimiento"] = FechaDeNacimiento
         datos["Obra Social"] = obrasocial
-
+        visualizarDatos(datos,Encabezado="Datos del paciente modificados:")
+        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
+        if confirmar != "s":
+            print("Modificación cancelada por el usuario.")
+            FuncionesGenerales.pausar()
+            FuncionesGenerales.limpiar_pantalla()
+            return
+        
         print("Se han modificado sus datos correctamente\n")
-        pausar()
+        FuncionesGenerales.pausar()
         mostrarLista()
-        limpiar_pantalla()
+        FuncionesGenerales.limpiar_pantalla()
         return
 
 

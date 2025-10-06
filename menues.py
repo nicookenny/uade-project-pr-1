@@ -4,7 +4,7 @@ import Turnos
 
 doctors_menu = {
     "0": {
-        "text": "Volver atras",
+        "text": "Volver al menu principal",
         "action": Medicos.MostrartablaMedicos,
     },
     "1": {
@@ -31,7 +31,7 @@ doctors_menu = {
 
 patients_menu = {
     "0": {
-        "text": "Salir del programa",
+        "text": "Volver al menu principal",
         "action": lambda: exit(),
     },
     "1": {

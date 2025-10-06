@@ -1,13 +1,14 @@
-import os
+import FuncionesGenerales
 from menues import showMenu, doctors_menu, patients_menu, turns_menu
 
 
 def menuMedicos():  # Menu de los medicos
-    os.system("clear")
+    FuncionesGenerales.limpiar_pantalla()
     """
     Menu en donde se puede eliminar,agregar o modificar la lista de los medicos, donde estos mismos estan en una matriz(lista) de diccionarios
     """
     while True:
+        #Ver si puedo pasarlo a funcion 
         showMenu(doctors_menu, title="Menu de Medicos")
         opcion = input("Ingresar una Opcion: ")
 
@@ -23,8 +24,7 @@ def menuMedicos():  # Menu de los medicos
 
 
 def menuPacientes():
-    os.system("clear")
-
+    FuncionesGenerales.limpiar_pantalla()
     while True:
         showMenu(patients_menu, title="Menu de Pacientes")
         opcion = input("Ingresar una Opcion: ")
@@ -40,8 +40,7 @@ def menuPacientes():
 
 
 def menuTurnos():
-    os.system("clear")
-
+    FuncionesGenerales.limpiar_pantalla()
     while True:
         showMenu(turns_menu, title="Menu de Turnos")
         opcion = input("Ingresar una Opcion: ")
@@ -78,12 +77,12 @@ main_menu = {
 
 
 def menuHospital():  # Menu principal
-    os.system("clear")
+    FuncionesGenerales.limpiar_pantalla()
     while True:
         showMenu(main_menu, title="Menu Principal")
         opcion = input("Ingresar una Opcion: ")
 
-        print(opcion)
+        #print(opcion)
 
         if opcion in main_menu:
             main_menu[opcion]["action"]()
@@ -94,7 +93,7 @@ def menuHospital():  # Menu principal
 
 def main():
     menuHospital()
-    os.system("clear")
+    FuncionesGenerales.limpiar_pantalla()
     print("Saliendo del programa...")
 
 

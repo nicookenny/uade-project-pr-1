@@ -9,43 +9,50 @@ medicos = [
         "Historial": [
             {
                 47130033: {
-                    "Nombre": "Lucas Kataoka",
+                    "Nombre": "Kataoka Lucas",
                     "Fecha de Nacimiento": (1998, 5, 23),
                     "Obra Social": "Osde",
                 }
             },
             {
                 46120054: {
-                    "Nombre": "Matias Gonzalez",
+                    "Nombre": "Gonzalez Matias",
                     "Fecha de Nacimiento": (1998, 10, 21),
                     "Obra Social": "Ioma",
                 }
             },
             {
                 48220011: {
-                    "Nombre": "Sofia Ramirez",
+                    "Nombre": "Ramirez Sofia ",
                     "Fecha de Nacimiento": (1994, 9, 21),
                     "Obra Social": "Galeno",
                 }
             },
             {
                 49340022: {
-                    "Nombre": "Martin Perez",
+                    "Nombre": "Perez Martin ",
                     "Fecha de Nacimiento": (2000, 10, 9),
                     "Obra Social": "Ioma",
                 }
             },
             {
                 50450033: {
-                    "Nombre": "Valentina Lopez",
+                    "Nombre": "Lopez Valentina",
                     "Fecha de Nacimiento": (1990, 1, 7),
                     "Obra Social": "Osde",
                 }
             },
             {
                 51560044: {
-                    "Nombre": "Juan Torres",
+                    "Nombre": "Torres Juan",
                     "Fecha de Nacimiento": (1998, 3, 11),
+                    "Obra Social": "Swiss Medical",
+                }
+            },
+            {
+                95862099: {
+                    "Nombre": "Quijada Jesus",
+                    "Fecha de Nacimiento": (2003, 2, 3),
                     "Obra Social": "Swiss Medical",
                 }
             },
@@ -61,35 +68,35 @@ medicos = [
         "Historial": [
             {
                 51560044: {
-                    "Nombre": "Juan Torres",
+                    "Nombre": "Torres Juan",
                     "Fecha de Nacimiento": (1998, 3, 11),
                     "Obra Social": "Swiss Medical",
                 }
             },
             {
                 52670055: {
-                    "Nombre": "Camila Diaz",
+                    "Nombre": "Diaz Camila",
                     "Fecha de Nacimiento": (1992, 11, 21),
                     "Obra Social": "Ioma",
                 }
             },
             {
                 53780066: {
-                    "Nombre": "Diego Fernandez",
+                    "Nombre": "Fernandez Diego",
                     "Fecha de Nacimiento": (1995, 10, 30),
                     "Obra Social": "Galeno",
                 }
             },
             {
                 54890077: {
-                    "Nombre": "Lucia Morales",
+                    "Nombre": "Morales Lucia",
                     "Fecha de Nacimiento": (1993, 2, 22),
                     "Obra Social": "Osde",
                 }
             },
             {
                 55900188: {
-                    "Nombre": "Nicolas Suarez",
+                    "Nombre": "Suarez Nicolas",
                     "Fecha de Nacimiento": (1999, 4, 18),
                     "Obra Social": "Ioma",
                 }
@@ -111,64 +118,70 @@ medicos = [
 pacientes = [
     {
         "DNI": 47130033,
-        "Nombre": "Lucas Kataoka",
+        "Nombre": "Kataoka Lucas",
         "Fecha de Nacimiento": (1998, 5, 23),
         "Obra Social": "Osde",
     },
     {
         "DNI": 46120054,
-        "Nombre": "Matias Gonzalez",
+        "Nombre": "Gonzalez Matias",
         "Fecha de Nacimiento": (1998, 10, 21),
         "Obra Social": "Ioma",
     },
     {
         "DNI": 48220011,
-        "Nombre": "Sofia Ramirez",
+        "Nombre": "Ramirez Sofia",
         "Fecha de Nacimiento": (1994, 9, 21),
         "Obra Social": "Galeno",
     },
     {
         "DNI": 49340022,
-        "Nombre": "Martin Perez",
+        "Nombre": "Perez Martin",
         "Fecha de Nacimiento": (2000, 10, 9),
         "Obra Social": "Ioma",
     },
     {
         "DNI": 50450033,
-        "Nombre": "Valentina Lopez",
+        "Nombre": "Lopez Valentina",
         "Fecha de Nacimiento": (1990, 1, 7),
         "Obra Social": "Osde",
     },
     {
         "DNI": 51560044,
-        "Nombre": "Juan Torres",
+        "Nombre": "Torres Juan",
         "Fecha de Nacimiento": (1998, 3, 11),
         "Obra Social": "Swiss Medical",
     },
     {
         "DNI": 52670055,
-        "Nombre": "Camila Diaz",
+        "Nombre": "Diaz Camila",
         "Fecha de Nacimiento": (1992, 11, 21),
         "Obra Social": "Ioma",
     },
     {
         "DNI": 53780066,
-        "Nombre": "Diego Fernandez",
+        "Nombre": "Fernandez Diego",
         "Fecha de Nacimiento": (1995, 10, 30),
         "Obra Social": "Galeno",
     },
     {
         "DNI": 54890077,
-        "Nombre": "Lucia Morales",
+        "Nombre": "Morales Lucia",
         "Fecha de Nacimiento": (1993, 2, 22),
         "Obra Social": "Osde",
     },
     {
         "DNI": 55900188,
-        "Nombre": "Nicolas Suarez",
+        "Nombre": "Suarez Nicolas",
         "Fecha de Nacimiento": (1999, 4, 18),
         "Obra Social": "Ioma",
     },
+    {
+        "DNI": 95862099,
+        "Nombre": "Quijada Jesus",
+        "Fecha de Nacimiento": (2003, 2, 3),
+        "Obra Social": "Swiss Medical",
+    }
 ]
 
 especialidades_medicas = (
