@@ -1,17 +1,18 @@
 import FuncionesGenerales
 import Datos
 from functools import reduce
+from datetime import date
 
 
 #Funciones para visualizar datos
 def mostrar_historial(historial):
     for paciente in historial:
-        for dni, datos in paciente.items():
-            print(f"DNI: {dni}")
-            print(f"  Nombre: {datos['Nombre']}")
-            print(f"  Fecha de Nacimiento: {datos['Fecha de Nacimiento'][2]:02d}/{datos['Fecha de Nacimiento'][1]:02d}/{datos['Fecha de Nacimiento'][0]}")
-            print(f"  Obra Social: {datos['Obra Social']}")
-            print("-" * 30)
+        print(f"DNI: {paciente['DNI']}")
+        print(f"  Nombre: {paciente['Nombre']}")
+        print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
+        print(f"  Obra Social: {paciente['Obra Social']}")
+        print(f"  Fecha Turno: {paciente['Fecha Turno'][2]:02d}/{paciente['Fecha Turno'][1]:02d}/{paciente['Fecha Turno'][0]}")
+        print("-" * 30)
 
 def mostrar_historial_paginado(historial, cantidad=6):
     total = len(historial)
@@ -20,12 +21,12 @@ def mostrar_historial_paginado(historial, cantidad=6):
         print("-" * 30)
         fin = min(inicio + cantidad, total)
         for paciente in historial[inicio:fin]:
-            for dni, datos in paciente.items():
-                print(f"DNI: {dni}")
-                print(f"  Nombre: {datos['Nombre']}")
-                print(f"  Fecha de Nacimiento: {datos['Fecha de Nacimiento'][2]:02d}/{datos['Fecha de Nacimiento'][1]:02d}/{datos['Fecha de Nacimiento'][0]}")
-                print(f"  Obra Social: {datos['Obra Social']}")
-                print("-" * 30)
+            print(f"DNI: {paciente['DNI']}")
+            print(f"  Nombre: {paciente['Nombre']}")
+            print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
+            print(f"  Obra Social: {paciente['Obra Social']}")
+            print(f"  Fecha Turno: {paciente['Fecha Turno'][2]:02d}/{paciente['Fecha Turno'][1]:02d}/{paciente['Fecha Turno'][0]}")
+            print("-" * 30)
         inicio += cantidad
         if inicio < total:
             respuesta = input("¿Desea ver más historiales? (s/n): ").lower()
@@ -41,23 +42,29 @@ def visualizarDatos(lista,Encabezado):
     print(f"Edad:{FuncionesGenerales.CalculoEdad(lista['Fecha de Nacimiento'])} años")
     print(f"DNI: {lista['DNI']}")
     print(f"Especialidad: {lista['Especialidad']}")
-    print(f"Estado: {lista['Estado']}")
+    if "Horarios" in lista:
+        print("Horarios de atención:")
+        for dia, horario in lista["Horarios"].items():
+            if horario:
+                print(f"  {dia}: {horario[0]}:00 - {horario[1]}:00")
+            else:
+                print(f"  {dia}: No disponible")
+    else:
+        print(f"Estado: {lista['Estado']}")
     print("=" * 40)
 
 def MostrartablaMedicos():
     FuncionesGenerales.limpiar_pantalla()
     print(
-        f"{'ID':<3} {'Nombre':<20} {'Edad':<12} {'DNI':<10} {'Especialidad':<30} {'Estado':<12} {'Paciente'}"
+        f"{'ID':<3} {'Nombre':<20} {'Edad':<12} {'DNI':<10} {'Especialidad':<30} {'Turnos Hoy':<12}"
     )
-    print("-" * 102)
+    print("-" * 90)
     for i, medico in enumerate(Datos.medicos, 1):
-        paciente = medico["Paciente"]
-        if paciente and "Nombre" in paciente:
-            nombre_paciente = paciente["Nombre"]
-        else:
-            nombre_paciente = ""
+        hoy = date.today()
+        fecha_hoy = (hoy.year, hoy.month, hoy.day)
+        turnos_hoy = len([t for t in Datos.turnos if t["medico_dni"] == medico["DNI"] and t["fecha"] == fecha_hoy and t["estado"] == "Confirmado"])
         print(
-            f"{i:<3} {medico['Nombre']:<20} {FuncionesGenerales.CalculoEdad(medico['Fecha de Nacimiento']):<12} {medico['DNI']:<10} {medico['Especialidad']:<30} {medico['Estado']:<12} {nombre_paciente}"
+            f"{i:<3} {medico['Nombre']:<20} {FuncionesGenerales.CalculoEdad(medico['Fecha de Nacimiento']):<12} {medico['DNI']:<10} {medico['Especialidad']:<30} {turnos_hoy:<12}"
         )
     FuncionesGenerales.pausar()
 
@@ -98,6 +105,15 @@ def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
         "Especialidad": Especialidad,
         "Estado": "Disponible",
         "Paciente": {},
+        "Horarios": {
+            "Lunes": (9, 18),
+            "Martes": (9, 18),
+            "Miércoles": (9, 18),
+            "Jueves": (9, 18),
+            "Viernes": (9, 18),
+            "Sábado": None,
+            "Domingo": None
+        },
         "Historial": [],
     }
 
@@ -296,11 +312,12 @@ def mostrarHistorialMedico1():
             return
 
 
-def obtener_historial_dict(id_medico):
+def obtener_historial_dict(dni_medico):
     historial_dict = {}
-    if 0 <= id_medico < len(Datos.medicos):
-        for paciente in Datos.medicos[id_medico]["Historial"]:
-            historial_dict.update(paciente)
+    medico = buscar_medico_por_dni(dni_medico)
+    if medico:
+        for paciente in medico["Historial"]:
+            historial_dict[paciente["DNI"]] = paciente
     return historial_dict
 
 
@@ -346,16 +363,19 @@ def mostrarHistorialMedico2():
     exclusivosSegundo = historialMedico2 - historialMedico1
 
     print("\nPacientes en comun:")
-    for pacientes in comunes:
-        print(historial1_dict[pacientes])
+    for dni_paciente in comunes:
+        paciente = historial1_dict[dni_paciente]
+        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     print("\nPacientes exclusivos del primero:")
-    for pacientes in exclusivosPrimero:
-        print(historial1_dict[pacientes])
+    for dni_paciente in exclusivosPrimero:
+        paciente = historial1_dict[dni_paciente]
+        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     print("\nPacientes exclusivos del segundo:")
-    for pacientes in exclusivosSegundo:
-        print(historial2_dict[pacientes])
+    for dni_paciente in exclusivosSegundo:
+        paciente = historial2_dict[dni_paciente]
+        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     FuncionesGenerales.pausar()
     FuncionesGenerales.limpiar_pantalla()

@@ -6,55 +6,64 @@ medicos = [
         "Especialidad": "Ortopedia y Traumatología",
         "Estado": "Disponible",
         "Paciente": {},
+        "Horarios": {
+            "Lunes": (9, 18),
+            "Martes": (9, 18),
+            "Miércoles": (9, 18),
+            "Jueves": (9, 18),
+            "Viernes": (9, 18),
+            "Sábado": None,
+            "Domingo": None
+        },
         "Historial": [
             {
-                47130033: {
-                    "Nombre": "Kataoka Lucas",
-                    "Fecha de Nacimiento": (1998, 5, 23),
-                    "Obra Social": "Osde",
-                }
+                "DNI": 47130033,
+                "Nombre": "Kataoka Lucas",
+                "Fecha de Nacimiento": (1998, 5, 23),
+                "Obra Social": "Osde",
+                "Fecha Turno": (2024, 5, 15)
             },
             {
-                46120054: {
-                    "Nombre": "Gonzalez Matias",
-                    "Fecha de Nacimiento": (1998, 10, 21),
-                    "Obra Social": "Ioma",
-                }
+                "DNI": 46120054,
+                "Nombre": "Gonzalez Matias",
+                "Fecha de Nacimiento": (1998, 10, 21),
+                "Obra Social": "Ioma",
+                "Fecha Turno": (2024, 6, 20)
             },
             {
-                48220011: {
-                    "Nombre": "Ramirez Sofia ",
-                    "Fecha de Nacimiento": (1994, 9, 21),
-                    "Obra Social": "Galeno",
-                }
+                "DNI": 48220011,
+                "Nombre": "Ramirez Sofia",
+                "Fecha de Nacimiento": (1994, 9, 21),
+                "Obra Social": "Galeno",
+                "Fecha Turno": (2024, 7, 10)
             },
             {
-                49340022: {
-                    "Nombre": "Perez Martin ",
-                    "Fecha de Nacimiento": (2000, 10, 9),
-                    "Obra Social": "Ioma",
-                }
+                "DNI": 49340022,
+                "Nombre": "Perez Martin",
+                "Fecha de Nacimiento": (2000, 10, 9),
+                "Obra Social": "Ioma",
+                "Fecha Turno": (2024, 8, 5)
             },
             {
-                50450033: {
-                    "Nombre": "Lopez Valentina",
-                    "Fecha de Nacimiento": (1990, 1, 7),
-                    "Obra Social": "Osde",
-                }
+                "DNI": 50450033,
+                "Nombre": "Lopez Valentina",
+                "Fecha de Nacimiento": (1990, 1, 7),
+                "Obra Social": "Osde",
+                "Fecha Turno": (2024, 9, 12)
             },
             {
-                51560044: {
-                    "Nombre": "Torres Juan",
-                    "Fecha de Nacimiento": (1998, 3, 11),
-                    "Obra Social": "Swiss Medical",
-                }
+                "DNI": 51560044,
+                "Nombre": "Torres Juan",
+                "Fecha de Nacimiento": (1998, 3, 11),
+                "Obra Social": "Swiss Medical",
+                "Fecha Turno": (2024, 10, 3)
             },
             {
-                95862099: {
-                    "Nombre": "Quijada Jesus",
-                    "Fecha de Nacimiento": (2003, 2, 3),
-                    "Obra Social": "Swiss Medical",
-                }
+                "DNI": 95862099,
+                "Nombre": "Quijada Jesus",
+                "Fecha de Nacimiento": (2003, 2, 3),
+                "Obra Social": "Swiss Medical",
+                "Fecha Turno": (2025, 1, 8)
             },
         ],
     },
@@ -65,41 +74,50 @@ medicos = [
         "Especialidad": "Pediatra",
         "Estado": "Disponible",
         "Paciente": {},
+        "Horarios": {
+            "Lunes": (9, 18),
+            "Martes": (9, 18),
+            "Miércoles": (9, 18),
+            "Jueves": (9, 18),
+            "Viernes": (9, 18),
+            "Sábado": None,
+            "Domingo": None
+        },
         "Historial": [
             {
-                51560044: {
-                    "Nombre": "Torres Juan",
-                    "Fecha de Nacimiento": (1998, 3, 11),
-                    "Obra Social": "Swiss Medical",
-                }
+                "DNI": 51560044,
+                "Nombre": "Torres Juan",
+                "Fecha de Nacimiento": (1998, 3, 11),
+                "Obra Social": "Swiss Medical",
+                "Fecha Turno": (2024, 4, 12)
             },
             {
-                52670055: {
-                    "Nombre": "Diaz Camila",
-                    "Fecha de Nacimiento": (1992, 11, 21),
-                    "Obra Social": "Ioma",
-                }
+                "DNI": 52670055,
+                "Nombre": "Diaz Camila",
+                "Fecha de Nacimiento": (1992, 11, 21),
+                "Obra Social": "Ioma",
+                "Fecha Turno": (2024, 5, 18)
             },
             {
-                53780066: {
-                    "Nombre": "Fernandez Diego",
-                    "Fecha de Nacimiento": (1995, 10, 30),
-                    "Obra Social": "Galeno",
-                }
+                "DNI": 53780066,
+                "Nombre": "Fernandez Diego",
+                "Fecha de Nacimiento": (1995, 10, 30),
+                "Obra Social": "Galeno",
+                "Fecha Turno": (2024, 6, 25)
             },
             {
-                54890077: {
-                    "Nombre": "Morales Lucia",
-                    "Fecha de Nacimiento": (1993, 2, 22),
-                    "Obra Social": "Osde",
-                }
+                "DNI": 54890077,
+                "Nombre": "Morales Lucia",
+                "Fecha de Nacimiento": (1993, 2, 22),
+                "Obra Social": "Osde",
+                "Fecha Turno": (2024, 7, 30)
             },
             {
-                55900188: {
-                    "Nombre": "Suarez Nicolas",
-                    "Fecha de Nacimiento": (1999, 4, 18),
-                    "Obra Social": "Ioma",
-                }
+                "DNI": 55900188,
+                "Nombre": "Suarez Nicolas",
+                "Fecha de Nacimiento": (1999, 4, 18),
+                "Obra Social": "Ioma",
+                "Fecha Turno": (2024, 9, 5)
             },
         ],
     },
@@ -110,9 +128,20 @@ medicos = [
         "Especialidad": "Oculista",
         "Estado": "Disponible",
         "Paciente": {},
+        "Horarios": {
+            "Lunes": (9, 18),
+            "Martes": (9, 18),
+            "Miércoles": (9, 18),
+            "Jueves": (9, 18),
+            "Viernes": (9, 18),
+            "Sábado": None,
+            "Domingo": None
+        },
         "Historial": [],
     },
 ]
+
+turnos = []
 
 
 pacientes = [
