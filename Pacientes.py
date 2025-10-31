@@ -56,7 +56,7 @@ def agregarPaciente():
     while True:
         print("=" * 40)
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("paciente")
         paciente_info = buscar_paciente(dni)
         if paciente_info:
             print(f"El paciente {paciente_info[1]['Nombre']} ya existe")
@@ -86,7 +86,7 @@ def agregarPaciente():
 def eliminarPaciente():
     while True:
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("paciente")
 
         paciente_info = buscar_paciente(dni)
         if not paciente_info:
@@ -117,7 +117,7 @@ def modificarPaciente():
     FuncionesGenerales.limpiar_pantalla()
     while True:
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("paciente")
 
         paciente_info = buscar_paciente(dni)
         if not paciente_info:

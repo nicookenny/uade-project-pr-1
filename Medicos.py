@@ -129,7 +129,7 @@ def agregarMedico():
     while True:
         print("=" * 40)
         MostrartablaMedicos()
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("medico")
 
         existe = medico_existe(dni)
 
@@ -168,7 +168,7 @@ def eliminarMedico():
         MostrartablaMedicos()
         print()
         print("=" * 40)
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("medico")
 
         existe = medico_existe(dni)
         if not existe:
@@ -207,7 +207,7 @@ def modificarMedico():
     FuncionesGenerales.limpiar_pantalla()
     while True:
         MostrartablaMedicos()
-        dni = FuncionesGenerales.CargarDNI()
+        dni = FuncionesGenerales.CargarDNI("medico")
 
         existe = medico_existe(dni)
         if not existe:
