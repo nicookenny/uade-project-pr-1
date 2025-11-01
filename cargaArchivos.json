@@ -1,0 +1,142 @@
+[
+    {
+        "Peugeot208": [
+            "2021",
+            "$16000",
+            "35000",
+            "Mendoza",
+            "Muy bueno"
+        ],
+        "FordFiesta": [
+            "2017",
+            "11000",
+            "72000",
+            "Córdoba",
+            "Regular"
+        ],
+        "ToyotaCorolla": [
+            "2020",
+            "14500",
+            "44000",
+            "Buenos aires",
+            "Excelente"
+        ],
+        "VolkswagenGolf": [
+            "2018",
+            "12.500",
+            "68.000",
+            "Cordoba",
+            "Regular"
+        ],
+        "RenaultClio": [
+            "2016",
+            "9500 usd",
+            "80000",
+            "La plata",
+            "Regular"
+        ],
+        "FiatCronos": [
+            "2022",
+            "17,000",
+            "15000",
+            "Buenos aires",
+            "Excelente"
+        ],
+        "ToyotaHilux": [
+            "2021",
+            "23.000",
+            "32000",
+            "Buenos aires",
+            "Muy bueno"
+        ],
+        "ChevroletOnix": [
+            "2020",
+            "15000",
+            "38.000",
+            "Rosario",
+            "Buen estado"
+        ],
+        "CitroënC3": [
+            "2019",
+            "13500",
+            "59000",
+            "Santa fe",
+            "Bueno"
+        ],
+        "FordFocus": [
+            "2019",
+            "13.800",
+            "52000",
+            "Rosario",
+            "Bueno"
+        ]
+    }
+]
+
+[
+    {
+        "FordFocus": [
+            "2019",
+            "13800",
+            "52000",
+            "Rosario",
+            "Bueno"
+        ],
+        "ToyotaCorolla": [
+            "2020",
+            "14500",
+            "44000",
+            "Buenos aires",
+            "Excelente"
+        ],
+        "Peugeot208": [
+            "2021",
+            "16000",
+            "35000",
+            "Mendoza",
+            "Muy bueno"
+        ],
+        "VolkswagenGolf": [
+            "2018",
+            "12500",
+            "68000",
+            "Córdoba",
+            "Regular"
+        ],
+        "RenaultClio": [
+            "2016",
+            "9500",
+            "80000",
+            "La plata",
+            "Regular"
+        ],
+        "ChevroletOnix": [
+            "2020",
+            "15000",
+            "38000",
+            "Rosario",
+            "Bueno"
+        ],
+        "FiatCronos": [
+            "2022",
+            "17000",
+            "15000",
+            "Buenos aires",
+            "Excelente"
+        ],
+        "ToyotaHilux": [
+            "2021",
+            "23000",
+            "32000",
+            "Buenos aires",
+            "Muy bueno"
+        ],
+        "NissanSentra": [
+            "2020",
+            "14500",
+            "",
+            "Buenos aires",
+            "Excelente"
+        ]
+    }
+]

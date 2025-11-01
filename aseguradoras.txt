@@ -1,0 +1,11 @@
+marca|modelo|año|precio|km|ubicacion|estado 
+Peugeot|208|2021|$16000|35000|Mendoza|Muy Bueno 
+Ford|Fiesta|2017|11000|72000|Córdoba|regular 
+Toyota|Corolla|2020|14500|44000|Buenos Aires|Excelente 
+Volkswagen|Golf|2018|12.500|68.000|Cordoba|regular 
+Renault|Clio|2016|9500 USD|80000|La Plata|REGULAR 
+Fiat|Cronos|2022|17,000|15000|Buenos Aires|EXCELENTE 
+Toyota|Hilux|2021|23.000|32000|Buenos Aires|Muy bueno 
+Chevrolet|Onix|2020|15000|38.000|Rosario|buen estado 
+Citroën|C3|2019|13500|59000|Santa Fe|Bueno 
+Ford|Focus|2019|13.800|52000|Rosario|bueno 

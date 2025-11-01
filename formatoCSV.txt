@@ -1,0 +1,31 @@
+marca,modelo,año,precio,km,ubicacion,estado 
+
+Ford,Focus,2019,13800,52000,Rosario,bueno 
+
+Toyota,Corolla,2020,14500,44000,Buenos Aires,excelente 
+
+Peugeot,208,2021,16000,35000,Mendoza,muy bueno 
+
+Volkswagen,Golf,2018,12500,68000,Córdoba,Regular 
+
+Renault,Clio,2016,9500,80000,La Plata,regular 
+
+Ford,Focus,2019,13800,52000,Rosario,bueno 
+
+Toyota,Corolla,2020,14500,44000,Buenos Aires,excelente 
+
+Peugeot,208,2021,16000,35000,Mendoza,Muy bueno 
+
+Volkswagen,Golf,2018,12500,68000,Córdoba,Regular 
+
+Renault,Clio,2016,9500,80000,La Plata,regular 
+
+Chevrolet,Onix,2020,15000,38000,Rosario,bUENO 
+
+Fiat,Cronos,2022,17000,15000,Buenos Aires,excelente 
+
+Toyota,Hilux,2021,23000,32000,Buenos Aires,Muy bueno 
+
+Ford,Focus,2019,13800,52000,Rosario,bueno 
+
+Nissan,Sentra,2020,14500,,Buenos Aires,excelente 
