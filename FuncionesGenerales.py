@@ -52,3 +52,16 @@ def CargarNombre():
         if re.match(patron_nombre, nombre):
             return nombre
         print("Nombre no válido. Use solo letras, espacios y caracteres permitidos (-, ')")
+
+def registrarErrores(error):
+    try:
+        archivo = open("C:\\Users\\Jesus\\Desktop\\JAVA--PROGRA2\\uade-project-pr-1\\Errores.txt" ,mode = "a" ,encoding="utf-8")
+        try:
+            error = f"Tipo:{type(error)} - Mensaje: {str(error)}\n"
+            print(f"Ocurrio un error: {error}")
+            archivo.write(error)
+        finally:
+            archivo.close()
+    except Exception as logError:
+        print(f"Error al escribir en el log: {logError}")
+        

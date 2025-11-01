@@ -359,9 +359,10 @@ def agendarTurno():
                     FuncionesGenerales.limpiar_pantalla()
                     return
 
-                except ValueError:
+                except Exception as e:
                     print("Fecha inválida")
                     FuncionesGenerales.pausar()
+                    FuncionesGenerales.registrarErrores(e)
                     continue
 
 
