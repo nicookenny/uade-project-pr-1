@@ -8,6 +8,15 @@ def limpiar_pantalla():
 def pausar():
     input("\nPresione Enter para continuar...")
 
+def confirmar_accion(mensaje_pregunta, mensaje_cancelacion="Acción cancelada por el usuario."):
+    confirmar = input(f"\n{mensaje_pregunta} (s/n) [s]: ").lower() or "s"
+    if confirmar != "s":
+        print(mensaje_cancelacion)
+        pausar()
+        limpiar_pantalla()
+        return False
+    return True
+
 def CalculoEdad(fecha):
     """
     Calcula la edad de una persona a partir de su fecha de nacimiento.

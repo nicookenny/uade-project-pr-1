@@ -1,19 +1,10 @@
-import Datos
+import Storage
 import FuncionesGenerales
-
-def buscar_paciente(dni):
-    for i, paciente in enumerate(Datos.pacientes):
-        if paciente["DNI"] == dni:
-            return (i, paciente)
-    return None
-
-def paciente_existe(dni):
-    return buscar_paciente(dni) is not None
 
 def CargarObraSocial():
     #Carga la obra social de un paciente.
     print("=" * 40)
-    for obras in Datos.obras_y_prepagas_arg:
+    for obras in Storage.obras_y_prepagas_arg:
         print(obras)
     print("=" * 40)
     obrasocial = input("Ingresar la Obra Social: ")
@@ -34,7 +25,7 @@ def mostrarLista():
     FuncionesGenerales.limpiar_pantalla()
     print(f"{'DNI':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
     print("-" * 102)
-    for pacienteWithKey in Datos.pacientes:
+    for pacienteWithKey in Storage.Pacientes.listar():
         print(
             f"{pacienteWithKey['DNI']:<8} {pacienteWithKey['Nombre']:<20} {FuncionesGenerales.CalculoEdad(pacienteWithKey['Fecha de Nacimiento']):<12} {pacienteWithKey['Obra Social']}"
         )
@@ -57,7 +48,7 @@ def agregarPaciente():
         print("=" * 40)
         mostrarLista()
         dni = FuncionesGenerales.CargarDNI("paciente")
-        paciente_info = buscar_paciente(dni)
+        paciente_info = Storage.Pacientes.obtener(dni)
         if paciente_info:
             print(f"El paciente {paciente_info[1]['Nombre']} ya existe")
             FuncionesGenerales.pausar()
@@ -68,14 +59,10 @@ def agregarPaciente():
             obrasocial = CargarObraSocial()
             newPaciente=CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, obrasocial)
             visualizarDatos(newPaciente,Encabezado="Resumen de datos del nuevo paciente:")
-            confirmar = input("\n¿Desea confirmar el alta del paciente? (s/n): ").lower()
-            if confirmar != "s":
-                print("Alta cancelada por el usuario.")
-                FuncionesGenerales.pausar()
-                FuncionesGenerales.limpiar_pantalla()
+            if not FuncionesGenerales.confirmar_accion("¿Desea confirmar el alta del paciente?", "Alta cancelada por el usuario."):
                 return
-            
-            Datos.pacientes.append(newPaciente)
+
+            Storage.Pacientes.agregar(newPaciente)
             print(f"El paciente {nombre} se agregó correctamente")
             FuncionesGenerales.pausar()
             break
@@ -88,24 +75,20 @@ def eliminarPaciente():
         mostrarLista()
         dni = FuncionesGenerales.CargarDNI("paciente")
 
-        paciente_info = buscar_paciente(dni)
+        paciente_info = Storage.Pacientes.obtener(dni)
         if not paciente_info:
             print("El paciente no existe en la lista")
             FuncionesGenerales.pausar()
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        idx, datos = paciente_info
+        _, datos = paciente_info
         nombre = datos["Nombre"]
         visualizarDatos(datos,Encabezado="Datos del paciente a eliminar:")
-        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
-        if confirmar != "s":
-            print("Modificación cancelada por el usuario.")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
+        if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Eliminación cancelada por el usuario."):
             return
-        
-        del Datos.pacientes[idx]
+
+        Storage.Pacientes.eliminar(dni)
         print(f"El paciente {nombre} se elimino correctamente de la lista")
         FuncionesGenerales.pausar()
         mostrarLista()
@@ -119,7 +102,7 @@ def modificarPaciente():
         mostrarLista()
         dni = FuncionesGenerales.CargarDNI("paciente")
 
-        paciente_info = buscar_paciente(dni)
+        paciente_info = Storage.Pacientes.obtener(dni)
         if not paciente_info:
             print("El paciente no esta en la lista")
             FuncionesGenerales.pausar()
@@ -132,17 +115,19 @@ def modificarPaciente():
         nombre = FuncionesGenerales.CargarNombre()
         obrasocial = CargarObraSocial()
 
-        datos["Nombre"] = nombre
-        datos["Fecha de Nacimiento"] = FechaDeNacimiento
-        datos["Obra Social"] = obrasocial
+        new_data = {
+            "Nombre": nombre,
+            "Fecha de Nacimiento": FechaDeNacimiento,
+            "Obra Social": obrasocial
+        }
+
+        # Actualizar datos temporalmente para visualizar
+        datos.update(new_data)
         visualizarDatos(datos,Encabezado="Datos del paciente modificados:")
-        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
-        if confirmar != "s":
-            print("Modificación cancelada por el usuario.")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
+        if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Modificación cancelada por el usuario."):
             return
-        
+
+        Storage.Pacientes.modificar(dni, new_data)
         print("Se han modificado sus datos correctamente\n")
         FuncionesGenerales.pausar()
         mostrarLista()

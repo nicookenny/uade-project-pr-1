@@ -50,6 +50,10 @@ patients_menu = {
         "text": "Modificar Paciente",
         "action": Pacientes.modificarPaciente,
     },
+    "5": {
+        "text": "Ver turnos de un paciente",
+        "action": Turnos.verTurnosPaciente,
+    },
 }
 
 

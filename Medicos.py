@@ -1,17 +1,20 @@
 import FuncionesGenerales
-import Datos
-from functools import reduce
+import Storage
 from datetime import date
 
 
 #Funciones para visualizar datos
 def mostrar_historial(historial):
-    for paciente in historial:
-        print(f"DNI: {paciente['DNI']}")
-        print(f"  Nombre: {paciente['Nombre']}")
-        print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
-        print(f"  Obra Social: {paciente['Obra Social']}")
-        print(f"  Fecha Turno: {paciente['Fecha Turno'][2]:02d}/{paciente['Fecha Turno'][1]:02d}/{paciente['Fecha Turno'][0]}")
+    for hist_entry in historial:
+        resultado = Storage.Pacientes.obtener(hist_entry['paciente_dni'])
+        paciente = resultado[1] if resultado else None
+        if paciente:
+            print(f"DNI: {paciente['DNI']}")
+            print(f"  Nombre: {paciente['Nombre']}")
+            print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
+            print(f"  Obra Social: {paciente['Obra Social']}")
+            print(f"  Fecha Turno: {hist_entry['fecha'][2]:02d}/{hist_entry['fecha'][1]:02d}/{hist_entry['fecha'][0]}")
+            print(f"  Estado: {hist_entry['estado']}")
         print("-" * 30)
 
 def mostrar_historial_paginado(historial, cantidad=6):
@@ -20,17 +23,20 @@ def mostrar_historial_paginado(historial, cantidad=6):
     while inicio < total:
         print("-" * 30)
         fin = min(inicio + cantidad, total)
-        for paciente in historial[inicio:fin]:
-            print(f"DNI: {paciente['DNI']}")
-            print(f"  Nombre: {paciente['Nombre']}")
-            print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
-            print(f"  Obra Social: {paciente['Obra Social']}")
-            print(f"  Fecha Turno: {paciente['Fecha Turno'][2]:02d}/{paciente['Fecha Turno'][1]:02d}/{paciente['Fecha Turno'][0]}")
+        for hist_entry in historial[inicio:fin]:
+            resultado = Storage.Pacientes.obtener(hist_entry['paciente_dni'])
+            paciente = resultado[1] if resultado else None
+            if paciente:
+                print(f"DNI: {paciente['DNI']}")
+                print(f"  Nombre: {paciente['Nombre']}")
+                print(f"  Fecha de Nacimiento: {paciente['Fecha de Nacimiento'][2]:02d}/{paciente['Fecha de Nacimiento'][1]:02d}/{paciente['Fecha de Nacimiento'][0]}")
+                print(f"  Obra Social: {paciente['Obra Social']}")
+                print(f"  Fecha Turno: {hist_entry['fecha'][2]:02d}/{hist_entry['fecha'][1]:02d}/{hist_entry['fecha'][0]}")
+                print(f"  Estado: {hist_entry['estado']}")
             print("-" * 30)
         inicio += cantidad
         if inicio < total:
-            respuesta = input("¿Desea ver más historiales? (s/n): ").lower()
-            if respuesta != "s":
+            if not FuncionesGenerales.confirmar_accion("¿Desea ver más historiales?", ""):
                 break
 
 def visualizarDatos(lista,Encabezado):
@@ -59,10 +65,10 @@ def MostrartablaMedicos():
         f"{'ID':<3} {'Nombre':<20} {'Edad':<12} {'DNI':<10} {'Especialidad':<30} {'Turnos Hoy':<12}"
     )
     print("-" * 90)
-    for i, medico in enumerate(Datos.medicos, 1):
+    for i, medico in enumerate(Storage.Medicos.listar(), 1):
         hoy = date.today()
         fecha_hoy = (hoy.year, hoy.month, hoy.day)
-        turnos_hoy = len([t for t in Datos.turnos if t["medico_dni"] == medico["DNI"] and t["fecha"] == fecha_hoy and t["estado"] == "Confirmado"])
+        turnos_hoy = len([t for t in Storage.Turnos.listar() if t["medico_dni"] == medico["DNI"] and t["fecha"] == fecha_hoy and t["estado"] == "Confirmado"])
         print(
             f"{i:<3} {medico['Nombre']:<20} {FuncionesGenerales.CalculoEdad(medico['Fecha de Nacimiento']):<12} {medico['DNI']:<10} {medico['Especialidad']:<30} {turnos_hoy:<12}"
         )
@@ -70,32 +76,26 @@ def MostrartablaMedicos():
 
 #Funciones de busqueda
 
-def buscar_medico_por_dni(dni):
-    existentes = [medico["DNI"] for medico in Datos.medicos]
-
-    if dni in existentes:
-        medico = reduce(lambda x, y: y if y["DNI"] == dni else x, Datos.medicos, None)
-        return medico
-    return None
-
 def medico_existe(dni):
-    existentes = [medico["DNI"] for medico in Datos.medicos]
-    if dni in existentes:
-        return True
-    return False
+    return Storage.Medicos.obtener(dni) is not None
 
 #Funciones de carga de datos
 
 def CargaEspecialidad():
     print("=" * 40)
-    for areas in Datos.especialidades_medicas:
-        print(areas)
+    print("Seleccione una especialidad:")
+    for i, especialidad in enumerate(Storage.especialidades_medicas, 1):
+        print(f"[{i}] {especialidad}")
     print("=" * 40)
-    especialidad = input("Ingresar la especialidad: ")
-    while especialidad not in Datos.especialidades_medicas:
-        print("Especialidad no encontrada")
-        especialidad = input("Ingresar otra especialidad: ")
-    return especialidad
+
+    while True:
+        try:
+            opcion = int(input("Ingrese el número de la especialidad: "))
+            if 1 <= opcion <= len(Storage.especialidades_medicas):
+                return Storage.especialidades_medicas[opcion - 1]
+            print(f"Opción inválida. Debe estar entre 1 y {len(Storage.especialidades_medicas)}")
+        except ValueError:
+            print("Debe ingresar un número")
 
 def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
     return {
@@ -104,7 +104,6 @@ def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
         "DNI": dni,
         "Especialidad": Especialidad,
         "Estado": "Disponible",
-        "Paciente": {},
         "Horarios": {
             "Lunes": (9, 18),
             "Martes": (9, 18),
@@ -114,11 +113,7 @@ def CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad):
             "Sábado": None,
             "Domingo": None
         },
-        "Historial": [],
     }
-
-def medico_disponible(datos_medico):
-    return datos_medico["Paciente"] == {}
 
 """
 Opción 2 (menu)
@@ -134,7 +129,7 @@ def agregarMedico():
         existe = medico_existe(dni)
 
         if existe:
-            medicoExistente = buscar_medico_por_dni(dni)
+            medicoExistente = Storage.Medicos.obtener(dni)
             print(f"El médico {medicoExistente['Nombre']} ya existe")
             FuncionesGenerales.pausar()
             FuncionesGenerales.limpiar_pantalla()
@@ -144,14 +139,10 @@ def agregarMedico():
             Especialidad = CargaEspecialidad()
             newMedico=CargaDeNuevoMedico(nombre, dni, FechaDeNacimiento, Especialidad)
             visualizarDatos(newMedico,Encabezado="Resumen de datos del nuevo médico:")
-            confirmar = input("\n¿Desea confirmar el alta del médico? (s/n): ").lower()
-            if confirmar != "s":
-                print("Alta cancelada por el usuario.")
-                FuncionesGenerales.pausar()
-                FuncionesGenerales.limpiar_pantalla()
+            if not FuncionesGenerales.confirmar_accion("¿Desea confirmar el alta del médico?", "Alta cancelada por el usuario."):
                 return
 
-            Datos.medicos.append(newMedico)
+            Storage.Medicos.agregar(newMedico)
             print(f"El medico {nombre} se agregó correctamente")
             FuncionesGenerales.pausar()
             break
@@ -177,23 +168,12 @@ def eliminarMedico():
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        medicoExistente = buscar_medico_por_dni(dni)
-        if not medico_disponible(medicoExistente):
-            print("El medico tiene informacion importante y no puede ser eliminado")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            continue
-
+        medicoExistente = Storage.Medicos.obtener(dni)
         nombre_medico = medicoExistente["Nombre"]
         visualizarDatos(medicoExistente,Encabezado="Datos del medico a eliminar:")
-        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
-        if confirmar != "s":
-            print("Modificación cancelada por el usuario.")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
+        if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Eliminación cancelada por el usuario."):
             return
-        index = Datos.medicos.index(medicoExistente)
-        del Datos.medicos[index]
+        Storage.Medicos.eliminar(dni)
         print(f"El medico {nombre_medico} se elimino correctamente de la lista")
         FuncionesGenerales.pausar()
         MostrartablaMedicos()
@@ -216,28 +196,24 @@ def modificarMedico():
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        medicoExistente = buscar_medico_por_dni(dni)
-        if not medico_disponible(medicoExistente):
-            print("El medico tiene información importante y no puede ser modificado")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            continue
-
+        medicoExistente = Storage.Medicos.obtener(dni)
         FechaDeNacimiento = FuncionesGenerales.CargarFechaDeNacimiento()
         nombre = FuncionesGenerales.CargarNombre()
         especialidad = CargaEspecialidad()
 
-        medicoExistente["Nombre"] = nombre
-        medicoExistente["Fecha de Nacimiento"] = FechaDeNacimiento
-        medicoExistente["Especialidad"] = especialidad
+        new_data = {
+            "Nombre": nombre,
+            "Fecha de Nacimiento": FechaDeNacimiento,
+            "Especialidad": especialidad
+        }
+
+        # Mostrar datos temporalmente para visualizar
+        medicoExistente.update(new_data)
         visualizarDatos(medicoExistente,Encabezado="Datos del medico modificados:")
-        confirmar = input("\n¿Desea confirmar? (s/n): ").lower()
-        if confirmar != "s":
-            print("Modificación cancelada por el usuario.")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
+        if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Modificación cancelada por el usuario."):
             return
 
+        Storage.Medicos.modificar(dni, new_data)
         print("Se han modificado sus datos correctamente\n")
         MostrartablaMedicos()
         FuncionesGenerales.limpiar_pantalla()
@@ -273,7 +249,8 @@ def mostrar_opciones_historial(historial):
         FuncionesGenerales.limpiar_pantalla()
         return True
 
-    if len(historial) < 3:
+    if len(historial) <= 6:
+        mostrar_historial(historial)
         FuncionesGenerales.pausar()
         FuncionesGenerales.limpiar_pantalla()
         return True
@@ -307,18 +284,9 @@ def mostrarHistorialMedico1():
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        medicoExistente = buscar_medico_por_dni(dni)
-        if mostrar_opciones_historial(medicoExistente["Historial"]):
+        historial_medico = Storage.Historial.obtener_por_medico(dni)
+        if mostrar_opciones_historial(historial_medico):
             return
-
-
-def obtener_historial_dict(dni_medico):
-    historial_dict = {}
-    medico = buscar_medico_por_dni(dni_medico)
-    if medico:
-        for paciente in medico["Historial"]:
-            historial_dict[paciente["DNI"]] = paciente
-    return historial_dict
 
 
 def mostrarHistorialMedico2():
@@ -329,7 +297,7 @@ def mostrarHistorialMedico2():
 
     medico1Existe = medico_existe(medico1_dni)
     if not medico1Existe:
-        print("El primer medico no esta en la lista o su historial esta vacio")
+        print("El primer medico no esta en la lista")
         FuncionesGenerales.pausar()
         FuncionesGenerales.limpiar_pantalla()
         return
@@ -341,7 +309,7 @@ def mostrarHistorialMedico2():
     medico2Existe = medico_existe(medico2_dni)
 
     if not medico2Existe:
-        print("El segundo medico no esta en la lista o su historial esta vacio")
+        print("El segundo medico no esta en la lista")
         FuncionesGenerales.pausar()
         FuncionesGenerales.limpiar_pantalla()
         return
@@ -352,30 +320,32 @@ def mostrarHistorialMedico2():
         return
 
     FuncionesGenerales.limpiar_pantalla()
-    historial1_dict = obtener_historial_dict(medico1_dni)
-    historial2_dict = obtener_historial_dict(medico2_dni)
+    comparacion = Storage.Historial.comparar_medicos(medico1_dni, medico2_dni)
 
-    historialMedico1 = set(historial1_dict.keys())
-    historialMedico2 = set(historial2_dict.keys())
-
-    comunes = historialMedico1 & historialMedico2
-    exclusivosPrimero = historialMedico1 - historialMedico2
-    exclusivosSegundo = historialMedico2 - historialMedico1
+    comunes = comparacion["comunes"]
+    exclusivosPrimero = comparacion["solo_medico1"]
+    exclusivosSegundo = comparacion["solo_medico2"]
 
     print("\nPacientes en comun:")
     for dni_paciente in comunes:
-        paciente = historial1_dict[dni_paciente]
-        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
+        resultado = Storage.Pacientes.obtener(dni_paciente)
+        paciente = resultado[1] if resultado else None
+        if paciente:
+            print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     print("\nPacientes exclusivos del primero:")
     for dni_paciente in exclusivosPrimero:
-        paciente = historial1_dict[dni_paciente]
-        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
+        resultado = Storage.Pacientes.obtener(dni_paciente)
+        paciente = resultado[1] if resultado else None
+        if paciente:
+            print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     print("\nPacientes exclusivos del segundo:")
     for dni_paciente in exclusivosSegundo:
-        paciente = historial2_dict[dni_paciente]
-        print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
+        resultado = Storage.Pacientes.obtener(dni_paciente)
+        paciente = resultado[1] if resultado else None
+        if paciente:
+            print(f"  {paciente['Nombre']} (DNI: {paciente['DNI']})")
 
     FuncionesGenerales.pausar()
     FuncionesGenerales.limpiar_pantalla()

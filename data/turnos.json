@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "medico_dni": 41560910,
+    "paciente_dni": 44593512,
+    "fecha": [
+      2025,
+      11,
+      5
+    ],
+    "hora": [
+      9,
+      30
+    ],
+    "estado": "Confirmado"
+  }
+]
