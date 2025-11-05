@@ -3,7 +3,6 @@ import Storage
 from datetime import date
 
 
-#Funciones para visualizar datos
 def mostrar_historial(historial):
     for hist_entry in historial:
         resultado = Storage.Pacientes.obtener(hist_entry['paciente_dni'])
@@ -79,7 +78,6 @@ def MostrartablaMedicos():
 def medico_existe(dni):
     return Storage.Medicos.obtener(dni) is not None
 
-#Funciones de carga de datos
 
 def CargaEspecialidad():
     print("=" * 40)
@@ -207,7 +205,6 @@ def modificarMedico():
             "Especialidad": especialidad
         }
 
-        # Mostrar datos temporalmente para visualizar
         medicoExistente.update(new_data)
         visualizarDatos(medicoExistente,Encabezado="Datos del medico modificados:")
         if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Modificación cancelada por el usuario."):

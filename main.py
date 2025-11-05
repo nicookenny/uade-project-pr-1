@@ -8,7 +8,6 @@ def menuMedicos():  # Menu de los medicos
     Menu en donde se puede eliminar,agregar o modificar la lista de los medicos, donde estos mismos estan en una matriz(lista) de diccionarios
     """
     while True:
-        #Ver si puedo pasarlo a funcion 
         showMenu(doctors_menu, title="Menu de Medicos")
         opcion = input("Ingresar una Opcion: ")
 

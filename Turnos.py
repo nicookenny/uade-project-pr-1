@@ -137,7 +137,6 @@ def mostrar_calendario_disponibilidad(medico_dni, medico_data):
 def agendarTurno():
     while True:
         Pacientes.mostrarLista()
-        #print("Ingrese el DNI del paciente que quiere agendar el turno->")
         dni_paciente = FuncionesGenerales.CargarDNI("paciente que quiere agendar el turno")
         resultado = Storage.Pacientes.obtener(dni_paciente)
         paciente_data = resultado[1] if resultado else None
@@ -154,7 +153,6 @@ def agendarTurno():
 
         while True:
             Medicos.MostrartablaMedicos()
-            #print("Ingrese el DNI del medico->")
             dni_medico = FuncionesGenerales.CargarDNI("medico")
             medico_data = Storage.Medicos.obtener(dni_medico)
 
@@ -267,7 +265,6 @@ def agendarTurno():
 def cancelarTurno():
     while True:
         Pacientes.mostrarLista()
-        #print("Ingrese el DNI del paciente que quiere cancelar el turno->")
         dni_paciente = FuncionesGenerales.CargarDNI("paciente que quiere cancelar el turno")
         resultado = Storage.Pacientes.obtener(dni_paciente)
         paciente_data = resultado[1] if resultado else None

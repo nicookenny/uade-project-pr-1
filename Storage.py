@@ -9,7 +9,7 @@ FILES = {
     "turnos": STORAGE_DIR / "turnos.json",
     "historial": STORAGE_DIR / "historial.json",
     "especialidades": STORAGE_DIR / "especialidades.json",
-    "obras_sociales": STORAGE_DIR / "obras_sociales.json"
+    "obras_sociales": STORAGE_DIR / "obras_sociales.json",
 }
 
 REFERENCE_DATA = {
@@ -95,10 +95,9 @@ REFERENCE_DATA = {
         "Obra Social del Personal de Edificios de Renta y Horizontal",
         "Obra Social de Petroleros Privados",
         "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)",
-    ]
+    ],
 }
 
-# In-memory data storage
 _datos = {
     "medicos": [],
     "pacientes": [],
@@ -111,19 +110,17 @@ def inicializar_storage():
     """Crea el directorio data/ y archivos JSON si no existen"""
     STORAGE_DIR.mkdir(exist_ok=True)
 
-    # Archivos de datos (listas vacías)
     datos_archivos = ["medicos", "pacientes", "turnos", "historial"]
     for nombre in datos_archivos:
         ruta = FILES[nombre]
         if not ruta.exists():
-            with open(ruta, 'w', encoding='utf-8') as f:
+            with open(ruta, "w", encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
 
-    # Archivos de referencia (data predefinida)
     for nombre in ["especialidades", "obras_sociales"]:
         ruta = FILES[nombre]
         if not ruta.exists():
-            with open(ruta, 'w', encoding='utf-8') as f:
+            with open(ruta, "w", encoding="utf-8") as f:
                 json.dump(REFERENCE_DATA[nombre], f, ensure_ascii=False, indent=2)
 
 
@@ -135,13 +132,13 @@ def cargar_datos():
         "turnos": [],
         "historial": [],
         "especialidades": [],
-        "obras_sociales": []
+        "obras_sociales": [],
     }
 
     for clave, ruta in FILES.items():
         try:
             if ruta.exists():
-                with open(ruta, 'r', encoding='utf-8') as f:
+                with open(ruta, "r", encoding="utf-8") as f:
                     datos[clave] = json.load(f)
         except json.JSONDecodeError:
             print(f"Error: archivo {ruta} corrupto, se ignorará")
@@ -155,15 +152,11 @@ def _guardar_archivo(nombre, datos):
     """Helper para guardar un archivo JSON"""
     ruta = FILES[nombre]
     try:
-        with open(ruta, 'w', encoding='utf-8') as f:
+        with open(ruta, "w", encoding="utf-8") as f:
             json.dump(datos, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"Error guardando {nombre}: {e}")
 
-
-# ============================================================================
-# DATA ACCESS LAYER - Nested CRUD classes
-# ============================================================================
 
 class _PacientesStorage:
     """CRUD operations for Pacientes"""
@@ -280,11 +273,19 @@ class _TurnosStorage:
 
     def buscar_por_paciente(self, paciente_dni):
         """Obtiene turnos de un paciente"""
-        return [t for t in _datos["turnos"] if t["paciente_dni"] == paciente_dni and t["estado"] == "Confirmado"]
+        return [
+            t
+            for t in _datos["turnos"]
+            if t["paciente_dni"] == paciente_dni and t["estado"] == "Confirmado"
+        ]
 
     def buscar_por_medico(self, medico_dni):
         """Obtiene turnos de un médico"""
-        return [t for t in _datos["turnos"] if t["medico_dni"] == medico_dni and t["estado"] == "Confirmado"]
+        return [
+            t
+            for t in _datos["turnos"]
+            if t["medico_dni"] == medico_dni and t["estado"] == "Confirmado"
+        ]
 
 
 class _HistorialStorage:
@@ -304,7 +305,7 @@ class _HistorialStorage:
             "paciente_dni": paciente_dni,
             "turno_id": turno_id,
             "fecha": fecha,
-            "estado": estado
+            "estado": estado,
         }
         _datos["historial"].append(nueva_entrada)
         _guardar_archivo("historial", _datos["historial"])
@@ -332,18 +333,24 @@ class _HistorialStorage:
         historial1 = self.obtener_por_medico(dni1)
         historial2 = self.obtener_por_medico(dni2)
 
-        pacientes_medico1 = {h["paciente_dni"] for h in historial1 if h["estado"] == "Confirmado"}
-        pacientes_medico2 = {h["paciente_dni"] for h in historial2 if h["estado"] == "Confirmado"}
+        pacientes_medico1 = {
+            h["paciente_dni"] for h in historial1 if h["estado"] == "Confirmado"
+        }
+        pacientes_medico2 = {
+            h["paciente_dni"] for h in historial2 if h["estado"] == "Confirmado"
+        }
 
         return {
             "comunes": pacientes_medico1 & pacientes_medico2,
             "solo_medico1": pacientes_medico1 - pacientes_medico2,
-            "solo_medico2": pacientes_medico2 - pacientes_medico1
+            "solo_medico2": pacientes_medico2 - pacientes_medico1,
         }
 
     def eliminar_por_medico(self, medico_dni):
         """Elimina historial de un médico"""
-        _datos["historial"] = [h for h in _datos["historial"] if h["medico_dni"] != medico_dni]
+        _datos["historial"] = [
+            h for h in _datos["historial"] if h["medico_dni"] != medico_dni
+        ]
         _guardar_archivo("historial", _datos["historial"])
 
     def listar(self):
@@ -351,20 +358,14 @@ class _HistorialStorage:
         return _datos["historial"]
 
 
-# ============================================================================
-# PUBLIC API - Expose nested classes
-# ============================================================================
-
 Pacientes = _PacientesStorage()
 Medicos = _MedicosStorage()
 Turnos = _TurnosStorage()
 Historial = _HistorialStorage()
 
-# Reference data
 especialidades_medicas = tuple(REFERENCE_DATA["especialidades"])
 obras_y_prepagas_arg = tuple(REFERENCE_DATA["obras_sociales"])
 
-# Initialize storage and load data
 inicializar_storage()
 datos_cargados = cargar_datos()
 _datos["medicos"] = datos_cargados["medicos"]
