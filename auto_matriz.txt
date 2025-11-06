@@ -1,0 +1,10 @@
+Toyota,Corolla,2020,14500,44000,Buenos Aires,bueno 
+Volkswagen,Golf,2018,12500,68000,Córdoba,regular 
+Ford,Fiesta,2017,11000,72000,Córdoba,regular 
+Fiat,Cronos,2022,17000,15000,Buenos Aires,excelente 
+Chevrolet,Onix,2020,15000,38000,Rosario,bueno 
+Toyota,Hilux,2021,23000,32000,Buenos Aires,Muy bueno 
+Renault,Clio,2016,9500,80000,La Plata,regular 
+Peugeot,208,2021,16000,35000,Mendoza,Muy bueno
+Nissan,Sentra,2020,14500,40000,Buenos Aires,Excelente 
+Ford,Focus,2019,13800,52000,Rosario,bueno 

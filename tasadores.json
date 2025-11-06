@@ -1,0 +1,9 @@
+[ {"marca": "Toyota", "modelo": "Corolla", "año": 2020, "precio": "14.500", "km": 45000, "ubicacion": "Buenos Aires", "estado": "bueno"}, 
+{"marca": "Volkswagen", "modelo": "Golf", "año": 2018, "precio": "12500 USD", "km": 68000, "ubicacion": "Cordoba", "estado": "Regular"}, 
+{"marca": "Ford", "modelo": "Focus", "año": 2019, "precio": "13.800", "km": null, "ubicacion": "Rosario", "estado": "Bueno"}, 
+{"marca": "Renault", "modelo": "Clío", "año": "2016", "precio": "9.500", "km": 81000, "ubicacion": "La Plata", "estado": "REGULAR"}, 
+{"marca": "Fiat", "modelo": "Cronos", "año": 2022, "precio": "17,000", "km": 15000, "ubicacion": "Buenos Aires", "estado": "excelente"}, 
+{"marca": "Chevrolet", "modelo": "Onix", "año": 2020, "precio": "15000$", "km": "38.000", "ubicacion": "Rosario", "estado": "Bueno"}, 
+{"marca": "Toyota", "modelo": "Hilux", "año": 2021, "precio": "23.000", "km": 32000, "ubicacion": "Buenos aires", "estado": "Muy bueno"}, 
+{"marca": "Peugeot", "modelo": "208", "año": 2021, "precio": "16O00", "km": 36000, "ubicacion": "Mendoza", "estado": "Muy Bueno"} 
+]

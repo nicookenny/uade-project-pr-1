@@ -1,0 +1,291 @@
+{
+    "txt": [
+        {
+            "Peugeot208": {
+                "Año": "2021",
+                "Precio": "16000",
+                "Km": "35000",
+                "Ubicacion": "Mendoza",
+                "Estado": "Muy bueno"
+            },
+            "FordFiesta": {
+                "Año": "2017",
+                "Precio": "11000",
+                "Km": "72000",
+                "Ubicacion": "Córdoba",
+                "Estado": "Regular"
+            },
+            "ToyotaCorolla": {
+                "Año": "2020",
+                "Precio": "14500",
+                "Km": "44000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "VolkswagenGolf": {
+                "Año": "2018",
+                "Precio": "12500",
+                "Km": "68.000",
+                "Ubicacion": "Cordoba",
+                "Estado": "Regular"
+            },
+            "RenaultClio": {
+                "Año": "2016",
+                "Precio": "9500",
+                "Km": "80000",
+                "Ubicacion": "La plata",
+                "Estado": "Regular"
+            },
+            "FiatCronos": {
+                "Año": "2022",
+                "Precio": "17000",
+                "Km": "15000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "ToyotaHilux": {
+                "Año": "2021",
+                "Precio": "23000",
+                "Km": "32000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Muy bueno"
+            },
+            "ChevroletOnix": {
+                "Año": "2020",
+                "Precio": "15000",
+                "Km": "38.000",
+                "Ubicacion": "Rosario",
+                "Estado": "Buen estado"
+            },
+            "CitroënC3": {
+                "Año": "2019",
+                "Precio": "13500",
+                "Km": "59000",
+                "Ubicacion": "Santa fe",
+                "Estado": "Bueno"
+            },
+            "FordFocus": {
+                "Año": "2019",
+                "Precio": "13800",
+                "Km": "52000",
+                "Ubicacion": "Rosario",
+                "Estado": "Bueno"
+            }
+        }
+    ],
+    "csv1": [
+        {
+            "FordFocus": {
+                "Año": "2019",
+                "Precio": "13800",
+                "Km": "52000",
+                "Ubicacion": "Rosario",
+                "Estado": "Bueno"
+            },
+            "ToyotaCorolla": {
+                "Año": "2020",
+                "Precio": "14500",
+                "Km": "44000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "Peugeot208": {
+                "Año": "2021",
+                "Precio": "16000",
+                "Km": "35000",
+                "Ubicacion": "Mendoza",
+                "Estado": "Muy bueno"
+            },
+            "VolkswagenGolf": {
+                "Año": "2018",
+                "Precio": "12500",
+                "Km": "68000",
+                "Ubicacion": "Córdoba",
+                "Estado": "Regular"
+            },
+            "RenaultClio": {
+                "Año": "2016",
+                "Precio": "9500",
+                "Km": "80000",
+                "Ubicacion": "La plata",
+                "Estado": "Regular"
+            },
+            "ChevroletOnix": {
+                "Año": "2020",
+                "Precio": "15000",
+                "Km": "38000",
+                "Ubicacion": "Rosario",
+                "Estado": "Bueno"
+            },
+            "FiatCronos": {
+                "Año": "2022",
+                "Precio": "17000",
+                "Km": "15000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "ToyotaHilux": {
+                "Año": "2021",
+                "Precio": "23000",
+                "Km": "32000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Muy bueno"
+            },
+            "NissanSentra": {
+                "Año": "2020",
+                "Precio": "14500",
+                "Km": "",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            }
+        }
+    ],
+    "csv2": [
+        {
+            "ToyotaCorolla": {
+                "Año": "2020",
+                "Precio": "14500",
+                "Km": "44000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Bueno"
+            },
+            "VolkswagenGolf": {
+                "Año": "2018",
+                "Precio": "12500",
+                "Km": "68000",
+                "Ubicacion": "Córdoba",
+                "Estado": "Regular"
+            },
+            "FordFiesta": {
+                "Año": "2017",
+                "Precio": "11000",
+                "Km": "72000",
+                "Ubicacion": "Córdoba",
+                "Estado": "Regular"
+            },
+            "FiatCronos": {
+                "Año": "2022",
+                "Precio": "17000",
+                "Km": "15000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "ChevroletOnix": {
+                "Año": "2020",
+                "Precio": "15000",
+                "Km": "38000",
+                "Ubicacion": "Rosario",
+                "Estado": "Bueno"
+            },
+            "ToyotaHilux": {
+                "Año": "2021",
+                "Precio": "23000",
+                "Km": "32000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Muy bueno"
+            },
+            "RenaultClio": {
+                "Año": "2016",
+                "Precio": "9500",
+                "Km": "80000",
+                "Ubicacion": "La plata",
+                "Estado": "Regular"
+            },
+            "Peugeot208": {
+                "Año": "2021",
+                "Precio": "16000",
+                "Km": "35000",
+                "Ubicacion": "Mendoza",
+                "Estado": "Muy bueno"
+            },
+            "NissanSentra": {
+                "Año": "2020",
+                "Precio": "14500",
+                "Km": "40000",
+                "Ubicacion": "Buenos aires",
+                "Estado": "Excelente"
+            },
+            "FordFocus": {
+                "Año": "2019",
+                "Precio": "13800",
+                "Km": "52000",
+                "Ubicacion": "Rosario",
+                "Estado": "Bueno"
+            }
+        }
+    ],
+    "json": [
+        {
+            "Marca": "Toyota",
+            "Modelo": "Corolla",
+            "Año": "2020",
+            "Precio": "14500",
+            "Km": "45000",
+            "Ubicacion": "Buenos aires",
+            "Estado": "Bueno"
+        },
+        {
+            "Marca": "Volkswagen",
+            "Modelo": "Golf",
+            "Año": "2018",
+            "Precio": "12500",
+            "Km": "68000",
+            "Ubicacion": "Cordoba",
+            "Estado": "Regular"
+        },
+        {
+            "Marca": "Ford",
+            "Modelo": "Focus",
+            "Año": "2019",
+            "Precio": "13800",
+            "Km": "None",
+            "Ubicacion": "Rosario",
+            "Estado": "Bueno"
+        },
+        {
+            "Marca": "Renault",
+            "Modelo": "Clío",
+            "Año": "2016",
+            "Precio": "9500",
+            "Km": "81000",
+            "Ubicacion": "La plata",
+            "Estado": "Regular"
+        },
+        {
+            "Marca": "Fiat",
+            "Modelo": "Cronos",
+            "Año": "2022",
+            "Precio": "17000",
+            "Km": "15000",
+            "Ubicacion": "Buenos aires",
+            "Estado": "Excelente"
+        },
+        {
+            "Marca": "Chevrolet",
+            "Modelo": "Onix",
+            "Año": "2020",
+            "Precio": "15000",
+            "Km": "38.000",
+            "Ubicacion": "Rosario",
+            "Estado": "Bueno"
+        },
+        {
+            "Marca": "Toyota",
+            "Modelo": "Hilux",
+            "Año": "2021",
+            "Precio": "23000",
+            "Km": "32000",
+            "Ubicacion": "Buenos aires",
+            "Estado": "Muy bueno"
+        },
+        {
+            "Marca": "Peugeot",
+            "Modelo": "208",
+            "Año": "2021",
+            "Precio": "16",
+            "Km": "36000",
+            "Ubicacion": "Mendoza",
+            "Estado": "Muy bueno"
+        }
+    ]
+}
