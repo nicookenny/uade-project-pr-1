@@ -1,0 +1,155 @@
+[
+  {
+    "marca": "Toyota",
+    "modelo": "Corolla",
+    "año": 2020,
+    "precio": 14500,
+    "km": 45000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "BUENO"
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Golf",
+    "año": 2018,
+    "precio": 12500,
+    "km": 68000,
+    "ubicacion": "CORDOBA",
+    "estado": "REGULAR"
+  },
+  {
+    "marca": "Renault",
+    "modelo": "Clío",
+    "año": 2016,
+    "precio": 9500,
+    "km": 81000,
+    "ubicacion": "LA PLATA",
+    "estado": "REGULAR"
+  },
+  {
+    "marca": "Fiat",
+    "modelo": "Cronos",
+    "año": 2022,
+    "precio": 17000,
+    "km": 15000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "EXCELENTE"
+  },
+  {
+    "marca": "Chevrolet",
+    "modelo": "Onix",
+    "año": 2020,
+    "precio": 15000,
+    "km": 38000,
+    "ubicacion": "ROSARIO",
+    "estado": "BUENO"
+  },
+  {
+    "marca": "Toyota",
+    "modelo": "Hilux",
+    "año": 2021,
+    "precio": 23000,
+    "km": 32000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "MUY BUENO"
+  },
+  {
+    "marca": "Peugeot",
+    "modelo": "208",
+    "año": 2021,
+    "precio": 16000,
+    "km": 36000,
+    "ubicacion": "MENDOZA",
+    "estado": "MUY BUENO"
+  },
+  {
+    "marca": "Toyota",
+    "modelo": "Corolla",
+    "año": 2020,
+    "precio": 14500,
+    "km": 44000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "BUENO"
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Golf",
+    "año": 2018,
+    "precio": 12500,
+    "km": 68000,
+    "ubicacion": "CÓRDOBA",
+    "estado": "REGULAR"
+  },
+  {
+    "marca": "Ford",
+    "modelo": "Fiesta",
+    "año": 2017,
+    "precio": 11000,
+    "km": 72000,
+    "ubicacion": "CÓRDOBA",
+    "estado": "REGULAR"
+  },
+  {
+    "marca": "Renault",
+    "modelo": "Clio",
+    "año": 2016,
+    "precio": 9500,
+    "km": 80000,
+    "ubicacion": "LA PLATA",
+    "estado": "REGULAR"
+  },
+  {
+    "marca": "Peugeot",
+    "modelo": "208",
+    "año": 2021,
+    "precio": 16000,
+    "km": 35000,
+    "ubicacion": "MENDOZA",
+    "estado": "MUY BUENO"
+  },
+  {
+    "marca": "Nissan",
+    "modelo": "Sentra",
+    "año": 2020,
+    "precio": 14500,
+    "km": 40000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "EXCELENTE"
+  },
+  {
+    "marca": "Ford",
+    "modelo": "Focus",
+    "año": 2019,
+    "precio": 13800,
+    "km": 52000,
+    "ubicacion": "ROSARIO",
+    "estado": "BUENO"
+  },
+  {
+    "marca": "Toyota",
+    "modelo": "Corolla",
+    "año": 2020,
+    "precio": 14500,
+    "km": 44000,
+    "ubicacion": "BUENOS AIRES",
+    "estado": "EXCELENTE"
+  },
+  {
+    "marca": "Chevrolet",
+    "modelo": "Onix",
+    "año": 2020,
+    "precio": 15000,
+    "km": 38000,
+    "ubicacion": "ROSARIO",
+    "estado": "BUEN ESTADO"
+  },
+  {
+    "marca": "Citroën",
+    "modelo": "C3",
+    "año": 2019,
+    "precio": 13500,
+    "km": 59000,
+    "ubicacion": "SANTA FE",
+    "estado": "BUENO"
+  }
+]
