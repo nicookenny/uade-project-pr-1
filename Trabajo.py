@@ -133,6 +133,7 @@ def importarDatos(rutasArchivos):
         elif path.suffix == ".txt":
             resultado = procesarArchivoTXT(ruta)
         else:
+            print(f"Archivo no soportado: {ruta}")
             continue
 
         if resultado:
@@ -142,7 +143,6 @@ def importarDatos(rutasArchivos):
     return Utilidades.eliminarDuplicados(autos)
 
 
-# use lib to get the root of the project
 root = os.path.dirname(os.path.abspath(__file__))
 
 rutas = []

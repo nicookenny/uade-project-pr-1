@@ -54,6 +54,23 @@ def eliminarDuplicados(autos):
     return resultado
 
 
+def limpiar_precio(precio_raw: str) -> str:
+    s = re.sub(r"[^\d,\.]", "", precio_raw)
+
+    if "," in s and "." in s:
+        if s.rfind(",") > s.rfind("."):
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            s = s.replace(",", "")
+    else:
+        if "," in s:
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            pass
+
+    return s
+
+
 def limpiarPrecios(listaAutos):
     resultado = []
 
@@ -61,7 +78,7 @@ def limpiarPrecios(listaAutos):
         copia = auto.copy()
         if "precio" in copia:
             precio_raw = str(copia["precio"]).strip()
-            precio_limpio = re.sub(r"[^\d]", "", precio_raw)
+            precio_limpio = limpiar_precio(precio_raw)
 
             if precio_limpio:
                 try:
