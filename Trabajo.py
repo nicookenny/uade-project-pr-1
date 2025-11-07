@@ -5,6 +5,7 @@ from datetime import datetime
 from functools import reduce
 import Utilidades
 import Validaciones
+from pathlib import Path
 
 
 def validarAuto(auto):
@@ -123,13 +124,14 @@ def importarDatos(rutasArchivos):
     autos = []
 
     for ruta in rutasArchivos:
+        path = Path(ruta)
         resultado = None
-        if ruta.endswith(".json"):
-            resultado = procesarArchivoJSON(ruta) if "json" in ruta else None
-        elif ruta.endswith(".csv"):
+        if path.suffix == ".json":
+            resultado = procesarArchivoJSON(ruta)
+        elif path.suffix == ".csv":
             resultado = procesarArchivoCSV(ruta)
-        elif ruta.endswith(".txt"):
-            resultado = procesarArchivoTXT(ruta) if "txt" in ruta else None
+        elif path.suffix == ".txt":
+            resultado = procesarArchivoTXT(ruta)
         else:
             continue
 
