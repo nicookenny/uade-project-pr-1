@@ -1,0 +1,47 @@
+[
+  {
+    "medico_dni": 47130033,
+    "paciente_dni": 47130033,
+    "fecha": [
+      2025,
+      11,
+      13
+    ],
+    "hora": [
+      9,
+      30
+    ],
+    "estado": "Cancelado",
+    "id": 1
+  },
+  {
+    "medico_dni": 36577889,
+    "paciente_dni": 47130033,
+    "fecha": [
+      2025,
+      11,
+      17
+    ],
+    "hora": [
+      7,
+      0
+    ],
+    "estado": "Confirmado",
+    "id": 2
+  },
+  {
+    "medico_dni": 40200111,
+    "paciente_dni": 47130033,
+    "fecha": [
+      2025,
+      11,
+      14
+    ],
+    "hora": [
+      12,
+      0
+    ],
+    "estado": "Cancelado",
+    "id": 3
+  }
+]

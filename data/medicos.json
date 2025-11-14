@@ -1,0 +1,101 @@
+[
+  {
+    "Nombre": "Kataoka Lucas",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      17
+    ],
+    "DNI": 47130033,
+    "Especialidad": "Alergología",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Sofia Ramirez",
+    "Fecha de Nacimiento": [1985, 4, 12],
+    "DNI": 40200111,
+    "Especialidad": "Pediatría",
+    "Estado": "Ocupado",
+    "Horarios": {
+      "Lunes": [8, 14],
+      "Martes": [8, 14],
+      "Miércoles": [12, 18],
+      "Jueves": [8, 14],
+      "Viernes": [12, 18],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Matias Gómez",
+    "Fecha de Nacimiento": [1978, 7, 3],
+    "DNI": 37890222,
+    "Especialidad": "Cardiología",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [10, 17],
+      "Martes": [10, 17],
+      "Miércoles": [10, 17],
+      "Jueves": null,
+      "Viernes": [9, 13],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Florencia Duarte",
+    "Fecha de Nacimiento": [1990, 11, 29],
+    "DNI": 42988331,
+    "Especialidad": "Dermatología",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": null,
+      "Martes": [14, 19],
+      "Miércoles": [14, 19],
+      "Jueves": [9, 15],
+      "Viernes": [9, 15],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Diego Fernández",
+    "Fecha de Nacimiento": [1982, 1, 20],
+    "DNI": 36577889,
+    "Especialidad": "Traumatología",
+    "Estado": "Ocupado",
+    "Horarios": {
+      "Lunes": [7, 12],
+      "Martes": [7, 12],
+      "Miércoles": [7, 12],
+      "Jueves": [7, 12],
+      "Viernes": null,
+      "Sábado": null,
+      "Domingo": null
+    }
+  }
+]

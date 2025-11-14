@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "medico_dni": 47130033,
+    "paciente_dni": 47130033,
+    "turno_id": 1,
+    "fecha": [
+      2025,
+      11,
+      13
+    ],
+    "estado": "Cancelado"
+  },
+  {
+    "id": 2,
+    "medico_dni": 40200111,
+    "paciente_dni": 47130033,
+    "turno_id": 2,
+    "fecha": [
+      2025,
+      11,
+      17
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 3,
+    "medico_dni": 37890222,
+    "paciente_dni": 47130033,
+    "turno_id": 3,
+    "fecha": [
+      2025,
+      11,
+      14
+    ],
+    "estado": "Cancelado"
+  },
+  {
+    "id": 4,
+    "medico_dni": 37890222,
+    "paciente_dni": 47130033,
+    "turno_id": 4,
+    "fecha": [
+      2025,
+      11,
+      17
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 5,
+    "medico_dni": 36577889,
+    "paciente_dni": 47130033,
+    "turno_id": 2,
+    "fecha": [
+      2025,
+      11,
+      17
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 6,
+    "medico_dni": 40200111,
+    "paciente_dni": 47130033,
+    "turno_id": 3,
+    "fecha": [
+      2025,
+      11,
+      14
+    ],
+    "estado": "Confirmado"
+  }
+]
