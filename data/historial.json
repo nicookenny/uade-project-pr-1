@@ -10,5 +10,29 @@
       5
     ],
     "estado": "Confirmado"
+  },
+  {
+    "id": 2,
+    "medico_dni": 41560910,
+    "paciente_dni": 44593512,
+    "turno_id": 2,
+    "fecha": [
+      2025,
+      12,
+      11
+    ],
+    "estado": "Cancelado"
+  },
+  {
+    "id": 3,
+    "medico_dni": 47130033,
+    "paciente_dni": 41560910,
+    "turno_id": 3,
+    "fecha": [
+      2025,
+      11,
+      17
+    ],
+    "estado": "Confirmado"
   }
 ]

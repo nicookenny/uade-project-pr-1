@@ -27,6 +27,14 @@ doctors_menu = {
         "text": "Mostrar historial de un medico",
         "action": Medicos.mostrarHistorialMedico,
     },
+    "6": {
+        "text": "Buscar medico",
+        "action": Medicos.buscarMedico,
+    },
+    "7": {
+        "text": "Ver cantidad de turnos de un medico",
+        "action": Medicos.verTurnosMedico,
+    },
 }
 
 patients_menu = {
@@ -54,6 +62,10 @@ patients_menu = {
         "text": "Ver turnos de un paciente",
         "action": Turnos.verTurnosPaciente,
     },
+    "6": {
+        "text": "Buscar paciente",
+        "action": Pacientes.buscarPaciente,
+    },
 }
 
 
@@ -70,6 +82,10 @@ turns_menu = {
         "text": "Cancelar Turno",
         "action": Turnos.cancelarTurno,
     },
+    "3": {
+        "text":"Mostrar Turnos",
+        "action": Turnos.verTurnosPaciente,
+    }
 }
 
 

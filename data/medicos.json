@@ -35,14 +35,14 @@
     }
   },
   {
-    "Nombre": "Pedro Petrificado",
+    "Nombre": "Lucas Kataoka",
     "Fecha de Nacimiento": [
-      2001,
-      1,
-      1
+      2006,
+      2,
+      17
     ],
-    "DNI": 42009920,
-    "Especialidad": "Oncología Radioterápica",
+    "DNI": 47130033,
+    "Especialidad": "Medicina Familiar y Comunitaria",
     "Estado": "Disponible",
     "Horarios": {
       "Lunes": [

@@ -2,16 +2,20 @@ import Storage
 import FuncionesGenerales
 
 def CargarObraSocial():
-    #Carga la obra social de un paciente.
     print("=" * 40)
-    for obras in Storage.obras_y_prepagas_arg:
-        print(obras)
+    print("Seleccione una Obra Social:")
+    for i, obra in enumerate(Storage.obras_y_prepagas_arg, 1):
+        print(f"[{i}] {obra}")
     print("=" * 40)
-    obrasocial = input("Ingresar la Obra Social: ")
-    while obrasocial == "" or obrasocial.isnumeric():
-        print("Obra Social no válida")
-        obrasocial = input("Intente nuevamente: ")
-    return obrasocial
+
+    while True:
+        try:
+            opcion = int(input("Ingrese el número de la Obra Social: "))
+            if 1 <= opcion <= len(Storage.obras_y_prepagas_arg):
+                return Storage.obras_y_prepagas_arg[opcion - 1]
+            print(f"Opción inválida. Debe estar entre 1 y {len(Storage.obras_y_prepagas_arg)}")
+        except ValueError:
+            print("Debe ingresar un número")
 
 def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
     return {
@@ -134,6 +138,15 @@ def modificarPaciente():
         FuncionesGenerales.limpiar_pantalla()
         return
 
+
+def buscarPaciente():
+    paciente = FuncionesGenerales.buscar_persona(Storage.Pacientes.listar(), tipo_busqueda="ambos")
+    if paciente:
+        visualizarDatos(paciente, Encabezado="Datos del paciente encontrado:")
+        FuncionesGenerales.pausar()
+        FuncionesGenerales.limpiar_pantalla()
+        return paciente
+    return None
 
 def main(): ...
 

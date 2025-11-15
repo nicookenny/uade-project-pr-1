@@ -1,12 +1,14 @@
 [
   {
-    "DNI": 44593512,
-    "Nombre": "Coco Messina",
-    "Fecha de Nacimiento": [
-      2002,
-      11,
-      12
-    ],
-    "Obra Social": "OSDE"
+    "DNI": 41560910,
+    "Nombre": "Kenny Nicolas",
+    "Fecha de Nacimiento": [1998, 8, 8],
+    "Obra Social": "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)"
+  },
+  {
+    "DNI": 95862099,
+    "Nombre": "Jesus Quijada",
+    "Fecha de Nacimiento": [2003, 2, 3],
+    "Obra Social": "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)"
   }
 ]

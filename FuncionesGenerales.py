@@ -9,13 +9,17 @@ def pausar():
     input("\nPresione Enter para continuar...")
 
 def confirmar_accion(mensaje_pregunta, mensaje_cancelacion="Acción cancelada por el usuario."):
-    confirmar = input(f"\n{mensaje_pregunta} (s/n) [s]: ").lower() or "s"
-    if confirmar != "s":
-        print(mensaje_cancelacion)
+    while True:
+        confirmar = input(f"\n{mensaje_pregunta} (s/n) [s]: ").lower() or "s"
+        if confirmar == "n":
+            print(mensaje_cancelacion)
+            pausar()
+            limpiar_pantalla()
+            return False
+        elif confirmar == "s":
+            return True
+        print("Opcion incorrecta")
         pausar()
-        limpiar_pantalla()
-        return False
-    return True
 
 def CalculoEdad(fecha):
     """
@@ -39,15 +43,15 @@ def CargarFechaDeNacimiento():
         try:
             patron_fecha = r"^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}$"
             fecha_str = input("Ingrese su fecha de nacimiento (DD/MM/AAAA): ")
-            
+
             if not re.match(patron_fecha, fecha_str):
                 print("Formato de fecha inválido. Use DD/MM/AAAA")
                 continue
-                
+
             dia, mes, año = map(int, fecha_str.split('/'))
             fecha = (año, mes, dia)
             edad = CalculoEdad(fecha)
-            
+
             if edad > 0:
                 return fecha
             print("La fecha debe ser anterior a la fecha actual")
@@ -62,6 +66,59 @@ def CargarNombre():
             return nombre
         print("Nombre no válido. Use solo letras, espacios y caracteres permitidos (-, ')")
 
+def buscar_persona(lista, tipo_busqueda="ambos"):
+    """
+    Busca personas en una lista por DNI o apellido.
+    tipo_busqueda: "ambos" (permite elegir), "dni" o "apellido"
+    Retorna: diccionario de la persona seleccionada o None si cancela
+    """
+    if not lista:
+        print("No hay registros para buscar.")
+        pausar()
+        return None
+
+    limpiar_pantalla()
+    print("=" * 50)
+    print("BÚSQUEDA DE PERSONA")
+    print("=" * 50)
+
+    if tipo_busqueda == "ambos":
+        print("\n1. Buscar por DNI")
+        print("2. Buscar por Apellido")
+        opcion = input("\nElegir opción (1 o 2): ").strip()
+        criterio = "dni" if opcion == "1" else "apellido"
+    else:
+        criterio = tipo_busqueda
+
+    if criterio == "dni":
+        termino = input("\nIngrese DNI (números): ").strip()
+        resultados = list(filter(lambda p: termino in str(p.get("DNI", "")), lista))
+    else:
+        termino = input("\nIngrese apellido: ").strip().lower()
+        resultados = list(filter(lambda p: termino in p.get("Nombre", "").lower(), lista))
+
+    if not resultados:
+        print("\nNo se encontraron resultados.")
+        pausar()
+        return None
+
+    limpiar_pantalla()
+    print("=" * 50)
+    print("RESULTADOS DE BÚSQUEDA")
+    print("=" * 50)
+
+    for i, persona in enumerate(resultados, 1):
+        print(f"\n{i}. DNI: {persona['DNI']} | {persona['Nombre']}")
+
+    while True:
+        try:
+            seleccion = int(input("\nSeleccionar persona (número): ")) - 1
+            if 0 <= seleccion < len(resultados):
+                return resultados[seleccion]
+            print("Selección inválida.")
+        except ValueError:
+            print("Ingrese un número válido.")
+
 def registrarErrores(error):
     try:
         archivo = open("C:\\Users\\Jesus\\Desktop\\JAVA--PROGRA2\\uade-project-pr-1\\Errores.txt" ,mode = "a" ,encoding="utf-8")
@@ -72,5 +129,4 @@ def registrarErrores(error):
         finally:
             archivo.close()
     except Exception as logError:
-        print(f"Error al escribir en el log: {logError}")
-        
+        print(f"Error al escribir en el log: {logError}")
