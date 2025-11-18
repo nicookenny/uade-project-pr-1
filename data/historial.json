@@ -34,5 +34,17 @@
       17
     ],
     "estado": "Confirmado"
+  },
+  {
+    "id": 4,
+    "medico_dni": 47130033,
+    "paciente_dni": 41560910,
+    "turno_id": 4,
+    "fecha": [
+      2025,
+      11,
+      18
+    ],
+    "estado": "Confirmado"
   }
 ]

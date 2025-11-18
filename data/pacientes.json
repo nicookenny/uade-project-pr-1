@@ -2,13 +2,81 @@
   {
     "DNI": 41560910,
     "Nombre": "Kenny Nicolas",
-    "Fecha de Nacimiento": [1998, 8, 8],
-    "Obra Social": "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)"
+    "Fecha de Nacimiento": [
+      1998,
+      8,
+      8
+    ],
+    "Obra Social": "Hospital"
+  },
+  {
+    "DNI": 47130033,
+    "Nombre": "Kataoka Lucas",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ],
+    "Obra Social": "Hospital"
+  },
+  {
+    "DNI": 95862033,
+    "Nombre": "Gonzalez Pedro",
+    "Fecha de Nacimiento": [
+      1983,
+      2,
+      3
+    ],
+    "Obra Social": "Hospital"
   },
   {
     "DNI": 95862099,
-    "Nombre": "Jesus Quijada",
-    "Fecha de Nacimiento": [2003, 2, 3],
+    "Nombre": "Quijada Jesus ",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ],
+    "Obra Social": "Hospital"
+  },
+  {
+    "DNI": 45317098,
+    "Nombre": "Gutierrez Fernando",
+    "Fecha de Nacimiento": [
+      1979,
+      3,
+      26
+    ],
+    "Obra Social": "Hospital"
+  },
+  {
+    "DNI": 44593512,
+    "Nombre": "Martinez Carlos",
+    "Fecha de Nacimiento": [
+      1995,
+      5,
+      15
+    ],
+    "Obra Social": "OSDE"
+  },
+  {
+    "Nombre": "Gutierres Nicolas",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ],
+    "DNI": 95860317,
+    "Obra Social": "Hospital"
+  },
+  {
+    "Nombre": "Salas Manuel",
+    "Fecha de Nacimiento": [
+      2022,
+      10,
+      12
+    ],
+    "DNI": 95808317,
     "Obra Social": "IO SFA (Instituto de Obra Social de las Fuerzas Armadas)"
   }
 ]

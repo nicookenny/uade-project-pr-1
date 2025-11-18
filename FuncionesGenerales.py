@@ -35,6 +35,10 @@ def CargarDNI(persona):
         dni = input(f"Ingresar número de documento del {persona}: ")
         patron_dni = r"^\d{8}$"
         if re.match(patron_dni, dni):
+            # Rechazar DNIs que tengan los 8 dígitos iguales (00000000, 11111111, ...)
+            if len(set(dni)) == 1:
+                print("DNI inválido. No se permiten 8 dígitos iguales")
+                continue
             return int(dni)
         print("DNI inválido. Debe contener exactamente 8 dígitos numéricos.")
 
@@ -49,12 +53,14 @@ def CargarFechaDeNacimiento():
                 continue
 
             dia, mes, año = map(int, fecha_str.split('/'))
-            fecha = (año, mes, dia)
-            edad = CalculoEdad(fecha)
+            fecha_obj = date(año, mes, dia)
+            hoy = date.today()
 
-            if edad > 0:
-                return fecha
-            print("La fecha debe ser anterior a la fecha actual")
+            # Permitimos fechas hasta hoy inclusive (recién nacidos y nacidos este año)
+            if fecha_obj <= hoy:
+                return (año, mes, dia)
+            else:
+                print("La fecha debe ser anterior o igual a la fecha actual (no puede ser futura)")
         except ValueError:
             print("Fecha inválida. Ingrese números válidos para día, mes y año")
 

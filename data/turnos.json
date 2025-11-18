@@ -43,5 +43,20 @@
     ],
     "estado": "Confirmado",
     "id": 3
+  },
+  {
+    "medico_dni": 47130033,
+    "paciente_dni": 41560910,
+    "fecha": [
+      2025,
+      11,
+      18
+    ],
+    "hora": [
+      13,
+      30
+    ],
+    "estado": "Confirmado",
+    "id": 4
   }
 ]

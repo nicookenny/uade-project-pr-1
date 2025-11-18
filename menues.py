@@ -72,7 +72,7 @@ patients_menu = {
 turns_menu = {
     "0": {
         "text": "Volver al menu principal",
-        "action": None,
+        "action": lambda: None,
     },
     "1": {
         "text": "Agendar Turno",

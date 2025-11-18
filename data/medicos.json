@@ -35,14 +35,189 @@
     }
   },
   {
-    "Nombre": "Lucas Kataoka",
+    "Nombre": "Kataoka Lucas",
     "Fecha de Nacimiento": [
-      2006,
+      2000,
       2,
-      17
+      3
     ],
     "DNI": 47130033,
     "Especialidad": "Medicina Familiar y Comunitaria",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Gonzalez Pedro",
+    "Fecha de Nacimiento": [
+      1983,
+      2,
+      3
+    ],
+    "DNI": 95862033,
+    "Especialidad": "Cirugía Cardiovascular",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Quijada Jesus ",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ],
+    "DNI": 95862099,
+    "Especialidad": "Dermatología",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Gutierrez Fernando",
+    "Fecha de Nacimiento": [
+      1979,
+      3,
+      26
+    ],
+    "DNI": 45317098,
+    "Especialidad": "Oftalmología",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Gutierres Nicolas",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ],
+    "DNI": 95860317,
+    "Especialidad": "Cirugía Torácica",
+    "Estado": "Disponible",
+    "Horarios": {
+      "Lunes": [
+        9,
+        18
+      ],
+      "Martes": [
+        9,
+        18
+      ],
+      "Miércoles": [
+        9,
+        18
+      ],
+      "Jueves": [
+        9,
+        18
+      ],
+      "Viernes": [
+        9,
+        18
+      ],
+      "Sábado": null,
+      "Domingo": null
+    }
+  },
+  {
+    "Nombre": "Salas Manuel",
+    "Fecha de Nacimiento": [
+      2000,
+      10,
+      15
+    ],
+    "DNI": 95808317,
+    "Especialidad": "Cardiología",
     "Estado": "Disponible",
     "Horarios": {
       "Lunes": [

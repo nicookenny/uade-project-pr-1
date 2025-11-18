@@ -81,8 +81,6 @@ def menuHospital():  # Menu principal
         showMenu(main_menu, title="Menu Principal")
         opcion = input("Ingresar una Opcion: ")
 
-        #print(opcion)
-
         if opcion in main_menu:
             main_menu[opcion]["action"]()
         else:

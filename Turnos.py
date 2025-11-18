@@ -1,7 +1,7 @@
 import FuncionesGenerales
-import Storage
 import Medicos
 import Pacientes
+import gestor_datos
 from datetime import date, timedelta
 
 
@@ -12,7 +12,7 @@ def obtener_dia_semana(fecha):
 
 
 def obtener_slots_disponibles(medico_dni, fecha):
-    medico = Storage.Medicos.obtener(medico_dni)
+    medico = gestor_datos.obtener_medico(medico_dni)
     if not medico:
         return []
 
@@ -34,7 +34,7 @@ def obtener_slots_disponibles(medico_dni, fecha):
             and t["fecha"] == fecha
             and t["hora"] == slot
             and t["estado"] == "Confirmado"
-            for t in Storage.Turnos.listar()
+            for t in gestor_datos.listar_turnos()
         )
         if not ocupado:
             slots.append(slot)
@@ -51,7 +51,7 @@ def obtener_slots_disponibles(medico_dni, fecha):
 
 
 def mostrar_turnos_paciente(dni_paciente):
-    turnos = Storage.Turnos.buscar_por_paciente(dni_paciente)
+    turnos = gestor_datos.buscar_turnos_por_paciente(dni_paciente)
     if not turnos:
         print("El paciente no tiene turnos agendados")
         return
@@ -61,7 +61,7 @@ def mostrar_turnos_paciente(dni_paciente):
     print("-" * 85)
 
     for turno in turnos:
-        medico = Storage.Medicos.obtener(turno["medico_dni"])
+        medico = gestor_datos.obtener_medico(turno["medico_dni"])
         fecha_str = (
             f"{turno['fecha'][2]:02d}/{turno['fecha'][1]:02d}/{turno['fecha'][0]}"
         )
@@ -152,6 +152,8 @@ def mostrar_calendario_disponibilidad(medico_dni, medico_data):
 
 def agendarTurno():
     while True:
+        FuncionesGenerales.limpiar_pantalla()
+
         print("=" * 40)
         print("[1] Ingresar DNI del paciente")
         print("[2] Buscar paciente por DNI o apellido")
@@ -163,8 +165,8 @@ def agendarTurno():
             dni_paciente = FuncionesGenerales.CargarDNI(
                 "paciente que quiere agendar el turno"
             )
-            resultado = Storage.Pacientes.obtener(dni_paciente)
-            paciente_data = resultado[1] if resultado else None
+            resultado = gestor_datos.obtener_paciente(dni_paciente)
+            paciente_data = resultado if resultado else None
 
             if not paciente_data:
                 print("El paciente no existe en la lista")
@@ -201,7 +203,7 @@ def agendarTurno():
             if opcion_medico == "1":
                 Medicos.MostrartablaMedicos()
                 dni_medico = FuncionesGenerales.CargarDNI("medico")
-                medico_data = Storage.Medicos.obtener(dni_medico)
+                medico_data = gestor_datos.obtener_medico(dni_medico)
 
                 if not medico_data:
                     print("El medico no esta en la lista")
@@ -222,6 +224,18 @@ def agendarTurno():
             print(
                 f"\nMédico seleccionado: {medico_data['Nombre']} - {medico_data['Especialidad']}"
             )
+
+            print("\n" + "=" * 60)
+            print(f" Médico seleccionado: {medico_data['Nombre']} - {medico_data['Especialidad']}")
+            print("=" * 60)
+
+            # Restricción: el médico no puede ser el mismo que el paciente
+            if dni_medico == dni_paciente:
+                print("\nError: El médico seleccionado tiene el mismo DNI que el paciente.")
+                print("No es posible agendar un turno cuando el médico es el paciente.")
+                FuncionesGenerales.pausar()
+                FuncionesGenerales.limpiar_pantalla()
+                continue
 
             print("\nCalendario de Turnos Disponibles (próximos 30 días):")
             mostrar_calendario_disponibilidad(dni_medico, medico_data)
@@ -267,13 +281,19 @@ def agendarTurno():
                         FuncionesGenerales.pausar()
                         continue
 
-                    print(f"\nTurnos disponibles para el {dia:02d}/{mes:02d}/{año}:")
+                    dia_semana = obtener_dia_semana(fecha_tuple)
+                    print(f"\nTurnos disponibles para el {dia:02d}/{mes:02d}/{año} ({dia_semana}):")
                     print("-" * 50)
 
+                    # Mostrar slots en columnas para mejor lectura
+                    cols = 3
                     for i, slot in enumerate(slots, 1):
-                        print(f"[{i}] {slot[0]:02d}:{slot[1]:02d}", end="  ")
-                        if i % 4 == 0:
+                        cell = f"[{i:2d}] {slot[0]:02d}:{slot[1]:02d}"
+                        print(cell.ljust(18), end="")
+                        if i % cols == 0:
                             print()
+                    if len(slots) % cols != 0:
+                        print()
                     print("\n" + "-" * 50)
 
                     opcion = int(input("Seleccione el número del turno: "))
@@ -285,20 +305,18 @@ def agendarTurno():
 
                     hora_seleccionada = slots[opcion - 1]
 
-                    print("\n" + "=" * 40)
-                    print("Resumen del turno a agendar:")
-                    print(
-                        f"Paciente: {paciente_data['Nombre']} (DNI: {paciente_data['DNI']})"
-                    )
-                    print(
-                        f"Médico: {medico_data['Nombre']} (DNI: {medico_data['DNI']})"
-                    )
-                    print(f"Especialidad: {medico_data['Especialidad']}")
-                    print(f"Fecha: {dia:02d}/{mes:02d}/{año}")
-                    print(
-                        f"Hora: {hora_seleccionada[0]:02d}:{hora_seleccionada[1]:02d}"
-                    )
-                    print("=" * 40)
+                    ancho = 62
+                    print("\n" + "=" * ancho)
+                    print("Resumen del turno a agendar:".center(ancho))
+                    print("-" * ancho)
+                    print(f"{'Paciente:':20} {paciente_data['Nombre']} (DNI: {paciente_data['DNI']})")
+                    print(f"{'Médico:':20} {medico_data['Nombre']} (DNI: {medico_data['DNI']})")
+                    print(f"{'Especialidad:':20} {medico_data['Especialidad']}")
+                    print(f"{'Fecha:':20} {dia:02d}/{mes:02d}/{año} ({obtener_dia_semana(fecha_tuple)})")
+                    print(f"{'Hora:':20} {hora_seleccionada[0]:02d}:{hora_seleccionada[1]:02d}")
+                    print("-" * ancho)
+                    print("Nota: Revise los datos antes de confirmar".center(ancho))
+                    print("=" * ancho)
 
                     if not FuncionesGenerales.confirmar_accion(
                         "¿Desea confirmar el turno?", "Turno cancelado por el usuario."
@@ -313,8 +331,8 @@ def agendarTurno():
                         "estado": "Confirmado",
                     }
 
-                    turno_id = Storage.Turnos.agregar(nuevo_turno)
-                    Storage.Historial.agregar(
+                    turno_id = gestor_datos.agregar_turno(nuevo_turno)
+                    gestor_datos.agregar_historial(
                         dni_medico, dni_paciente, turno_id, fecha_tuple, "Confirmado"
                     )
 
@@ -336,8 +354,8 @@ def cancelarTurno():
         dni_paciente = FuncionesGenerales.CargarDNI(
             "paciente que quiere cancelar el turno"
         )
-        resultado = Storage.Pacientes.obtener(dni_paciente)
-        paciente_data = resultado[1] if resultado else None
+        resultado = gestor_datos.obtener_paciente(dni_paciente)
+        paciente_data = resultado if resultado else None
 
         if not paciente_data:
             print("El paciente no existe en la lista")
@@ -345,7 +363,7 @@ def cancelarTurno():
             FuncionesGenerales.limpiar_pantalla()
             return
 
-        turnos = Storage.Turnos.buscar_por_paciente(dni_paciente)
+        turnos = gestor_datos.buscar_turnos_por_paciente(dni_paciente)
 
         if not turnos:
             print("El paciente no tiene turnos agendados")
@@ -360,7 +378,7 @@ def cancelarTurno():
         id_turno = int(input())
 
         turno_encontrado = None
-        for turno in Storage.Turnos.listar():
+        for turno in gestor_datos.listar_turnos():
             if (
                 turno["id"] == id_turno
                 and turno["paciente_dni"] == dni_paciente
@@ -375,7 +393,7 @@ def cancelarTurno():
             FuncionesGenerales.limpiar_pantalla()
             return
 
-        medico_data = Storage.Medicos.obtener(turno_encontrado["medico_dni"])
+        medico_data = gestor_datos.obtener_medico(turno_encontrado["medico_dni"])
 
         print("\n" + "=" * 40)
         print("Resumen del turno a cancelar:")
@@ -395,8 +413,8 @@ def cancelarTurno():
         ):
             return
 
-        Storage.Turnos.cancelar(turno_encontrado["id"])
-        Storage.Historial.actualizar_estado(turno_encontrado["id"], "Cancelado")
+        gestor_datos.cancelar_turno(turno_encontrado["id"])
+        gestor_datos.actualizar_estado_historial(turno_encontrado["id"], "Cancelado")
 
         print("\nEl turno se canceló correctamente")
         FuncionesGenerales.pausar()
@@ -409,7 +427,7 @@ def mostrar_turnos_filtrados(dni_paciente, filtro):
     fecha_hoy = (hoy.year, hoy.month, hoy.day)
 
     todos_turnos = list(
-        filter(lambda t: t["paciente_dni"] == dni_paciente, Storage.Turnos.listar())
+        filter(lambda t: t["paciente_dni"] == dni_paciente, gestor_datos.listar_turnos())
     )
 
     if not todos_turnos:
@@ -442,7 +460,7 @@ def mostrar_turnos_filtrados(dni_paciente, filtro):
     print("-" * 95)
 
     for turno in sorted(turnos, key=lambda t: tuple(t["fecha"])):
-        medico = Storage.Medicos.obtener(turno["medico_dni"])
+        medico = gestor_datos.obtener_medico(turno["medico_dni"])
         fecha_str = (
             f"{turno['fecha'][2]:02d}/{turno['fecha'][1]:02d}/{turno['fecha'][0]}"
         )
@@ -456,8 +474,8 @@ def verTurnosPaciente():
     while True:
         Pacientes.mostrarLista()
         dni_paciente = FuncionesGenerales.CargarDNI("paciente para ver sus turnos")
-        resultado = Storage.Pacientes.obtener(dni_paciente)
-        paciente_data = resultado[1] if resultado else None
+        resultado = gestor_datos.obtener_paciente(dni_paciente)
+        paciente_data = resultado if resultado else None
 
         if not paciente_data:
             print("El paciente no existe en la lista")

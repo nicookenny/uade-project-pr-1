@@ -1,19 +1,19 @@
-import Storage
+import gestor_datos
 import FuncionesGenerales
 
 def CargarObraSocial():
     print("=" * 40)
     print("Seleccione una Obra Social:")
-    for i, obra in enumerate(Storage.obras_y_prepagas_arg, 1):
+    for i, obra in enumerate(gestor_datos.obras_y_prepagas_arg, 1):
         print(f"[{i}] {obra}")
     print("=" * 40)
 
     while True:
         try:
             opcion = int(input("Ingrese el número de la Obra Social: "))
-            if 1 <= opcion <= len(Storage.obras_y_prepagas_arg):
-                return Storage.obras_y_prepagas_arg[opcion - 1]
-            print(f"Opción inválida. Debe estar entre 1 y {len(Storage.obras_y_prepagas_arg)}")
+            if 1 <= opcion <= len(gestor_datos.obras_y_prepagas_arg):
+                return gestor_datos.obras_y_prepagas_arg[opcion - 1]
+            print(f"Opción inválida. Debe estar entre 1 y {len(gestor_datos.obras_y_prepagas_arg)}")
         except ValueError:
             print("Debe ingresar un número")
 
@@ -27,12 +27,28 @@ def CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, ObraSocial):
 
 def mostrarLista():
     FuncionesGenerales.limpiar_pantalla()
-    print(f"{'DNI':<8} {'Nombre':<20} {'Edad':<12} {'Obra Social'}")
-    print("-" * 102)
-    for pacienteWithKey in Storage.Pacientes.listar():
+    ancho_tabla = 102
+    titulo = "LISTADO DE PACIENTES"
+  
+    print("=" * ancho_tabla)
+    print(titulo.center(ancho_tabla))
+    print("=" * ancho_tabla)
+    
+    print(f"{'DNI':<12} {'Nombre':<25} {'Edad':<8} {'Obra Social':<57}")
+    print("-" * ancho_tabla)
+    
+    lista_pacientes = gestor_datos.datos["pacientes"]
+    
+    if not lista_pacientes:
+        print("No hay pacientes registrados.".center(ancho_tabla))
+
+    for paciente in lista_pacientes:
+        edad = FuncionesGenerales.CalculoEdad(paciente['Fecha de Nacimiento'])
         print(
-            f"{pacienteWithKey['DNI']:<8} {pacienteWithKey['Nombre']:<20} {FuncionesGenerales.CalculoEdad(pacienteWithKey['Fecha de Nacimiento']):<12} {pacienteWithKey['Obra Social']}"
+            f"{paciente['DNI']:<12} {paciente['Nombre']:<25} {edad:<8} {paciente['Obra Social']:<57}"
         )
+    
+    print("=" * ancho_tabla)
     FuncionesGenerales.pausar()
 
 def visualizarDatos(lista,Encabezado):  
@@ -51,22 +67,23 @@ def agregarPaciente():
     while True:
         print("=" * 40)
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI("paciente")
-        paciente_info = Storage.Pacientes.obtener(dni)
+        dni = FuncionesGenerales.CargarDNI("paciente que quiere agregar")
+        paciente_info = gestor_datos.obtener_paciente(dni)
         if paciente_info:
-            print(f"El paciente {paciente_info[1]['Nombre']} ya existe")
+            print(f"El paciente {paciente_info['Nombre']} ya existe")
             FuncionesGenerales.pausar()
             FuncionesGenerales.limpiar_pantalla()
         else:
             nombre = FuncionesGenerales.CargarNombre()
             FechaDeNacimiento = FuncionesGenerales.CargarFechaDeNacimiento()
+            FuncionesGenerales.limpiar_pantalla()
             obrasocial = CargarObraSocial()
             newPaciente=CargaDeNuevoPaciente(nombre, dni, FechaDeNacimiento, obrasocial)
             visualizarDatos(newPaciente,Encabezado="Resumen de datos del nuevo paciente:")
             if not FuncionesGenerales.confirmar_accion("¿Desea confirmar el alta del paciente?", "Alta cancelada por el usuario."):
                 return
 
-            Storage.Pacientes.agregar(newPaciente)
+            gestor_datos.agregar_paciente(newPaciente)
             print(f"El paciente {nombre} se agregó correctamente")
             FuncionesGenerales.pausar()
             break
@@ -77,22 +94,22 @@ def agregarPaciente():
 def eliminarPaciente():
     while True:
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI("paciente")
+        dni = FuncionesGenerales.CargarDNI("paciente que quiere eliminar")
 
-        paciente_info = Storage.Pacientes.obtener(dni)
+        paciente_info = gestor_datos.obtener_paciente(dni)
         if not paciente_info:
             print("El paciente no existe en la lista")
             FuncionesGenerales.pausar()
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        _, datos = paciente_info
+        datos = paciente_info
         nombre = datos["Nombre"]
         visualizarDatos(datos,Encabezado="Datos del paciente a eliminar:")
         if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Eliminación cancelada por el usuario."):
             return
 
-        Storage.Pacientes.eliminar(dni)
+        gestor_datos.eliminar_paciente(dni)
         print(f"El paciente {nombre} se elimino correctamente de la lista")
         FuncionesGenerales.pausar()
         mostrarLista()
@@ -104,16 +121,16 @@ def modificarPaciente():
     FuncionesGenerales.limpiar_pantalla()
     while True:
         mostrarLista()
-        dni = FuncionesGenerales.CargarDNI("paciente")
+        dni = FuncionesGenerales.CargarDNI("paciente que quiere modificar")
 
-        paciente_info = Storage.Pacientes.obtener(dni)
+        paciente_info = gestor_datos.obtener_paciente(dni)
         if not paciente_info:
             print("El paciente no esta en la lista")
             FuncionesGenerales.pausar()
             FuncionesGenerales.limpiar_pantalla()
             continue
 
-        _, datos = paciente_info
+        datos = paciente_info
 
         FechaDeNacimiento = FuncionesGenerales.CargarFechaDeNacimiento()
         nombre = FuncionesGenerales.CargarNombre()
@@ -131,7 +148,7 @@ def modificarPaciente():
         if not FuncionesGenerales.confirmar_accion("¿Desea confirmar?", "Modificación cancelada por el usuario."):
             return
 
-        Storage.Pacientes.modificar(dni, new_data)
+        gestor_datos.modificar_paciente(dni, new_data)
         print("Se han modificado sus datos correctamente\n")
         FuncionesGenerales.pausar()
         mostrarLista()
@@ -140,7 +157,7 @@ def modificarPaciente():
 
 
 def buscarPaciente():
-    paciente = FuncionesGenerales.buscar_persona(Storage.Pacientes.listar(), tipo_busqueda="ambos")
+    paciente = FuncionesGenerales.buscar_persona(gestor_datos.listar_pacientes(), tipo_busqueda="ambos")
     if paciente:
         visualizarDatos(paciente, Encabezado="Datos del paciente encontrado:")
         FuncionesGenerales.pausar()
