@@ -1,0 +1,317 @@
+[
+  {
+    "DNI": 24100100,
+    "Nombre": "Carlos Fuentes",
+    "Fecha de Nacimiento": [
+      1975,
+      5,
+      20
+    ]
+  },
+  {
+    "DNI": 25200200,
+    "Nombre": "Jennifer Aniston",
+    "Fecha de Nacimiento": [
+      1982,
+      11,
+      15
+    ]
+  },
+  {
+    "DNI": 26300300,
+    "Nombre": "Miguel Angel Rodriguez",
+    "Fecha de Nacimiento": [
+      1988,
+      3,
+      10
+    ]
+  },
+  {
+    "DNI": 27400400,
+    "Nombre": "Sarah Connor",
+    "Fecha de Nacimiento": [
+      1979,
+      7,
+      4
+    ]
+  },
+  {
+    "DNI": 28500500,
+    "Nombre": "Roberto Gomez",
+    "Fecha de Nacimiento": [
+      1965,
+      1,
+      25
+    ]
+  },
+  {
+    "DNI": 30100001,
+    "Nombre": "Juan Perez",
+    "Fecha de Nacimiento": [
+      1990,
+      2,
+      1
+    ]
+  },
+  {
+    "DNI": 30100002,
+    "Nombre": "Maria Garcia",
+    "Fecha de Nacimiento": [
+      1992,
+      3,
+      5
+    ]
+  },
+  {
+    "DNI": 30100003,
+    "Nombre": "John Smith",
+    "Fecha de Nacimiento": [
+      1985,
+      4,
+      10
+    ]
+  },
+  {
+    "DNI": 30100004,
+    "Nombre": "Emily Davis",
+    "Fecha de Nacimiento": [
+      1995,
+      5,
+      15
+    ]
+  },
+  {
+    "DNI": 30100005,
+    "Nombre": "Pedro Sanchez",
+    "Fecha de Nacimiento": [
+      1980,
+      6,
+      20
+    ]
+  },
+  {
+    "DNI": 40200001,
+    "Nombre": "Kevin McAllister",
+    "Fecha de Nacimiento": [
+      2015,
+      1,
+      10
+    ]
+  },
+  {
+    "DNI": 40200002,
+    "Nombre": "Sofia Vergara",
+    "Fecha de Nacimiento": [
+      2016,
+      2,
+      15
+    ]
+  },
+  {
+    "DNI": 40200003,
+    "Nombre": "Mateo Messi",
+    "Fecha de Nacimiento": [
+      2017,
+      3,
+      20
+    ]
+  },
+  {
+    "DNI": 40200004,
+    "Nombre": "Lisa Simpson",
+    "Fecha de Nacimiento": [
+      2014,
+      4,
+      25
+    ]
+  },
+  {
+    "DNI": 40200005,
+    "Nombre": "Benito Martinez",
+    "Fecha de Nacimiento": [
+      2018,
+      5,
+      30
+    ]
+  },
+  {
+    "DNI": 30300001,
+    "Nombre": "Carmen Electra",
+    "Fecha de Nacimiento": [
+      1993,
+      7,
+      1
+    ]
+  },
+  {
+    "DNI": 30300002,
+    "Nombre": "Brad Pitt",
+    "Fecha de Nacimiento": [
+      1970,
+      8,
+      5
+    ]
+  },
+  {
+    "DNI": 30300003,
+    "Nombre": "Salma Hayek",
+    "Fecha de Nacimiento": [
+      1975,
+      9,
+      10
+    ]
+  },
+  {
+    "DNI": 30300004,
+    "Nombre": "Will Smith",
+    "Fecha de Nacimiento": [
+      1968,
+      10,
+      15
+    ]
+  },
+  {
+    "DNI": 30300005,
+    "Nombre": "Thalia Sodi",
+    "Fecha de Nacimiento": [
+      1981,
+      11,
+      20
+    ]
+  },
+  {
+    "DNI": 30400001,
+    "Nombre": "Bruce Wayne",
+    "Fecha de Nacimiento": [
+      1985,
+      1,
+      1
+    ]
+  },
+  {
+    "DNI": 30400002,
+    "Nombre": "Clark Kent",
+    "Fecha de Nacimiento": [
+      1986,
+      2,
+      2
+    ]
+  },
+  {
+    "DNI": 30400003,
+    "Nombre": "Diana Prince",
+    "Fecha de Nacimiento": [
+      1987,
+      3,
+      3
+    ]
+  },
+  {
+    "DNI": 30400004,
+    "Nombre": "Barry Allen",
+    "Fecha de Nacimiento": [
+      1995,
+      4,
+      4
+    ]
+  },
+  {
+    "DNI": 30400005,
+    "Nombre": "Hal Jordan",
+    "Fecha de Nacimiento": [
+      1990,
+      5,
+      5
+    ]
+  },
+  {
+    "DNI": 30500001,
+    "Nombre": "Tony Stark",
+    "Fecha de Nacimiento": [
+      1970,
+      6,
+      6
+    ]
+  },
+  {
+    "DNI": 30500002,
+    "Nombre": "Steve Rogers",
+    "Fecha de Nacimiento": [
+      1940,
+      7,
+      4
+    ]
+  },
+  {
+    "DNI": 30500003,
+    "Nombre": "Natasha Romanoff",
+    "Fecha de Nacimiento": [
+      1984,
+      11,
+      22
+    ]
+  },
+  {
+    "DNI": 30500004,
+    "Nombre": "Bruce Banner",
+    "Fecha de Nacimiento": [
+      1975,
+      12,
+      18
+    ]
+  },
+  {
+    "DNI": 30500005,
+    "Nombre": "Wanda Maximoff",
+    "Fecha de Nacimiento": [
+      1999,
+      2,
+      10
+    ]
+  },
+  {
+    "DNI": 95862099,
+    "Nombre": "Quijada Jesus",
+    "Fecha de Nacimiento": [
+      2000,
+      2,
+      3
+    ]
+  },
+  {
+    "DNI": 20309012,
+    "Nombre": "Oliver Gomez",
+    "Fecha de Nacimiento": [
+      2025,
+      11,
+      26
+    ]
+  },
+  {
+    "DNI": 30294070,
+    "Nombre": "Gomez Oliver",
+    "Fecha de Nacimiento": [
+      2000,
+      10,
+      15
+    ]
+  },
+  {
+    "DNI": 95840724,
+    "Nombre": "Salas Sofia",
+    "Fecha de Nacimiento": [
+      2025,
+      3,
+      28
+    ]
+  },
+  {
+    "DNI": 95860317,
+    "Nombre": "Martinez Karem",
+    "Fecha de Nacimiento": [
+      1979,
+      3,
+      26
+    ]
+  }
+]

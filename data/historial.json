@@ -1,49 +1,325 @@
 [
   {
     "id": 1,
-    "medico_dni": 41560910,
-    "paciente_dni": 44593512,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100001,
     "turno_id": 1,
     "fecha": [
-      2025,
-      11,
-      5
+      2024,
+      3,
+      11
     ],
     "estado": "Confirmado"
   },
   {
     "id": 2,
-    "medico_dni": 41560910,
-    "paciente_dni": 44593512,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100002,
     "turno_id": 2,
     "fecha": [
-      2025,
-      12,
+      2024,
+      3,
       11
     ],
-    "estado": "Cancelado"
+    "estado": "Confirmado"
   },
   {
     "id": 3,
-    "medico_dni": 47130033,
-    "paciente_dni": 41560910,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100003,
     "turno_id": 3,
     "fecha": [
-      2025,
-      11,
-      17
+      2024,
+      3,
+      12
     ],
     "estado": "Confirmado"
   },
   {
     "id": 4,
-    "medico_dni": 47130033,
-    "paciente_dni": 41560910,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100004,
     "turno_id": 4,
     "fecha": [
-      2025,
-      11,
+      2024,
+      3,
+      12
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 5,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100005,
+    "turno_id": 5,
+    "fecha": [
+      2024,
+      3,
+      15
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 6,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200001,
+    "turno_id": 6,
+    "fecha": [
+      2024,
+      4,
+      11
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 7,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200002,
+    "turno_id": 7,
+    "fecha": [
+      2024,
+      4,
+      11
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 8,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200003,
+    "turno_id": 8,
+    "fecha": [
+      2024,
+      4,
       18
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 9,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200004,
+    "turno_id": 9,
+    "fecha": [
+      2024,
+      4,
+      18
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 10,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200005,
+    "turno_id": 10,
+    "fecha": [
+      2024,
+      4,
+      25
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 11,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300001,
+    "turno_id": 11,
+    "fecha": [
+      2024,
+      5,
+      6
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 12,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300002,
+    "turno_id": 12,
+    "fecha": [
+      2024,
+      5,
+      6
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 13,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300003,
+    "turno_id": 13,
+    "fecha": [
+      2024,
+      5,
+      8
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 14,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300004,
+    "turno_id": 14,
+    "fecha": [
+      2024,
+      5,
+      8
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 15,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300005,
+    "turno_id": 15,
+    "fecha": [
+      2024,
+      5,
+      10
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 16,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400001,
+    "turno_id": 16,
+    "fecha": [
+      2024,
+      6,
+      4
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 17,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400002,
+    "turno_id": 17,
+    "fecha": [
+      2024,
+      6,
+      4
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 18,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400003,
+    "turno_id": 18,
+    "fecha": [
+      2024,
+      6,
+      11
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 19,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400004,
+    "turno_id": 19,
+    "fecha": [
+      2024,
+      6,
+      11
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 20,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400005,
+    "turno_id": 20,
+    "fecha": [
+      2024,
+      6,
+      18
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 21,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500001,
+    "turno_id": 21,
+    "fecha": [
+      2024,
+      7,
+      1
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 22,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500002,
+    "turno_id": 22,
+    "fecha": [
+      2024,
+      7,
+      2
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 23,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500003,
+    "turno_id": 23,
+    "fecha": [
+      2024,
+      7,
+      8
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 24,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500004,
+    "turno_id": 24,
+    "fecha": [
+      2024,
+      7,
+      9
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 25,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500005,
+    "turno_id": 25,
+    "fecha": [
+      2024,
+      7,
+      15
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 26,
+    "medico_dni": 24100100,
+    "paciente_dni": 95862099,
+    "turno_id": 26,
+    "fecha": [
+      2025,
+      12,
+      1
+    ],
+    "estado": "Cancelado"
+  },
+  {
+    "id": 27,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100001,
+    "turno_id": 27,
+    "fecha": [
+      2025,
+      12,
+      1
     ],
     "estado": "Confirmado"
   }

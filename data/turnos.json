@@ -1,12 +1,27 @@
 [
   {
     "id": 1,
-    "medico_dni": 41560910,
-    "paciente_dni": 44593512,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100001,
     "fecha": [
-      2025,
-      11,
-      5
+      2024,
+      3,
+      11
+    ],
+    "hora": [
+      9,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 2,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100002,
+    "fecha": [
+      2024,
+      3,
+      11
     ],
     "hora": [
       9,
@@ -15,48 +30,378 @@
     "estado": "Confirmado"
   },
   {
-    "medico_dni": 41560910,
-    "paciente_dni": 44593512,
+    "id": 3,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100003,
     "fecha": [
-      2025,
-      12,
+      2024,
+      3,
+      12
+    ],
+    "hora": [
+      10,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 4,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100004,
+    "fecha": [
+      2024,
+      3,
+      12
+    ],
+    "hora": [
+      10,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 5,
+    "medico_dni": 24100100,
+    "paciente_dni": 30100005,
+    "fecha": [
+      2024,
+      3,
+      15
+    ],
+    "hora": [
+      11,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 6,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200001,
+    "fecha": [
+      2024,
+      4,
       11
     ],
     "hora": [
       9,
       0
     ],
-    "estado": "Cancelado",
-    "id": 2
+    "estado": "Confirmado"
   },
   {
-    "medico_dni": 47130033,
-    "paciente_dni": 41560910,
+    "id": 7,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200002,
     "fecha": [
-      2025,
-      11,
-      17
+      2024,
+      4,
+      11
     ],
     "hora": [
       9,
       30
     ],
-    "estado": "Confirmado",
-    "id": 3
+    "estado": "Confirmado"
   },
   {
-    "medico_dni": 47130033,
-    "paciente_dni": 41560910,
+    "id": 8,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200003,
     "fecha": [
-      2025,
-      11,
+      2024,
+      4,
       18
+    ],
+    "hora": [
+      14,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 9,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200004,
+    "fecha": [
+      2024,
+      4,
+      18
+    ],
+    "hora": [
+      14,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 10,
+    "medico_dni": 25200200,
+    "paciente_dni": 40200005,
+    "fecha": [
+      2024,
+      4,
+      25
+    ],
+    "hora": [
+      15,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 11,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300001,
+    "fecha": [
+      2024,
+      5,
+      6
+    ],
+    "hora": [
+      14,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 12,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300002,
+    "fecha": [
+      2024,
+      5,
+      6
+    ],
+    "hora": [
+      14,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 13,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300003,
+    "fecha": [
+      2024,
+      5,
+      8
+    ],
+    "hora": [
+      15,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 14,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300004,
+    "fecha": [
+      2024,
+      5,
+      8
+    ],
+    "hora": [
+      15,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 15,
+    "medico_dni": 26300300,
+    "paciente_dni": 30300005,
+    "fecha": [
+      2024,
+      5,
+      10
+    ],
+    "hora": [
+      16,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 16,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400001,
+    "fecha": [
+      2024,
+      6,
+      4
+    ],
+    "hora": [
+      9,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 17,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400002,
+    "fecha": [
+      2024,
+      6,
+      4
+    ],
+    "hora": [
+      9,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 18,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400003,
+    "fecha": [
+      2024,
+      6,
+      11
+    ],
+    "hora": [
+      10,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 19,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400004,
+    "fecha": [
+      2024,
+      6,
+      11
+    ],
+    "hora": [
+      10,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 20,
+    "medico_dni": 27400400,
+    "paciente_dni": 30400005,
+    "fecha": [
+      2024,
+      6,
+      18
+    ],
+    "hora": [
+      11,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 21,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500001,
+    "fecha": [
+      2024,
+      7,
+      1
+    ],
+    "hora": [
+      13,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 22,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500002,
+    "fecha": [
+      2024,
+      7,
+      2
     ],
     "hora": [
       13,
       30
     ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 23,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500003,
+    "fecha": [
+      2024,
+      7,
+      8
+    ],
+    "hora": [
+      16,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 24,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500004,
+    "fecha": [
+      2024,
+      7,
+      9
+    ],
+    "hora": [
+      16,
+      30
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "id": 25,
+    "medico_dni": 28500500,
+    "paciente_dni": 30500005,
+    "fecha": [
+      2024,
+      7,
+      15
+    ],
+    "hora": [
+      17,
+      0
+    ],
+    "estado": "Confirmado"
+  },
+  {
+    "medico_dni": 24100100,
+    "paciente_dni": 95862099,
+    "fecha": [
+      2025,
+      12,
+      1
+    ],
+    "hora": [
+      9,
+      0
+    ],
+    "estado": "Cancelado",
+    "id": 26
+  },
+  {
+    "medico_dni": 24100100,
+    "paciente_dni": 30100001,
+    "fecha": [
+      2025,
+      12,
+      1
+    ],
+    "hora": [
+      9,
+      0
+    ],
     "estado": "Confirmado",
-    "id": 4
+    "id": 27
   }
 ]

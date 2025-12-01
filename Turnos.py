@@ -1,518 +1,324 @@
-import FuncionesGenerales
-import Medicos
+import FuncionesGenerales as FG
 import Pacientes
+import Medicos
 import gestor_datos
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
+
+# Constantes para visualización
+MESES = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 
-def obtener_dia_semana(fecha):
-    dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-    fecha_obj = date(fecha[0], fecha[1], fecha[2])
-    return dias[fecha_obj.weekday()]
+def _es_bisiesto(anio):
+    """Retorna True si el año es bisiesto (regla gregoriana)."""
+    return (anio % 4 == 0 and anio % 100 != 0) or (anio % 400 == 0)
 
+def _dias_en_mes(anio, mes):
+    """Devuelve cuántos días tiene un mes específico."""
+    # Índice 0 vacío para que coincida mes 1 con Enero
+    dias = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    
+    # Ajuste Febrero bisiesto
+    if mes == 2 and _es_bisiesto(anio):
+        return 29
+    return dias[mes]
 
-def obtener_slots_disponibles(medico_dni, fecha):
+def _generar_matriz_mes(anio, mes):
+    # 1. Averiguar qué día de la semana cae el 1ro (0=Lunes ... 6=Domingo)
+    primer_dia_obj = date(anio, mes, 1)
+    dia_inicio_semana = primer_dia_obj.weekday()
+    
+    total_dias = _dias_en_mes(anio, mes)
+    
+    lista_dias = [0] * dia_inicio_semana
+    lista_dias.extend(range(1, total_dias + 1))
+    
+    # 3. Agrupar en semanas de 7 días
+    matriz = []
+    semana_actual = []
+    
+    for dia in lista_dias:
+        semana_actual.append(dia)
+        if len(semana_actual) == 7:
+            matriz.append(semana_actual)
+            semana_actual = []
+            
+    # 4. Rellenar última semana si quedó incompleta
+    if semana_actual:
+        while len(semana_actual) < 7:
+            semana_actual.append(0)
+        matriz.append(semana_actual)
+        
+    return matriz
+
+# --- LÓGICA DE TURNOS ---
+
+def obtener_slots(medico_dni, fecha_tuple):
+    """
+    Devuelve lista de horarios disponibles.
+    Filtra los horarios ocupados Y los horarios pasados (si es hoy).
+    """
     medico = gestor_datos.obtener_medico(medico_dni)
-    if not medico:
-        return []
+    if not medico or "Horarios" not in medico: return []
 
-    dia_semana = obtener_dia_semana(fecha)
-    horario = medico["Horarios"].get(dia_semana)
+    nombres_dias = {0: "Lunes", 1: "Martes", 2: "Miércoles", 3: "Jueves", 4: "Viernes", 5: "Sábado", 6: "Domingo"}
+    f_obj = date(*fecha_tuple)
+    nombre_dia = nombres_dias[f_obj.weekday()]
 
-    if not horario:
-        return []
+    horario_dia = medico["Horarios"].get(nombre_dia)
+    if not horario_dia: return [] # El médico no trabaja ese día
 
-    hora_inicio, hora_fin = horario
+    hora_inicio, hora_fin = horario_dia
     slots = []
+    
+    hora_actual = hora_inicio
+    minuto_actual = 0
+    
+    # Cargamos turnos ocupados de la BD
+    ocupados = set()
+    for t in gestor_datos.listar_turnos():
+        if t["medico_dni"] == medico_dni and t["estado"] == "Confirmado":
+            ocupados.add((tuple(t["fecha"]), tuple(t["hora"])))
+    
+    ahora_mismo = datetime.now()
 
-    hora = hora_inicio
-    minuto = 0
-    while hora < hora_fin or (hora == hora_fin and minuto == 0):
-        slot = (hora, minuto)
-        ocupado = any(
-            t["medico_dni"] == medico_dni
-            and t["fecha"] == fecha
-            and t["hora"] == slot
-            and t["estado"] == "Confirmado"
-            for t in gestor_datos.listar_turnos()
-        )
-        if not ocupado:
-            slots.append(slot)
+    # Generamos los slots de 30 mins
+    while hora_actual < hora_fin:
+        slot_tiempo = (hora_actual, minuto_actual)
+        
+        # 1. Chequeo de base de datos
+        esta_ocupado = (fecha_tuple, slot_tiempo) in ocupados
+        
+        # 2. Chequeo de tiempo real (No mostrar horarios pasados)
+        fecha_hora_slot = datetime(fecha_tuple[0], fecha_tuple[1], fecha_tuple[2], hora_actual, minuto_actual)
+        es_pasado = fecha_hora_slot < ahora_mismo
 
-        minuto += 30
-        if minuto >= 60:
-            minuto = 0
-            hora += 1
+        if not esta_ocupado and not es_pasado:
+            slots.append(slot_tiempo)
 
-    if slots and slots[-1][0] >= hora_fin:
-        slots.pop()
-
+        # Avanzar 30 mins
+        minuto_actual += 30
+        if minuto_actual == 60:
+            minuto_actual = 0
+            hora_actual += 1
+            
     return slots
 
+def visualizar_calendario_grafico(medico_dni):
+    """Muestra el calendario visual usando la matriz manual."""
+    medico = gestor_datos.obtener_medico(medico_dni)
+    FG.limpiar_pantalla()
+    print("=" * 80)
+    print(f" CALENDARIO DE DISPONIBILIDAD: Dr/a. {medico['Nombre']} ".center(80))
+    print("=" * 80)
+    print(" REFERENCIA: [Día (Turnos Libres)] | --- : Sin atención/Pasado \n")
 
-def mostrar_turnos_paciente(dni_paciente):
-    turnos = gestor_datos.buscar_turnos_por_paciente(dni_paciente)
-    if not turnos:
-        print("El paciente no tiene turnos agendados")
-        return
-
-    print("\nTurnos del paciente:")
-    print(f"{'ID':<5} {'Médico':<20} {'Especialidad':<30} {'Fecha':<12} {'Hora':<8}")
-    print("-" * 85)
-
-    for turno in turnos:
-        medico = gestor_datos.obtener_medico(turno["medico_dni"])
-        fecha_str = (
-            f"{turno['fecha'][2]:02d}/{turno['fecha'][1]:02d}/{turno['fecha'][0]}"
-        )
-        hora_str = f"{turno['hora'][0]:02d}:{turno['hora'][1]:02d}"
-        print(
-            f"{turno['id']:<5} {medico['Nombre']:<20} {medico['Especialidad']:<30} {fecha_str:<12} {hora_str:<8}"
-        )
-
-
-def mostrar_calendario_disponibilidad(medico_dni, medico_data):
     hoy = date.today()
-    meses_a_mostrar = {}
+    header_dias = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sá", "Do"]
 
-    for i in range(30):
-        fecha_futura = hoy + timedelta(days=i)
-        fecha_tuple = (fecha_futura.year, fecha_futura.month, fecha_futura.day)
-        dia_semana = obtener_dia_semana(fecha_tuple)
-        horario = medico_data["Horarios"].get(dia_semana)
+    # Mostramos mes actual y siguiente
+    for delta in range(2):
+        mes_calc = hoy.month + delta
+        anio_calc = hoy.year
+        if mes_calc > 12:
+            mes_calc -= 12
+            anio_calc += 1
+            
+        nombre_mes = MESES[mes_calc]
+        print(f"   >>>  {nombre_mes.upper()} {anio_calc}  <<<")
+        
+        # Manera de alinear cabecera 
+        linea_head = " "
+        for d in header_dias:
+            linea_head += f"{d:^10}"
+        print(linea_head)
+        print(" " + "-"*70)
 
-        mes_año = (fecha_futura.year, fecha_futura.month)
-        if mes_año not in meses_a_mostrar:
-            meses_a_mostrar[mes_año] = {}
+        # Generación de matriz propia
+        matriz = _generar_matriz_mes(anio_calc, mes_calc)
 
-        if horario:
-            slots = obtener_slots_disponibles(medico_dni, fecha_tuple)
-            meses_a_mostrar[mes_año][fecha_futura.day] = len(slots) if slots else 0
-        else:
-            meses_a_mostrar[mes_año][fecha_futura.day] = -1
-
-    meses_nombres = [
-        "",
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre",
-    ]
-
-    for mes_año, dias_info in meses_a_mostrar.items():
-        año, mes = mes_año
-        print(f"\n        {meses_nombres[mes]} {año}")
-        print("  L      M      X      J      V      S      D")
-
-        primer_dia = date(año, mes, 1)
-        dia_semana_inicio = primer_dia.weekday()
-
-        if mes == 12:
-            ultimo_dia = 31
-        else:
-            ultimo_dia = (date(año, mes + 1, 1) - timedelta(days=1)).day
-
-        semana = []
-        for _ in range(dia_semana_inicio):
-            semana.append("       ")
-
-        for dia in range(1, ultimo_dia + 1):
-            if dia in dias_info:
-                if dias_info[dia] == -1:
-                    semana.append(f"{dia:2d}(-)".ljust(7))
-                elif dias_info[dia] == 0:
-                    semana.append(f"{dia:2d}(-)".ljust(7))
-                else:
-                    semana.append(f"{dia:2d}({dias_info[dia]:2d})".ljust(7))
-            else:
-                if dia < hoy.day and mes == hoy.month and año == hoy.year:
-                    semana.append("       ")
-                else:
-                    semana.append("       ")
-
-            if len(semana) == 7:
-                print("".join(semana))
-                semana = []
-
-        if semana:
-            while len(semana) < 7:
-                semana.append("       ")
-            print("".join(semana))
-
-    print("\nDD(N) = Día DD con N turnos disponibles  |  DD(-) = No disponible")
-
-
-def agendarTurno():
-    while True:
-        FuncionesGenerales.limpiar_pantalla()
-
-        print("=" * 40)
-        print("[1] Ingresar DNI del paciente")
-        print("[2] Buscar paciente por DNI o apellido")
-        print("=" * 40)
-        opcion = input("Elegir opción (1 o 2): ").strip()
-
-        if opcion == "1":
-            Pacientes.mostrarLista()
-            dni_paciente = FuncionesGenerales.CargarDNI(
-                "paciente que quiere agendar el turno"
-            )
-            resultado = gestor_datos.obtener_paciente(dni_paciente)
-            paciente_data = resultado if resultado else None
-
-            if not paciente_data:
-                print("El paciente no existe en la lista")
-                FuncionesGenerales.pausar()
-                FuncionesGenerales.limpiar_pantalla()
-                continue
-        elif opcion == "2":
-            paciente_data = Pacientes.buscarPaciente()
-            if not paciente_data:
-                FuncionesGenerales.limpiar_pantalla()
-                continue
-            dni_paciente = paciente_data["DNI"]
-        else:
-            print("Opción inválida")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            continue
-
-        Pacientes.visualizarDatos(
-            paciente_data, Encabezado="Datos del paciente seleccionado"
-        )
-        if not FuncionesGenerales.confirmar_accion(
-            "¿Desea continuar?", "Acción cancelada por el usuario."
-        ):
-            return
-
-        while True:
-            print("=" * 40)
-            print("[1] Ingresar DNI del médico")
-            print("[2] Buscar médico por DNI o apellido")
-            print("=" * 40)
-            opcion_medico = input("Elegir opción (1 o 2): ").strip()
-
-            if opcion_medico == "1":
-                Medicos.MostrartablaMedicos()
-                dni_medico = FuncionesGenerales.CargarDNI("medico")
-                medico_data = gestor_datos.obtener_medico(dni_medico)
-
-                if not medico_data:
-                    print("El medico no esta en la lista")
-                    FuncionesGenerales.pausar()
-                    FuncionesGenerales.limpiar_pantalla()
-                    continue
-            elif opcion_medico == "2":
-                medico_data = Medicos.buscarMedico()
-                if not medico_data:
-                    continue
-                dni_medico = medico_data["DNI"]
-            else:
-                print("Opción inválida")
-                FuncionesGenerales.pausar()
-                FuncionesGenerales.limpiar_pantalla()
-                continue
-
-            print(
-                f"\nMédico seleccionado: {medico_data['Nombre']} - {medico_data['Especialidad']}"
-            )
-
-            print("\n" + "=" * 60)
-            print(f" Médico seleccionado: {medico_data['Nombre']} - {medico_data['Especialidad']}")
-            print("=" * 60)
-
-            # Restricción: el médico no puede ser el mismo que el paciente
-            if dni_medico == dni_paciente:
-                print("\nError: El médico seleccionado tiene el mismo DNI que el paciente.")
-                print("No es posible agendar un turno cuando el médico es el paciente.")
-                FuncionesGenerales.pausar()
-                FuncionesGenerales.limpiar_pantalla()
-                continue
-
-            print("\nCalendario de Turnos Disponibles (próximos 30 días):")
-            mostrar_calendario_disponibilidad(dni_medico, medico_data)
-
-            hoy = date.today()
-
-            while True:
-                fecha_input = input("\nIngrese la fecha (DD-MM-YYYY): ")
-
-                try:
-                    partes = fecha_input.split("-")
-                    if len(partes) != 3:
-                        print("Formato inválido. Use DD-MM-YYYY")
-                        FuncionesGenerales.pausar()
-                        continue
-
-                    dia = int(partes[0])
-                    mes = int(partes[1])
-                    año = int(partes[2])
-
-                    fecha_turno = date(año, mes, dia)
-                    fecha_tuple = (año, mes, dia)
-
-                    if fecha_turno < hoy:
-                        print("La fecha no puede ser anterior a hoy")
-                        FuncionesGenerales.pausar()
-                        continue
-
-                    if fecha_turno > hoy + timedelta(days=30):
-                        print(
-                            "Solo puede agendar turnos con hasta 30 días de anticipación"
-                        )
-                        FuncionesGenerales.pausar()
-                        continue
-
+        for semana in matriz:
+            linea = " "
+            for dia in semana:
+                texto_celda = "---"
+                if dia != 0:
+                    fecha_iter = date(anio_calc, mes_calc, dia)
                     
-                    slots = obtener_slots_disponibles(dni_medico, fecha_tuple)
+                    if fecha_iter >= hoy:
+                        ft = (anio_calc, mes_calc, dia)
+                        cant = len(obtener_slots(medico_dni, ft))
+                        if cant > 0:
+                            texto_celda = f"[{dia:02d}({cant})]"
+                        else:
+                            texto_celda = f"[{dia:02d} (0)]"
+                    else:
+                        # Día pasado visual
+                        texto_celda = f" {dia:02d} .."
+                
+                linea += f"{texto_celda:^10}"
+            print(linea)
+            print(" " + "-"*70)
+        print("\n")
 
-                    if not slots:
-                        print(
-                            f"El médico no tiene disponibilidad para el día {obtener_dia_semana(fecha_tuple)}"
-                        )
-                        FuncionesGenerales.pausar()
-                        continue
-
-                    dia_semana = obtener_dia_semana(fecha_tuple)
-                    print(f"\nTurnos disponibles para el {dia:02d}/{mes:02d}/{año} ({dia_semana}):")
-                    print("-" * 50)
-
-                    # Mostrar slots en columnas para mejor lectura
-                    cols = 3
-                    for i, slot in enumerate(slots, 1):
-                        cell = f"[{i:2d}] {slot[0]:02d}:{slot[1]:02d}"
-                        print(cell.ljust(18), end="")
-                        if i % cols == 0:
-                            print()
-                    if len(slots) % cols != 0:
-                        print()
-                    print("\n" + "-" * 50)
-
-                    opcion = int(input("Seleccione el número del turno: "))
-
-                    if opcion < 1 or opcion > len(slots):
-                        print("Opción inválida")
-                        FuncionesGenerales.pausar()
-                        continue
-
-                    hora_seleccionada = slots[opcion - 1]
-
-                    ancho = 62
-                    print("\n" + "=" * ancho)
-                    print("Resumen del turno a agendar:".center(ancho))
-                    print("-" * ancho)
-                    print(f"{'Paciente:':20} {paciente_data['Nombre']} (DNI: {paciente_data['DNI']})")
-                    print(f"{'Médico:':20} {medico_data['Nombre']} (DNI: {medico_data['DNI']})")
-                    print(f"{'Especialidad:':20} {medico_data['Especialidad']}")
-                    print(f"{'Fecha:':20} {dia:02d}/{mes:02d}/{año} ({obtener_dia_semana(fecha_tuple)})")
-                    print(f"{'Hora:':20} {hora_seleccionada[0]:02d}:{hora_seleccionada[1]:02d}")
-                    print("-" * ancho)
-                    print("Nota: Revise los datos antes de confirmar".center(ancho))
-                    print("=" * ancho)
-
-                    if not FuncionesGenerales.confirmar_accion(
-                        "¿Desea confirmar el turno?", "Turno cancelado por el usuario."
-                    ):
-                        return
-
-                    nuevo_turno = {
-                        "medico_dni": dni_medico,
-                        "paciente_dni": dni_paciente,
-                        "fecha": fecha_tuple,
-                        "hora": hora_seleccionada,
-                        "estado": "Confirmado",
-                    }
-
-                    turno_id = gestor_datos.agregar_turno(nuevo_turno)
-                    gestor_datos.agregar_historial(
-                        dni_medico, dni_paciente, turno_id, fecha_tuple, "Confirmado"
-                    )
-
-                    print("\nEl turno se agendó correctamente")
-                    FuncionesGenerales.pausar()
-                    FuncionesGenerales.limpiar_pantalla()
-                    return
-
-                except Exception as e:
-                    print("Fecha inválida")
-                    FuncionesGenerales.pausar()
-                    FuncionesGenerales.registrarErrores(e)
-                    continue
-
-
-def cancelarTurno():
+def agendar_turno():
     while True:
-        Pacientes.mostrarLista()
-        dni_paciente = FuncionesGenerales.CargarDNI(
-            "paciente que quiere cancelar el turno"
-        )
-        resultado = gestor_datos.obtener_paciente(dni_paciente)
-        paciente_data = resultado if resultado else None
+        # 1. Paciente
+        Pacientes.mostrar_lista_pacientes()
+        print("\n[BUSCAR PACIENTE] Enter para iniciar (o '0' para salir):")
+        if input("> ") == "0": return
+        
+        paciente = FG.buscar_persona_ui(gestor_datos.listar_pacientes())
+        if not paciente: continue
+        
+        FG.limpiar_pantalla()
+        print(f"Paciente: {paciente['Nombre']}")
+        FG.pausar()
 
-        if not paciente_data:
-            print("El paciente no existe en la lista")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            return
-
-        turnos = gestor_datos.buscar_turnos_por_paciente(dni_paciente)
-
-        if not turnos:
-            print("El paciente no tiene turnos agendados")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            return
-
-        FuncionesGenerales.limpiar_pantalla()
-        mostrar_turnos_paciente(dni_paciente)
-
-        print("\nIngrese el ID del turno a cancelar->")
-        id_turno = int(input())
-
-        turno_encontrado = None
-        for turno in gestor_datos.listar_turnos():
-            if (
-                turno["id"] == id_turno
-                and turno["paciente_dni"] == dni_paciente
-                and turno["estado"] == "Confirmado"
-            ):
-                turno_encontrado = turno
-                break
-
-        if not turno_encontrado:
-            print("Turno no encontrado o ya cancelado")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
-            return
-
-        medico_data = gestor_datos.obtener_medico(turno_encontrado["medico_dni"])
-
-        print("\n" + "=" * 40)
-        print("Resumen del turno a cancelar:")
-        print(f"Paciente: {paciente_data['Nombre']} (DNI: {paciente_data['DNI']})")
-        print(f"Médico: {medico_data['Nombre']} (DNI: {medico_data['DNI']})")
-        print(f"Especialidad: {medico_data['Especialidad']}")
-        print(
-            f"Fecha: {turno_encontrado['fecha'][2]:02d}/{turno_encontrado['fecha'][1]:02d}/{turno_encontrado['fecha'][0]}"
-        )
-        print(
-            f"Hora: {turno_encontrado['hora'][0]:02d}:{turno_encontrado['hora'][1]:02d}"
-        )
-        print("=" * 40)
-
-        if not FuncionesGenerales.confirmar_accion(
-            "¿Desea cancelar el turno?", "Cancelación abortada por el usuario."
-        ):
-            return
-
-        gestor_datos.cancelar_turno(turno_encontrado["id"])
-        gestor_datos.actualizar_estado_historial(turno_encontrado["id"], "Cancelado")
-
-        print("\nEl turno se canceló correctamente")
-        FuncionesGenerales.pausar()
-        FuncionesGenerales.limpiar_pantalla()
-        return
-
-
-def mostrar_turnos_filtrados(dni_paciente, filtro):
-    hoy = date.today()
-    fecha_hoy = (hoy.year, hoy.month, hoy.day)
-
-    todos_turnos = list(
-        filter(lambda t: t["paciente_dni"] == dni_paciente, gestor_datos.listar_turnos())
-    )
-
-    if not todos_turnos:
-        print("El paciente no tiene turnos agendados")
-        return
-
-    if filtro == "todos":
-        turnos = todos_turnos
-    elif filtro == "futuros":
-        turnos = [
-            t
-            for t in todos_turnos
-            if tuple(t["fecha"]) >= fecha_hoy and t["estado"] == "Confirmado"
-        ]
-    elif filtro == "pasados":
-        turnos = [t for t in todos_turnos if tuple(t["fecha"]) < fecha_hoy]
-    else:
-        turnos = []
-
-    if not turnos:
-        if filtro == "futuros":
-            print("No hay turnos futuros pendientes")
-        elif filtro == "pasados":
-            print("No hay turnos pasados")
-        return
-
-    print(
-        f"\n{'ID':<5} {'Médico':<20} {'Especialidad':<30} {'Fecha':<12} {'Hora':<8} {'Estado':<12}"
-    )
-    print("-" * 95)
-
-    for turno in sorted(turnos, key=lambda t: tuple(t["fecha"])):
-        medico = gestor_datos.obtener_medico(turno["medico_dni"])
-        fecha_str = (
-            f"{turno['fecha'][2]:02d}/{turno['fecha'][1]:02d}/{turno['fecha'][0]}"
-        )
-        hora_str = f"{turno['hora'][0]:02d}:{turno['hora'][1]:02d}"
-        print(
-            f"{turno['id']:<5} {medico['Nombre']:<20} {medico['Especialidad']:<30} {fecha_str:<12} {hora_str:<8} {turno['estado']:<12}"
-        )
-
-
-def verTurnosPaciente():
-    while True:
-        Pacientes.mostrarLista()
-        dni_paciente = FuncionesGenerales.CargarDNI("paciente para ver sus turnos")
-        resultado = gestor_datos.obtener_paciente(dni_paciente)
-        paciente_data = resultado if resultado else None
-
-        if not paciente_data:
-            print("El paciente no existe en la lista")
-            FuncionesGenerales.pausar()
-            FuncionesGenerales.limpiar_pantalla()
+        # 2. Médico
+        Medicos.mostrar_tabla_medicos()
+        print("\n[BUSCAR MÉDICO] Enter para seleccionar:")
+        input("> ")
+        
+        medico = FG.buscar_persona_ui(gestor_datos.listar_medicos())
+        if not medico: continue
+        
+        if medico['DNI'] == paciente['DNI']:
+            print("\nError: El médico no puede atenderse a sí mismo.")
+            FG.pausar()
             continue
 
-        FuncionesGenerales.limpiar_pantalla()
-        print(f"\n{'=' * 50}")
-        print(f"Turnos de {paciente_data['Nombre']} (DNI: {dni_paciente})")
-        print(f"{'=' * 50}")
-
-        print("\n[1] Ver todos los turnos")
-        print("[2] Ver turnos futuros/pendientes")
-        print("[3] Ver turnos pasados")
-
+        visualizar_calendario_grafico(medico['DNI'])
+        
+        print("Ingrese fecha (DD/MM/AAAA) o '0' para cancelar:")
+        fi = input("> ")
+        if fi == "0": continue
+        
         try:
-            opcion = int(input("\nSeleccione una opción: "))
-
-            if opcion == 1:
-                mostrar_turnos_filtrados(dni_paciente, "todos")
-            elif opcion == 2:
-                mostrar_turnos_filtrados(dni_paciente, "futuros")
-            elif opcion == 3:
-                mostrar_turnos_filtrados(dni_paciente, "pasados")
-            else:
-                print("Opción inválida")
+            fi = fi.replace("-", "/")
+            d, m, a = map(int, fi.split("/"))
+            fecha_turno = (a, m, d)
+            
+            if date(a, m, d) < date.today():
+                print("No puede viajar al pasado.")
+                FG.pausar()
+                continue
         except ValueError:
-            print("Debe ingresar un número")
+            print("Formato incorrecto.")
+            FG.pausar()
+            continue
 
-        FuncionesGenerales.pausar()
-        FuncionesGenerales.limpiar_pantalla()
+        slots = obtener_slots(medico['DNI'], fecha_turno)
+        
+        if not slots:
+            print(f"\nSin horarios disponibles para el {d}/{m}/{a}.")
+            FG.pausar()
+            continue
+            
+        FG.limpiar_pantalla()
+        print(f"=== HORARIOS PARA {d}/{m}/{a} ===")
+        for i, s in enumerate(slots, 1):
+            print(f"[{i}] {s[0]:02d}:{s[1]:02d}", end="\t")
+            if i % 4 == 0: print()
+            
+        print("\n" + "-" * 50)
+        
+        try:
+            sel = int(input("\nElija horario: "))
+            if not (1 <= sel <= len(slots)): raise ValueError
+            hora_elegida = slots[sel - 1]
+            
+            # Doble chequeo de seguridad
+            dt_check = datetime(a, m, d, hora_elegida[0], hora_elegida[1])
+            if dt_check < datetime.now():
+                print("Error: Ese horario ya pasó hace instantes.")
+                FG.pausar()
+                continue
+                
+        except ValueError:
+            print("Selección inválida.")
+            FG.pausar()
+            continue
+            
+        # 5. Confirmar
+        FG.limpiar_pantalla()
+        print("📝 CONFIRMAR TURNO")
+        print(f" Paciente: {paciente['Nombre']}")
+        print(f" Médico:   {medico['Nombre']}")
+        print(f" Cita:     {d}/{m}/{a} a las {hora_elegida[0]:02d}:{hora_elegida[1]:02d}")
+        
+        if FG.confirmar_accion("¿Confirmar?"):
+            nt = {
+                "medico_dni": medico['DNI'],
+                "paciente_dni": paciente['DNI'],
+                "fecha": fecha_turno,
+                "hora": hora_elegida,
+                "estado": "Confirmado"
+            }
+            tid = gestor_datos.agregar_turno(nt)
+            gestor_datos.agregar_historial(medico['DNI'], paciente['DNI'], tid, fecha_turno)
+            print("\nTurno agendado.")
+            FG.pausar()
+            return
+
+def cancelar_turno():
+    FG.limpiar_pantalla()
+    print("=== CANCELAR TURNO ===")
+    Pacientes.mostrar_lista_pacientes()
+    print("\nBusque al paciente:")
+    
+    paciente = FG.buscar_persona_ui(gestor_datos.listar_pacientes())
+    if not paciente: return
+    
+    turnos = gestor_datos.buscar_turnos_por_paciente(paciente['DNI'])
+    if not turnos:
+        print("\nℹSin turnos pendientes.")
+        FG.pausar()
         return
+        
+    FG.limpiar_pantalla()
+    print(f"Turnos de: {paciente['Nombre']}")
+    print("-" * 60)
+    for t in turnos:
+        m = gestor_datos.obtener_medico(t['medico_dni'])
+        f = t['fecha']; h = t['hora']
+        print(f"[ID: {t['id']}] {f[2]}/{f[1]} {h[0]:02d}:{h[1]:02d} - Dr. {m['Nombre']}")
+    print("-" * 60)
+        
+    try:
+        tid = int(input("\nID a cancelar (0 salir): "))
+        if tid == 0: return
+        if not any(x['id'] == tid for x in turnos):
+            print("ID inválido.")
+            FG.pausar()
+            return
+            
+        if FG.confirmar_accion("¿Cancelar?"):
+            gestor_datos.cancelar_turno(tid)
+            gestor_datos.actualizar_estado_historial(tid, "Cancelado")
+            print("Cancelado.")
+            FG.pausar()
+    except ValueError:
+        print("Error.")
+        FG.pausar()
 
-
-def main():
-    pass
-
-
-main()
+def ver_turnos_paciente():
+    FG.limpiar_pantalla()
+    Pacientes.mostrar_lista_pacientes()
+    print("\nSeleccione paciente:")
+    paciente = FG.buscar_persona_ui(gestor_datos.listar_pacientes())
+    if not paciente: return
+    
+    FG.limpiar_pantalla()
+    print(f"HISTORIAL: {paciente['Nombre']}")
+    todos = [t for t in gestor_datos.listar_turnos() if t["paciente_dni"] == paciente['DNI']]
+    if not todos:
+        print("Vacío.")
+    else:
+        todos.sort(key=lambda x: tuple(x["fecha"]))
+        print(f"{'FECHA':<12} {'HORA':<8} {'MÉDICO':<20} {'ESTADO'}")
+        print("-" * 60)
+        for t in todos:
+            m = gestor_datos.obtener_medico(t['medico_dni'])
+            f = t['fecha']; h = t['hora']
+            nom_med = m['Nombre'] if m else "Desconocido"
+            print(f"{f[2]:02d}/{f[1]:02d}/{f[0]:<4} {h[0]:02d}:{h[1]:02d}   {nom_med[:20]:<20} {t['estado']}")
+    FG.pausar()
