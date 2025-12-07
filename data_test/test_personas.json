@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "DNI": 44555666,
+    "Nombre": "Mario Manual",
+    "Fecha de Nacimiento": [
+      1990,
+      5,
+      20
+    ]
+  }
+]

@@ -3,7 +3,6 @@ import gestor_datos
 from datetime import date
 
 # --- VISUALIZACIÓN ---
-
 def visualizar_datos_medico(medico, encabezado="DATOS DEL MÉDICO"):
     FG.limpiar_pantalla()
     print("=" * 60)
@@ -93,37 +92,18 @@ def validar_edad_minima_medico():
 # --- ALGORITMOS RECURSIVOS ---
 
 def _imprimir_historial_recursivo(historial, indice=0):
-    """
-    Imprime una lista de historial clínico de forma recursiva con formato visual de árbol.
-
-    Esta función recorre la lista 'historial' elemento por elemento utilizando un índice,
-    sin usar bucles tradicionales (for/while). Muestra los datos de cada turno y 
-    dibuja líneas conectoras para simular una estructura jerárquica.
-
-    Args:
-        historial (list): Lista de diccionarios, donde cada diccionario representa un registro
-                          del historial (contiene fecha, dni paciente, estado, etc.).
-        indice (int, opcional): Posición actual en la lista que se está procesando. 
-                                Por defecto inicia en 0.
-
-    Returns:
-        None: La función no retorna valores, imprime directamente en consola.
-    """
     
-    # --- CASO BASE (Condición de parada) ---
-    # Si el índice actual es igual o mayor al tamaño de la lista, significa que
-    # ya hemos procesado todos los elementos.
+    # CASO BASE 
+    # Si el índice actual es igual o mayor al tamaño de la lista, significa que ya hemos procesado todos los elementos.
     if indice >= len(historial):
-        # Imprimimos la línea final ("pie") del árbol para cerrar el dibujo visualmente.
+        # Cerramnos la ultima rama
         print("    " + "└──" + "─" * 50) 
         return  # Terminamos la ejecución de la función (rompemos la recursión).
 
-    # --- PROCESAMIENTO DEL ELEMENTO ACTUAL ---
     # Obtenemos el registro correspondiente a la posición actual del índice.
     item = historial[indice]
     
     # Buscamos los datos completos del paciente usando su DNI para mostrar el nombre.
-    # Si el paciente no existe (borrado), mostramos el DNI como respaldo.
     p = gestor_datos.obtener_paciente(item["paciente_dni"])
     nombre_p = p["Nombre"] if p else f"DNI {item['paciente_dni']}"
     
@@ -136,14 +116,10 @@ def _imprimir_historial_recursivo(historial, indice=0):
 
     # Definimos el conector visual para las ramas intermedias del árbol.
     conector = "├──" 
-    
-    # Imprimimos la fila con formato alineado.
-    # :<20 asegura que el nombre ocupe siempre 20 espacios para mantener la tabla ordenada.
+    #Formato
     print(f"    {conector} FECHA: {fecha_str} | PACIENTE: {nombre_p:<20} | ESTADO: {estado}")
 
     # --- LLAMADA RECURSIVA (Paso al siguiente) ---
-    # La función se llama a sí misma, pero incrementando el índice en 1.
-    # Esto mueve el "puntero" al siguiente elemento de la lista.
     _imprimir_historial_recursivo(historial, indice + 1)
 
 # --- ACCIONES ---

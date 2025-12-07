@@ -69,17 +69,13 @@ def guardar_archivo(key, datos_lista):
     except Exception as e:
         print(f"Error guardando {key}: {e}")
 
-# --- INICIALIZACIÓN DE VARIABLES GLOBALES ---
 inicializar_storage()
 
-# _memoria es un diccionario común y corriente
 _memoria = cargar_datos_raw()
 
-# Exponemos las listas de referencia
 obras_y_prepagas_arg = _memoria.get("obras_sociales", [])
 especialidades_medicas = _memoria.get("especialidades", [])
 
-# --- FUNCIONES INTERNAS (LÓGICA DEL NEGOCIO) ---
 def _crear_actualizar_persona(full_data):
     """Gestiona la lista de personas (unifica datos)."""
     dni = full_data["DNI"]
@@ -90,9 +86,8 @@ def _crear_actualizar_persona(full_data):
     }
     
     lista = _memoria["personas"]
-    idx = -1 # Porque este -1 es un indicador de "no encontrado"
+    idx = -1
     
-    # Búsqueda secuencial
     for i in range(len(lista)):
         if lista[i]["DNI"] == dni:
             idx = i
@@ -151,7 +146,6 @@ def _unir(dni, datos_rol):
     unido["Fecha de Nacimiento"] = persona["Fecha de Nacimiento"]
     return unido
 
-# === MÉDICOS ===
 def agregar_medico(full_data):
     # 1. Gestionar Persona
     _crear_actualizar_persona(full_data)

@@ -2,15 +2,12 @@ import gestor_datos
 import os
 from pathlib import Path 
 
-# Obtenemos la ruta base usando OS (como pediste)
 DIRECTORIO_BASE = os.path.dirname(os.path.abspath(__file__))
 RUTA_TEST = os.path.join(DIRECTORIO_BASE, "data_test")
 
 if not os.path.exists(RUTA_TEST):
     os.makedirs(RUTA_TEST)
     
-# Aunque usamos os.path.join, envolvemos el resultado en Path()
-# porque tu gestor_datos.py usa .exists() y necesita objetos Path.
 gestor_datos.FILES = {
     "personas": Path(os.path.join(RUTA_TEST, "test_personas.json")),
     "medicos": Path(os.path.join(RUTA_TEST, "test_medicos.json")),
@@ -84,7 +81,6 @@ def test_integridad_medico_paciente():
         "DNI": dni, "Nombre": "Dra. Grey Test", "Fecha de Nacimiento": [1980, 1, 1],
         "Obra Social": "Hospital"
     })
-    
     assert gestor_datos.obtener_medico(dni) is not None
     assert gestor_datos.obtener_paciente(dni) is not None
 
@@ -111,16 +107,40 @@ def test_eliminar_medico():
     limpiar_memoria_test()
     
     medico = {
-        "DNI": 11111111, "Nombre": "Borrar", 
+        "DNI": 1030451, "Nombre": "Borrar", 
         "Fecha de Nacimiento": [1990, 1, 1], "Especialidad": "Test", "Horarios": {}
     }
     gestor_datos.agregar_medico(medico)
     
-    assert gestor_datos.obtener_medico(11111111) is not None
+    assert gestor_datos.obtener_medico(1030451) is not None
     
-    gestor_datos.eliminar_medico(11111111)
+    gestor_datos.eliminar_medico(1030451)
     
-    assert gestor_datos.obtener_medico(11111111) is None
+    assert gestor_datos.obtener_medico(1030451) is None
+
+def test_auditoria_paciente_manual():
+    limpiar_memoria_test()
+
+    dni_test = 44555666
+    paciente_nuevo = {
+        "DNI": dni_test, 
+        "Nombre": "Mario Manual", 
+        "Fecha de Nacimiento": [1990, 5, 20], 
+        "Obra Social": "PAMI"
+    }
+    
+    gestor_datos.agregar_paciente(paciente_nuevo)
+    recuperado = gestor_datos.obtener_paciente(99999999)
+    
+    if recuperado is None:
+        raise AssertionError(f"FALLO CRÍTICO: Se buscó el DNI {dni_test} pero el sistema devolvió 'None'.")
+
+    nombre_esperado = "Mario Manual"
+    if recuperado["Nombre"] != nombre_esperado:
+        raise AssertionError(
+            f"ERROR DE DATOS: El nombre guardado es '{recuperado['Nombre']}' "
+            f"pero se esperaba '{nombre_esperado}'."
+        )
 
 """
 def test_falla_porque_no_existe():
@@ -129,8 +149,7 @@ def test_falla_porque_no_existe():
     
     # Intentamos buscar un DNI inexistente
     resultado = gestor_datos.obtener_medico(99999999)
-
-    # El resultado será None, pero el test exige que NO sea None.
+    
     assert resultado is not None
 
 def test_falla_por_nombre_incorrecto():
